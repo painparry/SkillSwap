@@ -10,6 +10,9 @@
   --color-border: #e5e7eb;
   --color-error: #ef4444;
   --color-success: #22c55e;
+  --color-control-border: #000;
+  --color-filter-form-accent: #508826;
+  --color-main-text: #253017;
 
   /* Spacing */
   --space-xs: 4px;
@@ -53,6 +56,15 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+.visuallyHidden {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 body {
