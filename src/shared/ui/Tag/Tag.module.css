@@ -1,0 +1,28 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 12px var(--space-lg);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  color: #253017;
+  font-size: var(--font-size-base);
+  line-height: 24px;
+  letter-spacing: 0.32px;
+  white-space: nowrap;
+}
+
+.remove {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: inherit;
+}
+
+.remove:hover {
+  opacity: 0.6;
+}
