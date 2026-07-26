@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.checkBox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1.5px solid var(--color-control-border);
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.container:hover .checkBox {
+  border-color: var(--color-accent);
+}
+
+input[type='checkbox']:checked + .checkBox {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+}
+
+.line::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 9.5px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--color-bg);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+input[type='checkbox']:checked + .line::after {
+  transform: translate(-50%, -50%) scaleX(1);
+}
+
+.mark::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: var(--color-bg);
+  mask-image: url(/check.svg);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s ease;
+}
+
+input[type='checkbox']:checked + .mark::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.label {
+  user-select: none;
+}
