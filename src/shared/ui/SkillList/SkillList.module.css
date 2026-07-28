@@ -1,0 +1,36 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.title {
+  margin: 0;
+  color: #253017;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  line-height: 24px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-sm) 12px;
+  border-radius: 20px;
+  color: #253017;
+  font-size: 0.75rem;
+  line-height: 16px;
+  white-space: nowrap;
+}
