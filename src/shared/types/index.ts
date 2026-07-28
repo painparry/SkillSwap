@@ -14,12 +14,18 @@ export interface Skill {
 }
 
 // ─── User ────────────────────────────────────────────────
+export type GenderType = 'male' | 'female'
 export interface User {
   id: string
   name: string
   email: string
   avatarUrl: string | null
   createdAt: string
+  city: string
+  age: number
+  gender: GenderType
+  likes: number
+  about: string
 }
 
 // ─── Request ─────────────────────────────────────────────
