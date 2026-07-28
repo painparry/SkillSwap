@@ -1,0 +1,76 @@
+import { ReactNode, useId, useState } from 'react'
+import styles from './Accordion.module.css'
+
+interface AccordionProps {
+  title: ReactNode
+  children: ReactNode
+  defaultOpen?: boolean
+  isOpen?: boolean
+  onToggle?: (open: boolean) => void
+  className?: string
+  variant?: 'default' | 'green'
+}
+
+export const Accordion = ({
+  title,
+  children,
+  defaultOpen = false,
+  isOpen: isOpenProp,
+  onToggle,
+  className,
+  variant = 'default',
+}: AccordionProps) => {
+  const [internalOpen, setInternalOpen] = useState(defaultOpen)
+  const isControlled = isOpenProp !== undefined
+  const isOpen = isControlled ? isOpenProp : internalOpen
+
+  const contentId = useId()
+
+  const handleToggle = () => {
+    const next = !isOpen
+    if (!isControlled) setInternalOpen(next)
+    onToggle?.(next)
+  }
+
+  return (
+    <div className={`${styles.root} ${className ?? ''}`}>
+      <button
+        type="button"
+        className={`${styles.header} ${variant === 'green' ? styles.headerGreen : ''}`}
+        onClick={handleToggle}
+        aria-expanded={isOpen}
+        aria-controls={contentId}
+      >
+        <span className={styles.title}>{title}</span>
+        <svg
+          className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ''}`}
+          width="16"
+          height="8"
+          viewBox="0 0 16 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8 7.93539C7.35391 7.93539 6.70782 7.68618 6.21863 7.197L0.20075 1.17912C-0.0669166 0.91145 -0.0669166 0.468416 0.20075 0.20075C0.468416 -0.0669166 0.911451 -0.0669166 1.17912 0.20075L7.197 6.21863C7.64003 6.66167 8.35997 6.66167 8.803 6.21863L14.8209 0.20075C15.0885 -0.0669166 15.5316 -0.0669166 15.7992 0.20075C16.0669 0.468416 16.0669 0.91145 15.7992 1.17912L9.78137 7.197C9.29218 7.68618 8.64609 7.93539 8 7.93539Z"
+            fill="#253017"
+          />
+        </svg>
+      </button>
+      <div
+        id={contentId}
+        className={styles.content}
+        style={{
+          gridTemplateRows: isOpen ? '1fr' : '0fr',
+        }}
+      >
+        <div className={styles.contentInner}>
+          <div
+            className={`${styles.paddingWrapper} ${variant === 'green' ? styles.paddingWrapperGreen : ''}`}
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

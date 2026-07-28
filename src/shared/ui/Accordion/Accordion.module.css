@@ -1,0 +1,62 @@
+.root {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #fff;
+  cursor: pointer;
+  font: inherit;
+  color: #253017;
+  text-align: left;
+  gap: 12px;
+}
+
+.headerGreen {
+  color: rgb(80 136 38 / 100%);
+}
+
+.title {
+  font-weight: 400;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  overflow: visible;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+.content {
+  display: grid;
+  transition: grid-template-rows 0.25s ease;
+  overflow: hidden;
+}
+
+.contentInner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.paddingWrapper {
+  padding: 12px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.paddingWrapperGreen {
+  padding-left: 0;
+  padding-right: 0;
+}
