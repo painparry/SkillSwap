@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background-color: #ffffff;
+  background-color: #fff;
   cursor: pointer;
   font: inherit;
   color: #253017;
@@ -16,13 +16,13 @@
 }
 
 .headerGreen {
-  color: rgba(80, 136, 38, 1);
+  color: rgb(80 136 38 / 100%);
 }
 
 .title {
   font-weight: 400;
   min-width: 0;
-  word-break: break-word;
+  overflow-wrap: anywhere;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -50,7 +50,7 @@
 }
 
 .paddingWrapper {
-  padding: 12px 20px; 
+  padding: 12px 20px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -58,5 +58,5 @@
 
 .paddingWrapperGreen {
   padding-left: 0;
-  padding-right: 0; 
+  padding-right: 0;
 }
