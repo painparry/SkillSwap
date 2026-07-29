@@ -18,6 +18,14 @@
   font-size: var(--font-size-base);
 }
 
+.withLeftIcon {
+  padding-left: 48px;
+}
+
+.withRightIcon {
+  padding-right: 48px;
+}
+
 .label {
   color: var(--color-text);
   font-family: var(--font-sans);
@@ -25,4 +33,27 @@
   font-size: var(--font-size-base);
   line-height: 24px;
   letter-spacing: 0.02em;
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.leftIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.rightIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
 }
