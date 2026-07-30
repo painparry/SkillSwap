@@ -1,0 +1,17 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(324px, 1fr));
+  gap: 24px;
+  width: 1020px;
+  justify-items: start;
+  padding: 20px 0;
+  box-sizing: border-box;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-style: italic;
+  font-size: 16px;
+}
