@@ -1,10 +1,10 @@
-// TODO: реализовать страницу CatalogPage
+import { FiltersSidebar } from '@/features/filters'
+import styles from './CatalogPage.module.css'
 
 export default function CatalogPage() {
   return (
-    <main>
-      <h1>CatalogPage</h1>
-      <p>Страница в разработке</p>
+    <main className={styles.page}>
+      <FiltersSidebar />
     </main>
   )
 }
