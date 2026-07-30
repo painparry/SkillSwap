@@ -1,6 +1,4 @@
-export { ActiveFilters } from './ActiveFilters'
 export { FiltersSidebar } from './FiltersSidebar'
-export type { ActiveFilter, ActiveFiltersProps } from './ActiveFilters'
 export type {
   AuthorGenderFilter,
   FiltersSidebarProps,

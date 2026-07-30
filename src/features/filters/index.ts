@@ -1,2 +1,9 @@
-export { ActiveFilters } from './ui'
-export type { ActiveFilter, ActiveFiltersProps } from './ui'
+export { ActiveFilters, FiltersSidebar } from './ui'
+export type {
+  ActiveFilter,
+  ActiveFiltersProps,
+  AuthorGenderFilter,
+  FiltersSidebarProps,
+  FiltersSidebarValue,
+  SkillFilterType,
+} from './ui'

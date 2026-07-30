@@ -1,0 +1,13 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  align-items: flex-start;
+  padding: var(--space-xl);
+  background-color: #f9faf7;
+}
+
+@media (width <= 768px) {
+  .page {
+    padding: var(--space-md);
+  }
+}
