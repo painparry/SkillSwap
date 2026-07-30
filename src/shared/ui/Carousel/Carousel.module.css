@@ -1,0 +1,109 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1368px;
+  margin: 0 auto;
+  padding: 25px;
+}
+
+.carouselContainer {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 24px;
+  padding-bottom: 16px;
+  scrollbar-width: none;
+}
+
+.cardWrapper {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+}
+
+.prevButton,
+.nextButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.prevButton {
+  left: 10px;
+}
+
+.nextButton {
+  right: 10px;
+}
+
+.prevButton::before,
+.prevButton::after,
+.nextButton::before,
+.nextButton::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 1.5px;
+  background: #333;
+  transition: all 0.3s ease;
+}
+
+.prevButton::before {
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%) rotate(45deg);
+  transform-origin: 0 50%;
+}
+
+.prevButton::after {
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%) rotate(-45deg);
+  transform-origin: 0 50%;
+}
+
+.nextButton::before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  transform-origin: 100% 50%;
+}
+
+.nextButton::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transform-origin: 100% 50%;
+}
+
+.prevButton:hover,
+.nextButton:hover {
+  background: #e4e8df;
+  border-color: #ccc;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: #e0e0e0;
+}
+
+.emptyState {
+  width: 100%;
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-style: italic;
+}
