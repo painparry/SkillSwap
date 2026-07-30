@@ -12,7 +12,14 @@
   scroll-behavior: smooth;
   gap: 24px;
   padding-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0;
+}
+
+.carouselContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .cardWrapper {
@@ -20,7 +27,6 @@
   scroll-snap-align: start;
 }
 
-.prevButton,
 .nextButton {
   position: absolute;
   top: 50%;
@@ -37,18 +43,9 @@
   z-index: 10;
   transition: all 0.3s ease;
   overflow: hidden;
-}
-
-.prevButton {
-  left: 10px;
-}
-
-.nextButton {
   right: 10px;
 }
 
-.prevButton::before,
-.prevButton::after,
 .nextButton::before,
 .nextButton::after {
   content: '';
@@ -57,20 +54,6 @@
   height: 1.5px;
   background: #333;
   transition: all 0.3s ease;
-}
-
-.prevButton::before {
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%) rotate(45deg);
-  transform-origin: 0 50%;
-}
-
-.prevButton::after {
-  top: 50%;
-  right: 50%;
-  transform: translate(50%, -50%) rotate(-45deg);
-  transform-origin: 0 50%;
 }
 
 .nextButton::before {
@@ -87,17 +70,10 @@
   transform-origin: 100% 50%;
 }
 
-.prevButton:hover,
 .nextButton:hover {
   background: #e4e8df;
   border-color: #ccc;
   transform: translateY(-50%) scale(1.05);
-}
-
-.disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  border-color: #e0e0e0;
 }
 
 .emptyState {

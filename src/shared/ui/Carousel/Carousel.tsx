@@ -1,65 +1,56 @@
-import { useRef, useState } from 'react'
-import { UserCard, UserCardProps } from '@/entities/user/ui/UserCard'
-import styles from './Carousel.module.css'
+import { useRef } from 'react';
+import { UserCard, UserCardProps } from '@/entities/user/ui/UserCard';
+import styles from './Carousel.module.css';
 
 interface CarouselProps {
-  items: UserCardProps[]
+  items: UserCardProps[];
 }
 
 export const Carousel = ({ items }: CarouselProps) => {
-  const carouselRef = useRef<HTMLDivElement>(null)
-  const cardWidth = 320
-  const [currentPosition, setCurrentPosition] = useState(0)
-
-  const maxPosition = Math.max(0, (items.length - 1) * cardWidth)
-
-  const shouldShowButtons = items.length > 1
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const scrollNext = () => {
-    if (!carouselRef.current || currentPosition >= maxPosition) return
+    if (!carouselRef.current) return;
 
-    carouselRef.current.scrollLeft += cardWidth
-    setCurrentPosition((prev) => prev + 1)
-  }
+    const container = carouselRef.current;
+    const totalCardsWidth = Array.from(container.children).reduce(
+      (sum, child) => sum + (child as HTMLElement).offsetWidth,
+      0
+    );
+    const maxScroll = totalCardsWidth - container.clientWidth;
+    const currentScroll = container.scrollLeft;
+    const cardWidth = 320;
 
-  const scrollPrev = () => {
-    if (!carouselRef.current || currentPosition <= 0) return
-
-    carouselRef.current.scrollLeft -= cardWidth
-    setCurrentPosition((prev) => prev - 1)
-  }
+    if (currentScroll >= maxScroll) {
+      container.scrollLeft = 0;
+    } else {
+      container.scrollLeft += cardWidth;
+    }
+  };
 
   return (
     <div className={styles.carousel}>
-      {shouldShowButtons && (
-        <button
-          onClick={scrollPrev}
-          className={`${styles.prevButton} ${currentPosition === 0 ? styles.disabled : ''}`}
-          disabled={currentPosition === 0}
-          aria-label="Прокрутить карусель назад"
-        />
-      )}
-
       <div ref={carouselRef} className={styles.carouselContainer} data-testid="carousel-container">
         {items.length === 0 ? (
           <div className={styles.emptyState}>Нет пользователей для отображения</div>
         ) : (
-          items.map((userProps) => (
-            <div key={userProps.id} className={styles.cardWrapper}>
-              <UserCard {...userProps} />
-            </div>
-          ))
+          <>
+            {[...items, ...items].map((userProps, index) => (
+              <div key={`${userProps.id}-${index}`} className={styles.cardWrapper}>
+                <UserCard {...userProps} />
+              </div>
+            ))}
+          </>
         )}
       </div>
-
-      {shouldShowButtons && (
+      {items.length > 1 && (
         <button
           onClick={scrollNext}
-          className={`${styles.nextButton} ${currentPosition >= maxPosition / cardWidth ? styles.disabled : ''}`}
-          disabled={currentPosition >= maxPosition / cardWidth}
+          className={styles.nextButton}
           aria-label="Прокрутить карусель вперёд"
-        />
+        >
+        </button>
       )}
     </div>
-  )
-}
+  );
+};
