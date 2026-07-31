@@ -1,0 +1,90 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1368px;
+  margin: 0 auto;
+  padding: 25px;
+}
+
+.carouselContainer {
+  display: flex;
+  overflow-x: auto;
+  gap: 24px;
+  padding-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0;
+}
+
+.carouselContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.cardWrapper {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+}
+
+.nextButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  right: 10px;
+}
+
+.nextButton::before,
+.nextButton::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 1.5px;
+  background: #333;
+  transition: all 0.3s ease;
+}
+
+.nextButton::before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  transform-origin: 100% 50%;
+}
+
+.nextButton::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  transform-origin: 100% 50%;
+}
+
+.nextButton:hover {
+  background: #e4e8df;
+  border-color: #ccc;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.emptyState {
+  width: 100%;
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-style: italic;
+}
+
+@media (width <= 768px) {
+  .cardWrapper {
+    flex: 0 0 280px;
+  }
+}
