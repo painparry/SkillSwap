@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import addIcon from './add-icon.svg'
 import styles from './AvatarUpload.module.css'
 
-export const AvatarUpload = () => {
+interface AvatarUploadProps {
+  onChange?: (file: File) => void
+}
+export const AvatarUpload = ({ onChange }: AvatarUploadProps) => {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,6 +16,7 @@ export const AvatarUpload = () => {
       }
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
+      onChange?.(file)
     }
   }
 
