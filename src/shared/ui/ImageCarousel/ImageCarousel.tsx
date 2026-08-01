@@ -51,7 +51,6 @@ export function ImageCarousel({
   return (
     <div className={`${styles.carousel} ${className || ''}`}>
       <div className={styles.mainContainer}>
-        {/* Главное фото */}
         <div className={styles.mainImageWrapper}>
           <img
             src={currentImage}
@@ -111,7 +110,6 @@ export function ImageCarousel({
           </div>
         </div>
 
-        {/* Превью справа */}
         <div className={styles.previewColumn}>
           {previewImages.map((src, index) => {
             const isLast = index === 2

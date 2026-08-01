@@ -32,15 +32,14 @@
   display: block;
 }
 
-/* ===== Стрелки (поверх фото) ===== */
 .arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   width: 32px;
   height: 32px;
-  border-radius: 100px;        /* полностью круглые */
-  background: #ffffff;          /* белый фон */
+  border-radius: 100px;        
+  background: #ffffff;          
   border: none;
   cursor: pointer;
   display: flex;
@@ -49,7 +48,7 @@
   transition: background 0.2s, opacity 0.2s;
   z-index: 10;
   padding: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* лёгкая тень */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); 
 }
 
 .arrow:hover {
