@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:carousel": "vite --open /dev.html",
     "build": "tsc -b && vite build",
     "lint": "eslint . && stylelint \"src/**/*.{css,scss}\"",
     "lint:fix": "eslint . --fix && stylelint \"src/**/*.{css,scss}\" --fix",
