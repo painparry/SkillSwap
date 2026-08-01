@@ -1,11 +1,9 @@
-
 .carousel {
-  width: 440px;             
-  height: 324px;            
+  width: 440px;
+  height: 324px;
   display: flex;
-  gap: 24px;                 
+  gap: 24px;
 }
-
 
 .mainContainer {
   display: flex;
@@ -14,12 +12,11 @@
   height: 100%;
 }
 
-
 .mainImageWrapper {
   position: relative;
   width: 324px;
   height: 324px;
-  flex-shrink: 0;          
+  flex-shrink: 0;
   border-radius: 12px;
   overflow: hidden;
   background: #f5f5f5;
@@ -38,8 +35,8 @@
   transform: translateY(-50%);
   width: 32px;
   height: 32px;
-  border-radius: 100px;        
-  background: #ffffff;          
+  border-radius: 100px;
+  background: #fff;
   border: none;
   cursor: pointer;
   display: flex;
@@ -48,7 +45,7 @@
   transition: background 0.2s, opacity 0.2s;
   z-index: 10;
   padding: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); 
+  box-shadow: 0 2px 8px rgb(0 0 0 / 8%);
 }
 
 .arrow:hover {
@@ -59,16 +56,13 @@
   transform: translateY(-50%) scale(0.95);
 }
 
-
 .arrowLeft {
   left: 16px;
 }
 
-
 .arrowRight {
   right: 16px;
 }
-
 
 .arrow svg {
   display: block;
@@ -76,30 +70,27 @@
   height: 10.67px;
 }
 
-
 .counter {
   position: absolute;
   bottom: 12px;
   right: 12px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgb(0 0 0 / 60%);
   color: white;
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 12px;
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
   z-index: 10;
 }
-
 
 .previewColumn {
   display: flex;
   flex-direction: column;
-  gap: 24px;                
+  gap: 24px;
   width: 92px;
   height: 324px;
   flex-shrink: 0;
 }
-
 
 .previewItem {
   position: relative;
@@ -121,28 +112,26 @@
   display: block;
 }
 
-
 .previewOverlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.5);  
+  background: rgb(255 255 255 / 50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  letter-spacing: -0.011em;   
+  letter-spacing: -0.011em;
   vertical-align: middle;
   color: #253017;
 }
 
-
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .carousel {
     width: 100%;
     height: auto;
