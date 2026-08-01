@@ -1,0 +1,38 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.link {
+  display: flex;
+  text-decoration: none;
+  min-height: 48px;
+  min-width: 244px;
+  border-radius: var(--radius-lg);
+  align-items: center;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  gap: 14px;
+}
+
+.linkActive {
+  background-color: var(--color-filter-form-accent);
+}
+
+.link:not(.linkActive):hover {
+  background-color: var(--color-button-hover);
+}
+
+.icon {
+  color: var(--color-main-text);
+  flex-shrink: 0;
+  margin-left: 22px;
+}
+
+.text {
+  color: var(--color-main-text);
+  font-weight: 400;
+  font-size: var(--font-size-base);
+}
