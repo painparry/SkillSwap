@@ -80,11 +80,13 @@ describe('FiltersSidebar', () => {
     render(<FiltersSidebar />)
 
     expect(screen.getByRole('checkbox', { name: 'Казань' })).toBeInTheDocument()
-    expect(screen.queryByRole('checkbox', { name: 'Самара' })).not.toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'Самара' })).toBeInTheDocument()
+    expect(screen.queryByRole('checkbox', { name: 'Уфа' })).not.toBeInTheDocument()
 
     fireEvent.click(screen.getByRole('button', { name: 'Все города' }))
 
-    expect(screen.getByRole('checkbox', { name: 'Самара' })).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'Уфа' })).toBeInTheDocument()
+    expect(screen.getByRole('checkbox', { name: 'Иркутск' })).toBeInTheDocument()
   })
 
   it('calls onChange with updated value', () => {
@@ -96,7 +98,7 @@ describe('FiltersSidebar', () => {
 
     expect(onChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        cities: ['moscow'],
+        cities: ['3'],
       }),
     )
   })

@@ -143,14 +143,28 @@ const filterCategories: FilterCategory[] = [
 ]
 
 const cities = [
-  { id: 'moscow', label: 'Москва' },
-  { id: 'saint-petersburg', label: 'Санкт-Петербург' },
-  { id: 'novosibirsk', label: 'Новосибирск' },
-  { id: 'ekaterinburg', label: 'Екатеринбург' },
-  { id: 'kazan', label: 'Казань' },
-  { id: 'nizhny-novgorod', label: 'Нижний Новгород' },
-  { id: 'samara', label: 'Самара' },
-  { id: 'ufa', label: 'Уфа' },
+  { id: '1', label: 'Казань' },
+  { id: '2', label: 'Санкт-Петербург' },
+  { id: '3', label: 'Москва' },
+  { id: '4', label: 'Новосибирск' },
+  { id: '5', label: 'Самара' },
+  { id: '6', label: 'Уфа' },
+  { id: '7', label: 'Пермь' },
+  { id: '8', label: 'Омск' },
+  { id: '9', label: 'Воронеж' },
+  { id: '10', label: 'Тула' },
+  { id: '11', label: 'Краснодар' },
+  { id: '12', label: 'Ростов-на-Дону' },
+  { id: '13', label: 'Екатеринбург' },
+  { id: '14', label: 'Тюмень' },
+  { id: '15', label: 'Сочи' },
+  { id: '16', label: 'Челябинск' },
+  { id: '17', label: 'Великий Новгород' },
+  { id: '18', label: 'Владимир' },
+  { id: '19', label: 'Ярославль' },
+  { id: '20', label: 'Тверь' },
+  { id: '21', label: 'Красноярск' },
+  { id: '22', label: 'Иркутск' },
 ]
 
 const defaultFiltersValue: FiltersSidebarValue = {
