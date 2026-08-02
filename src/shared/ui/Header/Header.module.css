@@ -1,0 +1,91 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:  36px;
+  padding-block: 36px 20px;
+  background-color: #F9FAF7;
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoText {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  color: #253017;
+  letter-spacing: -1.1%; 
+}
+
+.navGroup{
+  display: flex;
+  gap: 24px;
+  line-height: 24px;
+  letter-spacing: 2%;
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 2%;
+  line-height: 24px;
+}
+
+.searchWrapper {
+  display: flex;
+  padding: 12px;
+  background-color: #FFFF;
+  border-radius: 12px;
+  gap: 8px;
+  min-width: 520px;
+}
+
+.searchInput {
+  border: none;
+  color: #69735D;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 2%;
+}
+
+.actions {
+  display: flex;
+  gap: 32px;
+}
+
+.btn {
+  border-radius: 12px;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 2%;
+}
+
+.authGroup{
+  display: flex;
+  gap: 8px;
+  color: #253017;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 2%;
+}
+
+.btnOutline{
+  border: 1px solid #ABD27A;
+  padding: 12px 22.5px;
+}
+
+.btnPrimary {
+  background-color: #ABD27A; 
+  padding: 12px 23.5px;
+}
+
