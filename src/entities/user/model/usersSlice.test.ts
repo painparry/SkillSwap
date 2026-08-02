@@ -1,5 +1,6 @@
 import type { User } from '@/shared/types'
 import reducer, { fetchUsersThunk, initialState } from './usersSlice'
+import { test, expect } from 'vitest'
 
 const mockUsers: User[] = [
   {
