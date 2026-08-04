@@ -1,5 +1,6 @@
 import type { ChangeEvent, KeyboardEvent } from 'react'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
+import clsx from 'clsx'
 import styles from './Autocomplete.module.css'
 
 export type AutocompleteOption = {
@@ -124,14 +125,14 @@ export function Autocomplete({
   }
 
   return (
-    <div className={`${styles.root} ${className ?? ''}`} ref={rootRef}>
+    <div className={clsx(styles.root, className)} ref={rootRef}>
       {label && (
         <label className={styles.label} htmlFor={inputId}>
           {label}
         </label>
       )}
 
-      <div className={`${styles.field} ${isListVisible ? styles.fieldOpen : ''}`}>
+      <div className={clsx(styles.field, { [styles.fieldOpen]: isListVisible })}>
         <input
           ref={inputRef}
           id={inputId}
@@ -140,7 +141,7 @@ export function Autocomplete({
           value={value}
           placeholder={placeholder}
           disabled={disabled}
-          className={`${styles.input} ${inputClassName ?? ''}`}
+          className={clsx(styles.input, inputClassName)}
           role="combobox"
           aria-autocomplete="list"
           aria-expanded={isListVisible}
@@ -169,7 +170,7 @@ export function Autocomplete({
             <li
               key={option.value}
               id={`${listboxId}-option-${index}`}
-              className={`${styles.option} ${index === activeIndex ? styles.optionActive : ''}`}
+              className={clsx(styles.option, { [styles.optionActive]: index === activeIndex })}
               role="option"
               aria-selected={index === activeIndex}
               onMouseDown={(event) => event.preventDefault()}
