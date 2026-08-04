@@ -12,7 +12,7 @@ export function UserMenu() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const user = useAppSelector((state) => state.authReducer.user)
+  const user = useAppSelector((state) => state.auth.user)
 
   const toggleMenu = () => setIsOpen((prev) => !prev)
   const closeMenu = () => setIsOpen(false)
