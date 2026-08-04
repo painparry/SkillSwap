@@ -1,15 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit'
-// Импортируй свои slice'ы здесь по мере их создания:
-// import skillsReducer from '@/entities/skill/model/skillsSlice'
-// import authReducer from '@/features/auth/model/authSlice'
+import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '@/features/auth/model/authSlice';
+import usersReducer from '@/entities/user/model/usersSlice';
 
 export const store = configureStore({
   reducer: {
-    // skills: skillsReducer,
-    authReducer
+    auth: authReducer,   
+    users: usersReducer
   },
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

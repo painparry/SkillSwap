@@ -52,7 +52,7 @@ input[type='checkbox']:checked + .line::after {
   width: 12px;
   height: 12px;
   background-color: var(--color-bg);
-  mask-image: url(/check.svg);
+  mask-image: url('/check.svg');
   mask-repeat: no-repeat;
   mask-position: center;
   mask-size: contain;

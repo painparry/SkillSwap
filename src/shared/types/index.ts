@@ -49,3 +49,23 @@ export interface AuthUser {
   token: string
   avatarUrl: string | null;
 }
+
+// ─── Skill Categories and Subcategories ─────────────────────────────────────────────
+export type SkillCategory = {
+  id: SkillCategoryId;
+  name: string;
+  subcategories: SkillSubcategory[];
+};
+
+export type SkillSubcategory = {
+  id: string;
+  name: string;
+};
+
+export type SkillCategoryId =
+  | "business"
+  | "art"
+  | "languages"
+  | "education"
+  | "health"
+  | "home";
