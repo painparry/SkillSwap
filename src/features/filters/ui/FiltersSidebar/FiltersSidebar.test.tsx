@@ -98,7 +98,7 @@ describe('FiltersSidebar', () => {
 
     expect(onChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
-        cities: ['3'],
+        cities: ['Москва'],
       }),
     )
   })
