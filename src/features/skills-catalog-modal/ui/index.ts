@@ -1,0 +1,1 @@
+export { SkillsCatalogModal } from './SkillsCatalogModal'

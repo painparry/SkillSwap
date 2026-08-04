@@ -1,13 +1,13 @@
-import React from 'react';
-import styles from './AboutProjectModal.module.css';
+import styles from './AboutProjectModal.module.css'
+import { Modal } from '@/shared/ui/modal' // проверь путь под свой проект
 
 interface TeamMember {
-  name: string;
+  name: string
 }
 
 interface AboutProjectModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen: boolean
+  onClose: () => void
 }
 
 const teamMembers: TeamMember[] = [
@@ -24,37 +24,22 @@ const teamMembers: TeamMember[] = [
   { name: 'Светлана Сметана' },
   { name: 'Андрей А.' },
   { name: 'Сергей А.' },
-];
-
+]
 
 export const AboutProjectModal = ({ isOpen, onClose }: AboutProjectModalProps) => {
-  if (!isOpen) return null;
-
   return (
-    <div
-      className={styles.overlay}
-      onClick={onClose}
-      role="button"
-      aria-label="Закрыть модальное окно"
-      tabIndex={0}
-    >
-      <div
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="about-project-title"
-      >
-        <div className={styles.header}>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <div className={styles.contentWrapper}>
+        <div className={styles.content}>
           <h2 id="about-project-title" className={styles.title}>
             О проекте SkillSwap
           </h2>
-        </div>
-        <div className={styles.content}>
-          <h3 className={styles.sectionTitle}>Команда</h3>
+
+          <p className={styles.sectionTitle}>Команда</p>
+
           <div className={styles.teamGrid}>
             {teamMembers.map((member, index) => {
-              const initial = member.name.charAt(0).toUpperCase();
+              const initial = member.name.charAt(0).toUpperCase()
               return (
                 <div key={index} className={styles.card}>
                   <div className={styles.avatarPlaceholder}>{initial}</div>
@@ -62,11 +47,11 @@ export const AboutProjectModal = ({ isOpen, onClose }: AboutProjectModalProps) =
                     <h4 className={styles.memberName}>{member.name}</h4>
                   </div>
                 </div>
-              );
+              )
             })}
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    </Modal>
+  )
+}
