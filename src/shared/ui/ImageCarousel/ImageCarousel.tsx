@@ -1,10 +1,11 @@
-import { useState } from 'react'
-import styles from './ImageCarousel.module.css'
+import { useState } from 'react';
+import clsx from 'clsx';  
+import styles from './ImageCarousel.module.css';
 
 export interface ImageCarouselProps {
-  images: string[]
-  alt?: string
-  className?: string
+  images: string[];
+  alt?: string;
+  className?: string;
 }
 
 export function ImageCarousel({
@@ -12,44 +13,44 @@ export function ImageCarousel({
   alt = 'Фото',
   className,
 }: ImageCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   if (!images || images.length === 0) {
-    return null
+    return null;
   }
 
-  const currentImage = images[currentIndex]
+  const currentImage = images[currentIndex];
 
   const getPreviewImages = () => {
-    const previews: string[] = []
-    const total = images.length
+    const previews: string[] = [];
+    const total = images.length;
     for (let i = 1; i <= 3; i++) {
-      const index = (currentIndex + i) % total
-      previews.push(images[index])
+      const index = (currentIndex + i) % total;
+      previews.push(images[index]);
     }
-    return previews
-  }
+    return previews;
+  };
 
-  const previewImages = getPreviewImages()
+  const previewImages = getPreviewImages();
 
   const goToPrevious = () => {
     setCurrentIndex((prev) =>
       prev === 0 ? images.length - 1 : prev - 1
-    )
-  }
+    );
+  };
 
   const goToNext = () => {
     setCurrentIndex((prev) =>
       prev === images.length - 1 ? 0 : prev + 1
-    )
-  }
+    );
+  };
 
   const goToSlide = (index: number) => {
-    setCurrentIndex(index)
-  }
+    setCurrentIndex(index);
+  };
 
   return (
-    <div className={`${styles.carousel} ${className || ''}`}>
+    <div className={clsx(styles.carousel, className)}>  
       <div className={styles.mainContainer}>
         <div className={styles.mainImageWrapper}>
           <img
@@ -61,7 +62,7 @@ export function ImageCarousel({
           {images.length > 1 && (
             <>
               <button
-                className={`${styles.arrow} ${styles.arrowLeft}`}
+                className={clsx(styles.arrow, styles.arrowLeft)}  
                 onClick={goToPrevious}
                 aria-label="Предыдущее фото"
               >
@@ -82,7 +83,7 @@ export function ImageCarousel({
                 </svg>
               </button>
               <button
-                className={`${styles.arrow} ${styles.arrowRight}`}
+                className={clsx(styles.arrow, styles.arrowRight)}  
                 onClick={goToNext}
                 aria-label="Следующее фото"
               >
@@ -105,15 +106,12 @@ export function ImageCarousel({
             </>
           )}
 
-          <div className={styles.counter}>
-            {currentIndex + 1} / {images.length}
-          </div>
         </div>
 
         <div className={styles.previewColumn}>
           {previewImages.map((src, index) => {
-            const isLast = index === 2
-            const remaining = images.length - 4
+            const isLast = index === 2;
+            const remaining = images.length - 4;
 
             return (
               <button
@@ -133,10 +131,10 @@ export function ImageCarousel({
                   </div>
                 )}
               </button>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
+  );
 }
