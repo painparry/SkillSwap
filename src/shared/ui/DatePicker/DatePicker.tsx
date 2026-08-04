@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
+import clsx from 'clsx'
 import { Button } from '@/shared/ui/Button'
 import styles from './DatePicker.module.css'
 
@@ -311,11 +312,7 @@ export function DatePicker({
   }
 
   return (
-    <div
-      ref={rootRef}
-      className={[styles.root, className].filter(Boolean).join(' ')}
-      onKeyDown={handleKeyDown}
-    >
+    <div ref={rootRef} className={clsx(styles.root, className)} onKeyDown={handleKeyDown}>
       <label id={labelId} className={styles.label} htmlFor={calendarId}>
         {label}
       </label>
@@ -417,13 +414,10 @@ export function DatePicker({
                 key={date.toISOString()}
                 type="button"
                 aria-label={formatDate(date)}
-                className={[
-                  styles.day,
-                  !isCurrentMonth ? styles.mutedDay : '',
-                  isSameDate(pendingDate, date) ? styles.selectedDay : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
+                className={clsx(styles.day, {
+                  [styles.mutedDay]: !isCurrentMonth,
+                  [styles.selectedDay]: isSameDate(pendingDate, date),
+                })}
                 aria-pressed={isSameDate(pendingDate, date)}
                 onClick={() => {
                   setPendingDate(date)
