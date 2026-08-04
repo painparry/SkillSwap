@@ -17,7 +17,7 @@
 }
 
 .trigger:hover {
-  background: rgba(0, 0, 0, 0.04);
+  background: rgb(0 0 0 / 4%);
 }
 
 .trigger:focus-visible {
@@ -26,7 +26,7 @@
 }
 
 .userName {
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
@@ -41,17 +41,17 @@
   right: 0;
   width: 260px;
   height: 152px;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #b2b9a9;
   border-radius: 12px;
   padding: 40px;
   box-sizing: border-box;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
   z-index: 100;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  animation: fadeIn 0.15s ease-out;
+  animation: fade-in 0.15s ease-out;
 }
 
 .menuItem {
@@ -63,7 +63,7 @@
   padding: 0;
   border: none;
   background: none;
-  font-family: 'Roboto', sans-serif;
+  font-family: Roboto, sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
@@ -87,7 +87,7 @@
   flex-shrink: 0;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from {
     opacity: 0;
     transform: translateY(-8px);
@@ -98,7 +98,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .trigger {
     padding: 0 8px;
   }
