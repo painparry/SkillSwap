@@ -1,4 +1,4 @@
-import { ReactNode, ChangeEvent } from 'react'
+import { ReactNode, ChangeEvent, useId } from 'react'
 import clsx from 'clsx'
 import styles from './Textarea.module.css'
 
@@ -27,12 +27,13 @@ export const Textarea = ({
   rightIcon,
   id: customId,
 }: TextareaProps) => {
-  const generatedId = customId || `textarea-${Math.random().toString(36).substr(2, 9)}`
+  const reactGeneratedId = useId()
+  const finalId = customId || reactGeneratedId
 
   return (
     <div className={styles.textareaWrapper}>
       {label && (
-        <label className={styles.label} htmlFor={generatedId}>
+        <label className={styles.label} htmlFor={finalId}>
           {label}
         </label>
       )}
@@ -41,7 +42,7 @@ export const Textarea = ({
         {leftIcon && <span className={styles.leftIcon}>{leftIcon}</span>}
 
         <textarea
-          id={generatedId}
+          id={finalId}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
@@ -55,7 +56,6 @@ export const Textarea = ({
             },
             className,
           )}
-          style={{ resize: 'vertical' }}
         />
 
         {rightIcon && <span className={styles.rightIcon}>{rightIcon}</span>}
