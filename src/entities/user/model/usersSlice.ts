@@ -1,17 +1,19 @@
 import type { User } from '@/shared/types'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit' // ← добавь PayloadAction
 import { fetchUsers } from '@/api/users'
 
 export type TUserState = {
   users: User[]
   isLoading: boolean
   error: string | null
+  selectedUserId: string | null 
 }
 
 export const initialState: TUserState = {
   users: [],
   isLoading: false,
   error: null,
+  selectedUserId: null, 
 }
 
 export const fetchUsersThunk = createAsyncThunk('users/fetchUsers', async () => {
@@ -22,7 +24,14 @@ export const fetchUsersThunk = createAsyncThunk('users/fetchUsers', async () => 
 export const userSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedUser: (state, action: PayloadAction<string>) => {
+      state.selectedUserId = action.payload
+    },
+    clearSelectedUser: (state) => {
+      state.selectedUserId = null
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsersThunk.pending, (state) => {
@@ -40,5 +49,8 @@ export const userSlice = createSlice({
       })
   },
 })
+
+
+export const { setSelectedUser, clearSelectedUser } = userSlice.actions
 
 export default userSlice.reducer
