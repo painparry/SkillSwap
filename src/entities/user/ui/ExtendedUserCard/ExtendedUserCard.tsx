@@ -2,6 +2,7 @@ import { SkillList, type SkillItem } from '@/shared/ui/SkillList'
 import { formatAge } from '../UserCard/formatAge'
 import { Avatar } from '@/shared/ui/Avatar'
 import style from './ExtendedUserCard.module.css'
+import clsx from 'clsx'
 
 export interface TExtendedUserCard {
   id: string
@@ -26,10 +27,8 @@ export const ExtendedUserCard = ({
   wantsToLearn,
   className,
 }: TExtendedUserCard) => {
-  const classNames = [style.card, className].filter(Boolean).join(' ')
-
   return (
-    <article className={classNames}>
+    <article className={clsx(style.card, className)}>
       <div className={style.userRow}>
         <Avatar src={avatarUrl} name={name} seed={id} size="lg" />
         <div className={style.info}>
