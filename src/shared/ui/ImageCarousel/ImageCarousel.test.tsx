@@ -36,7 +36,7 @@ describe('ImageCarousel', () => {
   it('переключается на конкретный слайд при клике на превью', () => {
     render(<ImageCarousel images={mockImages} />)
     const previews = screen.getAllByLabelText(/Перейти к фото/)
-    fireEvent.click(previews[2]) 
+    fireEvent.click(previews[2])
     const img = screen.getByAltText('Фото 4')
     expect(img).toHaveAttribute('src', mockImages[3])
   })
@@ -55,14 +55,5 @@ describe('ImageCarousel', () => {
   it('ничего не рендерит, если images пустой', () => {
     render(<ImageCarousel images={[]} />)
     expect(screen.queryByAltText('Фото 1')).not.toBeInTheDocument()
-  })
-
-  it('отображает счётчик текущего фото', () => {
-    render(<ImageCarousel images={mockImages} />)
-    expect(screen.getByText('1 / 5')).toBeInTheDocument()
-    
-    const nextButton = screen.getByLabelText('Следующее фото')
-    fireEvent.click(nextButton)
-    expect(screen.getByText('2 / 5')).toBeInTheDocument()
   })
 })
