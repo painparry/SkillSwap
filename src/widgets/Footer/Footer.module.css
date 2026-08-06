@@ -38,3 +38,9 @@
   line-height: 24px;
   letter-spacing: 0.02em;
 }
+
+.footerNavigation ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
