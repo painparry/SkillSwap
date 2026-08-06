@@ -36,7 +36,6 @@ export function AppRouter() {
           </Routes>
           <Footer />
         </div>
-        </Routes>
       </Suspense>
     </BrowserRouter>
   )
