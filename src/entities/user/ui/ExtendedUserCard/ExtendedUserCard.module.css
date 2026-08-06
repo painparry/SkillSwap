@@ -1,0 +1,61 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 324px;
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+}
+
+.userRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.info {
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.name {
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-main-text);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.location {
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-main-text);
+  font-size: 0.75rem;
+  line-height: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.about {
+  color: var(--color-main-text);
+  font-size: 16px;
+  font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.skillList {
+  margin-top: auto;
+  gap: var(--space-lg);
+}

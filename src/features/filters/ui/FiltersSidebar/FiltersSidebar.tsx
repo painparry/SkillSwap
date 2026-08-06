@@ -143,14 +143,28 @@ const filterCategories: FilterCategory[] = [
 ]
 
 const cities = [
-  { id: 'moscow', label: 'Москва' },
-  { id: 'saint-petersburg', label: 'Санкт-Петербург' },
-  { id: 'novosibirsk', label: 'Новосибирск' },
-  { id: 'ekaterinburg', label: 'Екатеринбург' },
-  { id: 'kazan', label: 'Казань' },
-  { id: 'nizhny-novgorod', label: 'Нижний Новгород' },
-  { id: 'samara', label: 'Самара' },
-  { id: 'ufa', label: 'Уфа' },
+  { id: 'Казань', label: 'Казань' },
+  { id: 'Санкт-Петербург', label: 'Санкт-Петербург' },
+  { id: 'Москва', label: 'Москва' },
+  { id: 'Новосибирск', label: 'Новосибирск' },
+  { id: 'Самара', label: 'Самара' },
+  { id: 'Уфа', label: 'Уфа' },
+  { id: 'Пермь', label: 'Пермь' },
+  { id: 'Омск', label: 'Омск' },
+  { id: 'Воронеж', label: 'Воронеж' },
+  { id: 'Тула', label: 'Тула' },
+  { id: 'Краснодар', label: 'Краснодар' },
+  { id: 'Ростов-на-Дону', label: 'Ростов-на-Дону' },
+  { id: 'Екатеринбург', label: 'Екатеринбург' },
+  { id: 'Тюмень', label: 'Тюмень' },
+  { id: 'Сочи', label: 'Сочи' },
+  { id: 'Челябинск', label: 'Челябинск' },
+  { id: 'Великий Новгород', label: 'Великий Новгород' },
+  { id: 'Владимир', label: 'Владимир' },
+  { id: 'Ярославль', label: 'Ярославль' },
+  { id: 'Тверь', label: 'Тверь' },
+  { id: 'Красноярск', label: 'Красноярск' },
+  { id: 'Иркутск', label: 'Иркутск' },
 ]
 
 const defaultFiltersValue: FiltersSidebarValue = {

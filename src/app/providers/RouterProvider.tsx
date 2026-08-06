@@ -30,11 +30,13 @@ export function AppRouter() {
             <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
             <Route path={ROUTES.CREATE} element={<CreateSkillPage />} />
 
+            <Route path={ROUTES.NOT_FOUND_ERROR} element={<NotFoundPage />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path={ROUTES.SERVER_ERROR} element={<ServerErrorPage />} />
           </Routes>
           <Footer />
         </div>
+        </Routes>
       </Suspense>
     </BrowserRouter>
   )
