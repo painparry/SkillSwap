@@ -1,0 +1,79 @@
+.item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 436px;
+  min-height: 104px;
+  gap: 16px;
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.iconWrapper {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.message {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+  margin: 0;
+}
+
+.time {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: #69735d;
+}
+
+.actionButton {
+  width: 114px;
+  height: 48px;
+  padding: 12px 24px;
+  background: #abd27a;
+  border: none;
+  border-radius: 12px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+  cursor: pointer;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.actionButton:hover {
+  background: #9bc06a;
+}
+
+.readTime {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #69735d;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
