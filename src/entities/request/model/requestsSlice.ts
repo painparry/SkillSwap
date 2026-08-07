@@ -2,25 +2,26 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { fetchRequests, saveRequest, ExchangeRequest } from '@/api/requests';
 import { generateId } from '@/shared/lib/helpers';
 
+export interface Notification {
+  id: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
 interface RequestsState {
   requests: ExchangeRequest[];
-  notifications: {
-    id: string;
-    message: string;
-    isRead: boolean;
-    createdAt: string;
-  }[];
+  notifications: Record<string, Notification[]>;  
   loading: boolean;
   error: string | null;
 }
 
 const initialState: RequestsState = {
   requests: [],
-  notifications: [],
+  notifications: {},
   loading: false,
   error: null,
 };
-
 
 export const fetchRequestsThunk = createAsyncThunk(
   'requests/fetch',
@@ -44,32 +45,50 @@ export const createRequestThunk = createAsyncThunk(
   }
 );
 
+const addNotificationForUser = (
+  state: RequestsState,
+  userId: string,
+  message: string
+) => {
+  if (!state.notifications[userId]) {
+    state.notifications[userId] = [];
+  }
+  state.notifications[userId].push({
+    id: generateId(),
+    message,
+    isRead: false,
+    createdAt: new Date().toISOString(),
+  });
+};
+
 const requestsSlice = createSlice({
   name: 'requests',
   initialState,
   reducers: {
     addRequest: (state, action: PayloadAction<ExchangeRequest>) => {
       state.requests.push(action.payload);
-      state.notifications.push({
-        id: generateId(),
-        message: `${action.payload.fromUserName} предлагает вам обмен по навыку "${action.payload.skillTitle}"`,
-        isRead: false,
-        createdAt: new Date().toISOString(),
-      });
+      
+      addNotificationForUser(
+        state,
+        action.payload.toUserId,
+        `${action.payload.fromUserName} предлагает вам обмен по навыку "${action.payload.skillTitle}"`
+      );
     },
+
     acceptRequest: (state, action: PayloadAction<string>) => {
       const request = state.requests.find((r) => r.id === action.payload);
-      if (request) {
-        request.status = 'accepted';
-        request.updatedAt = new Date().toISOString();
-        state.notifications.push({
-          id: generateId(),
-          message: `${request.toUserName} принял ваш обмен по навыку "${request.skillTitle}"`,
-          isRead: false,
-          createdAt: new Date().toISOString(),
-        });
-      }
+      if (!request) return;
+
+      request.status = 'accepted';
+      request.updatedAt = new Date().toISOString();
+
+      addNotificationForUser(
+        state,
+        request.fromUserId,
+        `${request.toUserName} принял ваш обмен по навыку "${request.skillTitle}"`
+      );
     },
+
     rejectRequest: (state, action: PayloadAction<string>) => {
       const request = state.requests.find((r) => r.id === action.payload);
       if (request) {
@@ -77,16 +96,35 @@ const requestsSlice = createSlice({
         request.updatedAt = new Date().toISOString();
       }
     },
-    markNotificationAsRead: (state, action: PayloadAction<string>) => {
-      const notification = state.notifications.find((n) => n.id === action.payload);
+
+    markNotificationAsRead: (state, action: PayloadAction<{ userId: string; notificationId: string }>) => {
+      const { userId, notificationId } = action.payload;
+      const userNotifications = state.notifications[userId];
+      if (!userNotifications) return;
+
+      const notification = userNotifications.find((n) => n.id === notificationId);
       if (notification) {
         notification.isRead = true;
       }
     },
-    clearNotifications: (state) => {
-    state.notifications = [];
+
+    clearNotificationsForUser: (state, action: PayloadAction<string>) => {
+      const userId = action.payload;
+      if (state.notifications[userId]) {
+        state.notifications[userId] = [];
+      }
+    },
+
+    clearReadNotificationsForUser: (state, action: PayloadAction<string>) => {
+      const userId = action.payload;
+      if (state.notifications[userId]) {
+        state.notifications[userId] = state.notifications[userId].filter(
+          (n) => !n.isRead
+        );
+      }
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchRequestsThunk.pending, (state) => {
@@ -101,14 +139,15 @@ const requestsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Ошибка загрузки заявок';
       })
+
       .addCase(createRequestThunk.fulfilled, (state, action) => {
         state.requests.push(action.payload);
-        state.notifications.push({
-          id: generateId(),
-          message: `${action.payload.fromUserName} предлагает вам обмен по навыку "${action.payload.skillTitle}"`,
-          isRead: false,
-          createdAt: new Date().toISOString(),
-        });
+
+        addNotificationForUser(
+          state,
+          action.payload.toUserId,
+          `${action.payload.fromUserName} предлагает вам обмен по навыку "${action.payload.skillTitle}"`
+        );
       });
   },
 });
@@ -118,7 +157,8 @@ export const {
   acceptRequest,
   rejectRequest,
   markNotificationAsRead,
-  clearNotifications
+  clearNotificationsForUser,
+  clearReadNotificationsForUser,
 } = requestsSlice.actions;
 
 export default requestsSlice.reducer;

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '@/store/hooks';
 import { markNotificationAsRead } from '@/entities/request/model/requestsSlice';
-import { LampIcon } from '././LampIcon';
+import { LampIcon } from './LampIcon';
 import styles from './NotificationItem.module.css';
 
 interface NotificationItemProps {
@@ -12,14 +12,15 @@ interface NotificationItemProps {
     createdAt: string;
   };
   type?: 'new' | 'read';
+  userId: string; 
 }
 
-export function NotificationItem({ notification, type = 'new' }: NotificationItemProps) {
+export function NotificationItem({ notification, type = 'new', userId }: NotificationItemProps) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleAction = () => {
-    dispatch(markNotificationAsRead(notification.id));
+    dispatch(markNotificationAsRead({ userId, notificationId: notification.id }));
     navigate('/exchanges');
   };
 

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -5,18 +6,30 @@ import { BrowserRouter } from 'react-router-dom';
 import { store } from './store';
 import { Notifications } from '@/widgets/Notifications';
 import { addRequest } from '@/entities/request/model/requestsSlice';
+import { setUser } from '@/features/auth/model/authSlice';
 import type { RequestStatus } from '@/shared/types';
+
+const mockUser = {
+  id: 'user-1',
+  name: 'Анна Иванова',
+  email: 'anna@example.com',
+  token: 'mock_token_123',
+  avatarUrl: null,
+};
+
+
+store.dispatch(setUser(mockUser));
 
 const testNotifications = [
   {
     id: 'notif-1',
     skillId: 'skill-1',
-    fromUserId: 'user-1',
-    toUserId: 'user-2',
+    fromUserId: 'user-2',
+    toUserId: 'user-1', 
     fromUserName: 'Николай',
     toUserName: 'Анна',
     skillTitle: 'React разработка',
-    status: 'pending' as RequestStatus, 
+    status: 'pending' as RequestStatus,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
@@ -24,28 +37,27 @@ const testNotifications = [
     id: 'notif-2',
     skillId: 'skill-2',
     fromUserId: 'user-3',
-    toUserId: 'user-1',
+    toUserId: 'user-1', 
     fromUserName: 'Татьяна',
     toUserName: 'Анна',
     skillTitle: 'Дизайн',
-    status: 'pending' as RequestStatus, 
+    status: 'pending' as RequestStatus,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
     updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
   },
   {
     id: 'notif-3',
     skillId: 'skill-3',
-    fromUserId: 'user-2',
-    toUserId: 'user-1',
+    fromUserId: 'user-4',
+    toUserId: 'user-2', 
     fromUserName: 'Сергей',
-    toUserName: 'Анна',
+    toUserName: 'Пётр',
     skillTitle: 'Python',
-    status: 'rejected' as RequestStatus, 
+    status: 'rejected' as RequestStatus,
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
     updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
   },
 ];
-
 
 testNotifications.forEach((n) => {
   store.dispatch(addRequest(n));

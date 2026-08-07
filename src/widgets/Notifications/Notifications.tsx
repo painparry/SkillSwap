@@ -1,27 +1,39 @@
-import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import {
   markNotificationAsRead,
-  clearNotifications,
+  clearNotificationsForUser,
+  clearReadNotificationsForUser,
 } from '@/entities/request/model/requestsSlice';
-import { NotificationItem } from '././components/NotificationItem';
+import { NotificationItem } from './components/NotificationItem';
 import styles from './Notifications.module.css';
 
 export function Notifications() {
   const dispatch = useAppDispatch();
-  const notifications = useAppSelector((state) => state.requests.notifications);
+  const currentUser = useAppSelector((state) => state.auth.user);
+  const allNotifications = useAppSelector((state) => state.requests.notifications);
 
- 
+  const userId = currentUser?.id;
+  const notifications = userId ? allNotifications[userId] || [] : [];
 
   const unread = notifications.filter((n) => !n.isRead);
   const read = notifications.filter((n) => n.isRead);
 
+  if (!userId) {
+    return (
+      <div className={styles.empty}>
+        <p>Пожалуйста, войдите в аккаунт</p>
+      </div>
+    );
+  }
+
   const handleMarkAllAsRead = () => {
-    unread.forEach((n) => dispatch(markNotificationAsRead(n.id)));
+    unread.forEach((n) => {
+      dispatch(markNotificationAsRead({ userId, notificationId: n.id }));
+    });
   };
 
   const handleClearRead = () => {
-    dispatch(clearNotifications());
+    dispatch(clearReadNotificationsForUser(userId));
   };
 
   if (notifications.length === 0) {
@@ -50,6 +62,7 @@ export function Notifications() {
               key={notification.id}
               notification={notification}
               type="new"
+              userId={userId}
             />
           ))}
         </div>
@@ -68,6 +81,7 @@ export function Notifications() {
               key={notification.id}
               notification={notification}
               type="read"
+              userId={userId}
             />
           ))}
         </div>
