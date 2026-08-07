@@ -38,7 +38,6 @@ export default function LoginPage() {
     //   setError(true)
     //   return
     // }
-    localStorage.setItem('authorization', 'true') //** Сам придумал, возможно надо будет потом исправить */
     navigate('/')
   }
 
