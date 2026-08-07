@@ -18,7 +18,8 @@
 }
 
 .linkActive {
-  background-color: var(--color-filter-form-accent);
+  pointer-events: none;
+  background-color: var(--color-button-hover);
 }
 
 .link:not(.linkActive):hover {
