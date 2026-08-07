@@ -1,7 +1,6 @@
 import { Logo } from '@/shared/ui/logo'
 import { Button } from '@/shared/ui/Button'
 import { CrossIcon } from '@/shared/ui/Tag/CrossIcon'
-import style from './loginPage.module.css'
 import { useNavigate } from 'react-router-dom'
 import { Input } from '@/shared/ui/Input'
 import { useState } from 'react'
@@ -10,6 +9,7 @@ import { CloseEye } from './CloseEye'
 import bulb from './light-bulb.png'
 import clsx from 'clsx'
 import { getAuthUser } from '@/features/auth/model/authUtils'
+import style from './loginPage.module.css'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -60,14 +60,22 @@ export default function LoginPage() {
                 type="email"
                 value={email}
                 placeholder="Введите email"
-                onChange={(e) => setEmail(e.target.value)}
+                className={error ? style.inputError : ''}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  setError(false)
+                }}
               />
               <Input
                 label="Пароль"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 placeholder="Введите ваш пароль"
-                onChange={(e) => setPassword(e.target.value)}
+                className={error ? style.inputError : ''}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  setError(false)
+                }}
                 rightIcon={
                   showPassword ? (
                     <CloseEye onClick={togglePasswordVisibility} />

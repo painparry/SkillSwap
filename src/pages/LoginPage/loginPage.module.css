@@ -59,6 +59,10 @@
   width: 436px;
 }
 
+.inputError {
+  border-color: var(--color-form-error);
+}
+
 .error {
   color: var(--color-form-error);
   font-size: 12px;
