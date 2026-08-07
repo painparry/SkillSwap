@@ -48,6 +48,16 @@ export interface AuthUser {
   email: string
   token: string
   avatarUrl: string | null;
+  city?: string
+  birthDate?: string
+  gender?: GenderType
+  about?: string
+}
+
+// ─── City ────────────────────────────────────────────────
+export interface City {
+  id: number
+  name: string
 }
 
 // ─── Skill Categories and Subcategories ─────────────────────────────────────────────
