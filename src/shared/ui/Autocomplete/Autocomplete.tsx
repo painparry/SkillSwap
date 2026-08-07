@@ -1,6 +1,7 @@
 import type { ChangeEvent, KeyboardEvent } from 'react'
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import clsx from 'clsx'
+import { CrossIcon } from '@/shared/ui/Tag/CrossIcon'
 import styles from './Autocomplete.module.css'
 
 export type AutocompleteOption = {
@@ -21,6 +22,7 @@ export interface AutocompleteProps {
   className?: string
   inputClassName?: string
   maxVisibleOptions?: number
+  showChevron?: boolean
 }
 
 export function Autocomplete({
@@ -36,6 +38,7 @@ export function Autocomplete({
   className,
   inputClassName,
   maxVisibleOptions = 6,
+  showChevron = false,
 }: AutocompleteProps) {
   const generatedId = useId()
   const inputId = id ?? generatedId
@@ -152,15 +155,30 @@ export function Autocomplete({
           onKeyDown={handleKeyDown}
         />
 
-        {value && !disabled && (
+        {showChevron && !isOpen ? (
           <button
             type="button"
-            className={styles.clearButton}
-            aria-label={`Очистить поле${label ? ` ${label}` : ''}`}
-            onClick={handleClear}
+            className={styles.chevronButton}
+            aria-label={`Показать варианты${label ? ` ${label}` : ''}`}
+            onClick={() => {
+              setIsOpen(true)
+              inputRef.current?.focus()
+            }}
           >
-            x
+            <span className={styles.chevron} aria-hidden="true" />
           </button>
+        ) : (
+          value &&
+          !disabled && (
+            <button
+              type="button"
+              className={styles.clearButton}
+              aria-label={`Очистить поле${label ? ` ${label}` : ''}`}
+              onClick={handleClear}
+            >
+              <CrossIcon />
+            </button>
+          )
         )}
       </div>
 
