@@ -61,6 +61,8 @@
   position: absolute;
   top: 94px;
   left: 36px;
+  z-index: 1;
+  background-color: #FFFF;
 }
 
 .buttonContent {

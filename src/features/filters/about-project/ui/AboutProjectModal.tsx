@@ -1,6 +1,7 @@
-import styles from './AboutProjectModal.module.css'
-import { Modal } from '@/shared/ui/modal' // проверь путь под свой проект
 
+import styles from './AboutProjectModal.module.css'
+
+import { Modal } from '@/shared/ui/modal' 
 interface TeamMember {
   name: string
 }
@@ -38,10 +39,10 @@ export const AboutProjectModal = ({ isOpen, onClose }: AboutProjectModalProps) =
           <p className={styles.sectionTitle}>Команда</p>
 
           <div className={styles.teamGrid}>
-            {teamMembers.map((member, index) => {
+            {teamMembers.map((member) => {
               const initial = member.name.charAt(0).toUpperCase()
               return (
-                <div key={index} className={styles.card}>
+                <div key={member.name} className={styles.card}>
                   <div className={styles.avatarPlaceholder}>{initial}</div>
                   <div className={styles.info}>
                     <h4 className={styles.memberName}>{member.name}</h4>
