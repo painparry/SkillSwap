@@ -1,32 +1,29 @@
-import { Logo } from '@/shared/ui/logo'
 import styles from './Footer.module.css'
+import { Logo } from '../../shared/ui/logo'
+import { Link } from 'react-router-dom'
+import { ROUTES } from '@/shared/lib/constants'
 
-const footerLinks = [
-  'О проекте',
-  'Все навыки',
-  'Контакты',
-  'Блог',
-  'Политика конфиденциальности',
-  'Пользовательское соглашение',
-]
-
-export function Footer() {
+export const Footer = () => {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.brand}>
+    <div className={styles.footerContainer}>
+      <div className={styles.footerBrand}>
         <Logo />
-        <span className={styles.copyright}>SkillSwap - 2025</span>
+        <p className={styles.copyright}>SkillSwap — 2025</p>
       </div>
-
-      <nav className={styles.nav}>
-        <ul className={styles.list}>
-          {footerLinks.map((label) => (
-            <li key={label}>
-              <span className={styles.link}>{label}</span>
-            </li>
-          ))}
+      <div className={styles.footerNavigation}>
+        <ul>
+          <li><Link to='/about'>О проекте</Link></li>
+          <li><Link to={ROUTES.HOME}>Все навыки</Link></li>
         </ul>
-      </nav>
-    </footer>
+        <ul>
+          <li><Link to='/contacts'>Контакты</Link></li>
+          <li><a href="https://habr.com/" target="_blank" rel="noopener noreferrer">Блог</a></li>
+        </ul>
+        <ul>
+          <li><Link to='/privacy-policy'>Политика конфиденциальности</Link></li>
+          <li><Link to='/terms'>Пользовательское соглашение</Link></li>
+        </ul>
+      </div>
+    </div>
   )
 }

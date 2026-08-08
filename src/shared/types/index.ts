@@ -7,7 +7,8 @@ export interface Skill {
   description: string
   type: SkillType
   category: string
-  tags: string[]
+  subcategory: string
+  tags: string
   imageUrl: string | null
   authorId: string
   createdAt: string
@@ -47,7 +48,7 @@ export interface AuthUser {
   name: string
   email: string
   token: string
-  avatarUrl: string | null;
+  avatarUrl: string | null
   city?: string
   birthDate?: string
   gender?: GenderType
@@ -62,20 +63,14 @@ export interface City {
 
 // ─── Skill Categories and Subcategories ─────────────────────────────────────────────
 export type SkillCategory = {
-  id: SkillCategoryId;
-  name: string;
-  subcategories: SkillSubcategory[];
-};
+  id: SkillCategoryId
+  name: string
+  subcategories: SkillSubcategory[]
+}
 
 export type SkillSubcategory = {
-  id: string;
-  name: string;
-};
+  id: string
+  name: string
+}
 
-export type SkillCategoryId =
-  | "business"
-  | "art"
-  | "languages"
-  | "education"
-  | "health"
-  | "home";
+export type SkillCategoryId = 'business' | 'art' | 'languages' | 'education' | 'health' | 'home'
