@@ -1,0 +1,7 @@
+export { ArtIcon } from './ArtIcon'
+export { BusinessIcon } from './BusinessIcon'
+export { EducationIcon } from './EducationIcon'
+export { HealthIcon } from './HealthIcon'
+export { HomeIcon } from './HomeIcon'
+export { LanguageIcon } from './LanguageIcon'
+export { ChevronDownIcon } from './ChevronDownIcon'
