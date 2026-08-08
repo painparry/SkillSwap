@@ -1,7 +1,7 @@
 
 import styles from './AboutProjectModal.module.css'
 
-import { Modal } from '@/shared/ui/modal' 
+import { Modal } from '@/shared/ui/Modal'
 interface TeamMember {
   name: string
 }
