@@ -4,10 +4,7 @@ import { Logo } from '@/shared/ui/logo'
 import { Button } from '@/shared/ui/Button'
 import { StepIndicator } from '@/shared/ui/StepIndicator'
 import { Input } from '@/shared/ui/Input'
-import { Divider } from '@/shared/ui/Divider'
 import { CrossIcon } from './icons/CrossIcon'
-import { GoogleIcon } from './icons/GoogleIcon'
-import { AppleIcon } from './icons/AppleIcon'
 import { EyeIcon } from './icons/EyeIcon'
 import lampimg from '../../assets/images/lamp.svg'
 import { useNavigate } from 'react-router-dom'
@@ -50,25 +47,8 @@ export default function RegistrationStep1Page() {
       <div className={styles.content}>
         <div className={styles.formCard}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.authButtons}>
-              <Button variant='outlined'>
-                <span className={styles.buttonContent}>
-                  <GoogleIcon />
-                  Продолжить с Google
-                </span>
-              </Button>
-              <Button variant='outlined'>
-                <span className={styles.buttonContent}>
-                  <AppleIcon />
-                  Продолжить с Apple
-                </span>
-              </Button>
-            </div>
-            <Divider>или</Divider>
-            <div className={styles.loginPwInputs}>
-              <Input value={email} onChange={(e) => setEmail(e.target.value)} helperText={emailHelper}placeholder='Введите email' label='Email' />
-              <Input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} helperText={passwordHelper} error={emailError} rightIcon={<EyeIcon onClick={() => setShowPassword(prev => !prev)} className={styles.eyeIcon} />} placeholder='Придумайте надёжный пароль' label='Пароль' />
-            </div>
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} helperText={emailHelper}placeholder='Введите email' label='Email' />
+            <Input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} helperText={passwordHelper} error={emailError} rightIcon={<EyeIcon onClick={() => setShowPassword(prev => !prev)} className={styles.eyeIcon} />} placeholder='Придумайте надёжный пароль' label='Пароль' />
             <Button variant='primary' type="submit">Далее</Button>
           </form>
         </div>
