@@ -11,7 +11,7 @@ export interface Notification {
 
 interface RequestsState {
   requests: ExchangeRequest[];
-  notifications: Record<string, Notification[]>;  
+  notifications: Record<string, Notification[]>;
   loading: boolean;
   error: string | null;
 }
@@ -48,7 +48,8 @@ export const createRequestThunk = createAsyncThunk(
 const addNotificationForUser = (
   state: RequestsState,
   userId: string,
-  message: string
+  message: string,
+  createdAt?: string
 ) => {
   if (!state.notifications[userId]) {
     state.notifications[userId] = [];
@@ -57,7 +58,7 @@ const addNotificationForUser = (
     id: generateId(),
     message,
     isRead: false,
-    createdAt: new Date().toISOString(),
+    createdAt: createdAt || new Date().toISOString(),
   });
 };
 
@@ -67,11 +68,12 @@ const requestsSlice = createSlice({
   reducers: {
     addRequest: (state, action: PayloadAction<ExchangeRequest>) => {
       state.requests.push(action.payload);
-      
+
       addNotificationForUser(
         state,
         action.payload.toUserId,
-        `${action.payload.fromUserName} предлагает вам обмен`
+        `${action.payload.fromUserName} предлагает вам обмен`,
+        action.payload.createdAt
       );
     },
 
@@ -85,7 +87,8 @@ const requestsSlice = createSlice({
       addNotificationForUser(
         state,
         request.fromUserId,
-        `${request.toUserName} принял ваш обмен `
+        `${request.toUserName} принял ваш обмен`,
+        request.updatedAt
       );
     },
 
@@ -98,7 +101,8 @@ const requestsSlice = createSlice({
         addNotificationForUser(
           state,
           request.fromUserId,
-          `${request.toUserName} отклонил ваш обмен `
+          `${request.toUserName} отклонил ваш обмен`,
+          request.updatedAt
         );
       }
     },
@@ -145,14 +149,14 @@ const requestsSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Ошибка загрузки заявок';
       })
-
       .addCase(createRequestThunk.fulfilled, (state, action) => {
         state.requests.push(action.payload);
 
         addNotificationForUser(
           state,
           action.payload.toUserId,
-          `${action.payload.fromUserName} предлагает вам обмен `
+          `${action.payload.fromUserName} предлагает вам обмен`,
+          action.payload.createdAt
         );
       });
   },

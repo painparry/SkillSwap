@@ -25,15 +25,23 @@ export function NotificationItem({ notification, type = 'new', userId }: Notific
   };
 
   const timeAgo = (dateString: string) => {
-    const now = new Date();
-    const date = new Date(dateString);
-    const diff = now.getTime() - date.getTime();
-    const hours = Math.floor(diff / (1000 * 60 * 60));
+  const now = new Date();
+  const date = new Date(dateString);
+  const diff = now.getTime() - date.getTime();
+  const hours = Math.floor(diff / (1000 * 60 * 60));
 
-    if (hours < 24) return 'сегодня';
-    if (hours < 48) return 'вчера';
-    return `${Math.floor(hours / 24)} дня назад`;
-  };
+  if (hours < 24) return 'сегодня';
+  if (hours < 48) return 'вчера';
+
+  const months = [
+    'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
+  ];
+
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  return `${day} ${month}`;
+};
 
   return (
     <div className={styles.item}>

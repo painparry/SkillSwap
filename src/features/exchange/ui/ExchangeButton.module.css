@@ -1,0 +1,56 @@
+.exchangeButton {
+  width: 399px;
+  height: 48px;
+  padding: 12px 24px;
+  background: #abd27a;
+  border: none;
+  border-radius: 12px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.exchangeButton:hover {
+  background: #9bc06a;
+}
+
+.exchangeButton:active {
+  background: #8ab05a;
+}
+
+
+.proposedButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 399px;
+  height: 48px;
+  padding: 12px 24px;
+  background: #ffffff;
+  border: 1px solid #b2b9a9;
+  border-radius: 12px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.proposedButton svg {
+  flex-shrink: 0;
+}
