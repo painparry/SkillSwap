@@ -47,6 +47,54 @@ describe('FiltersSidebar', () => {
     expect(screen.getByRole('checkbox', { name: 'Маркетинг и реклама' })).toBeChecked()
   })
 
+  it('selects and deselects all subcategories via the category checkbox', () => {
+    const onChange = vi.fn()
+
+    render(<FiltersSidebar onChange={onChange} />)
+
+    const checkbox = screen.getByRole('button', {
+      name: 'Выбрать все подкатегории Бизнес и карьера',
+    })
+
+    fireEvent.click(checkbox)
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        subcategories: [
+          'team-management',
+          'marketing',
+          'sales',
+          'personal-brand',
+          'resume',
+          'time-management',
+          'project-management',
+          'entrepreneurship',
+        ],
+      }),
+    )
+    expect(screen.getByRole('heading', { name: 'Фильтры (8)' })).toBeInTheDocument()
+
+    fireEvent.click(checkbox)
+
+    expect(onChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        subcategories: [],
+      }),
+    )
+    expect(screen.getByRole('heading', { name: 'Фильтры' })).toBeInTheDocument()
+  })
+
+  it('expands subcategories when clicking the category text', () => {
+    render(<FiltersSidebar />)
+
+    expect(screen.queryByRole('checkbox', { name: 'Маркетинг и реклама' })).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Показать подкатегории Бизнес и карьера' }))
+
+    expect(screen.getByRole('checkbox', { name: 'Маркетинг и реклама' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Фильтры' })).toBeInTheDocument()
+  })
+
   it('shows selected filters counter and resets filters', () => {
     render(<FiltersSidebar />)
 
