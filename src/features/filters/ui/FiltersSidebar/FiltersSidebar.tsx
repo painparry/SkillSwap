@@ -243,6 +243,15 @@ export function FiltersSidebar({
     setOpenedCategoryIds((ids) => toggleValue(ids, categoryId))
   }
 
+  const toggleCategorySelection = (category: FilterCategory) => {
+    const subcategoryIds = category.subcategories.map((subcategory) => subcategory.id)
+    const isEverySelected = subcategoryIds.every((id) => currentValue.subcategories.includes(id))
+    const nextSubcategories = isEverySelected
+      ? currentValue.subcategories.filter((id) => !subcategoryIds.includes(id))
+      : Array.from(new Set([...currentValue.subcategories, ...subcategoryIds]))
+    updateField('subcategories', nextSubcategories)
+  }
+
   const handleReset = () => {
     updateValue(defaultFiltersValue)
     setOpenedCategoryIds([])
@@ -287,25 +296,42 @@ export function FiltersSidebar({
               .map((subcategory) => subcategory.id)
               .filter((subcategoryId) => currentValue.subcategories.includes(subcategoryId))
             const isCategoryChecked = selectedSubcategoryIds.length > 0
+            const isCategoryFullyChecked =
+              category.subcategories.length > 0 &&
+              selectedSubcategoryIds.length === category.subcategories.length
 
             return (
               <div className={styles.category} key={category.id}>
-                <button
-                  className={`${styles.categoryButton} ${isOpen ? styles.categoryButtonOpen : ''}`}
-                  type="button"
-                  aria-expanded={isOpen}
-                  aria-label={`${isOpen ? 'Скрыть' : 'Показать'} подкатегории ${category.label}`}
-                  onClick={() => toggleCategory(category.id)}
-                >
-                  <span
-                    className={`${styles.categoryIndicator} ${
-                      isCategoryChecked ? styles.categoryIndicatorActive : ''
-                    }`}
-                    aria-hidden="true"
-                  />
-                  <span className={styles.categoryLabel}>{category.label}</span>
-                  <span className={styles.chevron} aria-hidden="true" />
-                </button>
+                <div className={styles.categoryRow}>
+                  <button
+                    className={styles.categoryCheckbox}
+                    type="button"
+                    aria-pressed={isCategoryChecked}
+                    aria-label={`Выбрать все подкатегории ${category.label}`}
+                    onClick={() => toggleCategorySelection(category)}
+                  >
+                    <span
+                      className={`${styles.categoryIndicator} ${
+                        isCategoryChecked ? styles.categoryIndicatorActive : ''
+                      } ${isCategoryFullyChecked ? styles.categoryIndicatorFull : ''}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+
+                  <button
+                    className={styles.categoryButton}
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-label={`${isOpen ? 'Скрыть' : 'Показать'} подкатегории ${category.label}`}
+                    onClick={() => toggleCategory(category.id)}
+                  >
+                    <span className={styles.categoryLabel}>{category.label}</span>
+                    <span
+                      className={`${styles.chevron} ${isOpen ? styles.chevronUp : ''}`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </div>
 
                 {isOpen && (
                   <div className={styles.subcategoryList}>

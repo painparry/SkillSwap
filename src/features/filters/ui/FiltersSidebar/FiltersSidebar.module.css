@@ -81,9 +81,26 @@
   gap: var(--space-sm);
 }
 
+.categoryRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.categoryCheckbox {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .categoryButton {
   display: flex;
-  width: 100%;
+  flex: 1;
+  min-width: 0;
   align-items: center;
   gap: 10px;
   padding: 0;
@@ -112,8 +129,14 @@
     background-color 0.3s ease;
 }
 
-.categoryButton:hover .categoryIndicator {
+.categoryCheckbox:hover .categoryIndicator {
   border-color: #abd27a;
+}
+
+.categoryCheckbox:focus-visible {
+  outline: 2px solid #508826;
+  outline-offset: 2px;
+  border-radius: 6px;
 }
 
 .categoryIndicatorActive {
@@ -131,6 +154,17 @@
   border-radius: 1px;
   background: #fff;
   transform: translate(-50%, -50%);
+}
+
+.categoryIndicatorFull::after {
+  width: 12px;
+  height: 12px;
+  border-radius: 0;
+  background: #fff;
+  mask-image: url('/check.svg');
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
 }
 
 .categoryLabel {
