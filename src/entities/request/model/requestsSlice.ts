@@ -71,7 +71,7 @@ const requestsSlice = createSlice({
       addNotificationForUser(
         state,
         action.payload.toUserId,
-        `${action.payload.fromUserName} предлагает вам обмен по навыку "${action.payload.skillTitle}"`
+        `${action.payload.fromUserName} предлагает вам обмен`
       );
     },
 
@@ -85,7 +85,7 @@ const requestsSlice = createSlice({
       addNotificationForUser(
         state,
         request.fromUserId,
-        `${request.toUserName} принял ваш обмен по навыку "${request.skillTitle}"`
+        `${request.toUserName} принял ваш обмен `
       );
     },
 
@@ -94,6 +94,12 @@ const requestsSlice = createSlice({
       if (request) {
         request.status = 'rejected';
         request.updatedAt = new Date().toISOString();
+
+        addNotificationForUser(
+          state,
+          request.fromUserId,
+          `${request.toUserName} отклонил ваш обмен `
+        );
       }
     },
 
@@ -146,7 +152,7 @@ const requestsSlice = createSlice({
         addNotificationForUser(
           state,
           action.payload.toUserId,
-          `${action.payload.fromUserName} предлагает вам обмен по навыку "${action.payload.skillTitle}"`
+          `${action.payload.fromUserName} предлагает вам обмен `
         );
       });
   },

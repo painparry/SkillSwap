@@ -12,7 +12,7 @@ interface NotificationItemProps {
     createdAt: string;
   };
   type?: 'new' | 'read';
-  userId: string; 
+  userId: string;
 }
 
 export function NotificationItem({ notification, type = 'new', userId }: NotificationItemProps) {
@@ -38,24 +38,25 @@ export function NotificationItem({ notification, type = 'new', userId }: Notific
   return (
     <div className={styles.item}>
       <div className={styles.content}>
-        <div className={styles.iconWrapper}>
-          <LampIcon />
-        </div>
-        <div className={styles.textWrapper}>
-          <p className={styles.message}>{notification.message}</p>
+        <div className={styles.topRow}>
+          <div className={styles.iconWrapper}>
+            <LampIcon />
+          </div>
+          <div className={styles.textWrapper}>
+            <p className={styles.message}>{notification.message}</p>
+            <p className={styles.subMessage}>
+              Перейдите в профиль, чтобы обсудить детали
+            </p>
+          </div>
           <span className={styles.time}>{timeAgo(notification.createdAt)}</span>
         </div>
+
+        {type === 'new' && (
+          <button className={styles.actionButton} onClick={handleAction}>
+            Перейти
+          </button>
+        )}
       </div>
-
-      {type === 'new' && (
-        <button className={styles.actionButton} onClick={handleAction}>
-          Перейти
-        </button>
-      )}
-
-      {type === 'read' && (
-        <span className={styles.readTime}>{timeAgo(notification.createdAt)}</span>
-      )}
     </div>
   );
 }
