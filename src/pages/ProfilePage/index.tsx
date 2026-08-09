@@ -1,7 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
-import { Header } from '@/widgets/Header'
-import { Footer } from '@/widgets/Footer'
 import { ProfileSidebar } from '@/widgets/ProfileSidebar'
 import { Input } from '@/shared/ui/Input'
 import { Textarea } from '@/shared/ui/Textarea'
@@ -127,8 +125,6 @@ export default function ProfilePage() {
 
   return (
     <div className={styles.page}>
-      <Header />
-
       <main className={styles.main}>
         <ProfileSidebar className={styles.sidebar} />
 
@@ -212,8 +208,6 @@ export default function ProfilePage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   )
 }
