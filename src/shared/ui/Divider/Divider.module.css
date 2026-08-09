@@ -1,0 +1,19 @@
+.dividerWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.line {
+  flex: 1;
+  border: none;
+  border-top: 1px solid #E4E8DF;
+}
+
+.text {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: var(--font-size-base);
+  line-height: 24px;
+  letter-spacing: 0.02em;
+}
