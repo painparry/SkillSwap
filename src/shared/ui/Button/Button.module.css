@@ -77,3 +77,11 @@
 .tertiary:disabled {
   opacity: 0.5;
 }
+
+.outlined {
+  border: 1px solid #69735D;
+  background-color: var(--color-bg);
+  color: var(--color-main-text);
+  padding: 12px 0;
+  width: 436px;
+}
