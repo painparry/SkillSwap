@@ -1,4 +1,4 @@
-import { ReactNode, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import clsx from 'clsx'
 import styles from './SkillImageUpload.module.css'
 import iconSrc from '@/assets/images/galleryAdd.svg'
@@ -7,8 +7,6 @@ interface SkillImageUploadProps {
   onFileSelect: (file: File) => void
   label?: string
   className?: string
-  leftIcon?: ReactNode
-  rightIcon?: ReactNode
 }
 
 export const SkillImageUpload = ({ onFileSelect, label, className }: SkillImageUploadProps) => {
