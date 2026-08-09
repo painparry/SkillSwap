@@ -1,12 +1,6 @@
-import type { SkillCategory } from '../../types/index';
-import {
-  BusinessIcon,
-  ArtIcon,
-  LanguageIcon,
-  EducationIcon,
-  HealthIcon,
-  HomeIcon,
-} from './icons';
+import clsx from 'clsx'
+import type { SkillCategory, SkillCategoryId } from '../../types/index'
+import { BusinessIcon, ArtIcon, LanguageIcon, EducationIcon, HealthIcon, HomeIcon } from './icons'
 import styles from './SkillsDropdown.module.css'
 
 export const categoryIcons = {
@@ -16,28 +10,48 @@ export const categoryIcons = {
   education: EducationIcon,
   health: HealthIcon,
   home: HomeIcon,
-} as const;
+} as const
 
 export type SkillsDropdownSectionProps = {
-  category: SkillCategory;
+  category: SkillCategory
+  onSelectCategory?: (categoryId: SkillCategoryId) => void
+  onSelectSubcategory?: (categoryId: SkillCategoryId, subcategoryId: string) => void
 }
 
-export function SkillsDropdownSection(props: SkillsDropdownSectionProps) {
-  const Icon = categoryIcons[props.category.id];
+export function SkillsDropdownSection({
+  category,
+  onSelectCategory,
+  onSelectSubcategory,
+}: SkillsDropdownSectionProps) {
+  const Icon = categoryIcons[category.id]
 
   return (
-    <div className={styles.section}>
-      <h2 className={styles.title}>
-        <span className={styles.iconWrapper}>
-          <Icon className={styles.icon}/>
-        </span>
-        {props.category.name}
-      </h2>
-      <ul className={styles.subcategories}>
-        {props.category.subcategories.map((subcategory) => (
-          <li className={styles.subcategory} key={subcategory.id}>{subcategory.name}</li>
-        ))}
-      </ul>
+    <div className={styles.skillCategory}>
+      <span className={clsx(styles.iconWrapper, styles[category.id])}>
+        <Icon className={styles.icon} />
+      </span>
+      <div className={styles.categoryContent}>
+        <button
+          type="button"
+          className={styles.title}
+          onClick={() => onSelectCategory?.(category.id)}
+        >
+          {category.name}
+        </button>
+        <ul className={styles.subcategories}>
+          {category.subcategories.map((subcategory) => (
+            <li key={subcategory.id}>
+              <button
+                type="button"
+                className={styles.subcategory}
+                onClick={() => onSelectSubcategory?.(category.id, subcategory.id)}
+              >
+                {subcategory.name}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
