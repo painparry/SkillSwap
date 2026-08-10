@@ -57,3 +57,19 @@
   display: flex;
   align-items: center;
 }
+
+.helperText {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+}
+
+.inputError {
+  border: 1px solid #BF3920;
+}
+
+.helperError {
+  color: #BF3920;
+}

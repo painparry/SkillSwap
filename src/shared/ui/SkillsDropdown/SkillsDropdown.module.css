@@ -1,17 +1,7 @@
-.section {
+.skillCategory {
   display: flex;
-  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
-}
-
-.title {
-  font-family: Jost, sans-serif;
-  font-weight: 500;
-  font-size: var(--font-size-2xl);
-  line-height: 28px;
-  letter-spacing: -0.011em;
-  display: flex;
-  align-items: center;
 }
 
 .iconWrapper {
@@ -29,40 +19,113 @@
   color: var(--color-text);
 }
 
+.categoryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: Jost, sans-serif;
+  font-weight: 500;
+  font-size: var(--font-size-2xl);
+  line-height: 28px;
+  letter-spacing: -0.011em;
+  color: #253017;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.title:hover {
+  color: var(--color-filter-form-accent);
+}
+
+.title:focus-visible {
+  outline: 2px solid #8bc34a;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 .subcategories {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 52px;
+  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .subcategory {
-  font-family: Roboto, sans-serif;
-  list-style: none;
   margin: 0;
   padding: 0;
+  border: none;
+  background: none;
+  font-family: Roboto, sans-serif;
   font-weight: 400;
   font-size: var(--font-size-base);
   line-height: 24px;
   letter-spacing: 0.02em;
+  color: #253017;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.subcategory:hover {
+  color: var(--color-filter-form-accent);
+}
+
+.subcategory:focus-visible {
+  outline: 2px solid #8bc34a;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.business {
+  background-color: #eee7f7;
+}
+
+.art {
+  background-color: #f7e7f2;
+}
+
+.languages {
+  background-color: #ebe5c5;
+}
+
+.education {
+  background-color: #e7f2f6;
+}
+
+.home {
+  background-color: #f7ebe5;
+}
+
+.health {
+  background-color: #e9f7e7;
 }
 
 .sectionsContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, auto);
-  grid-auto-flow: column;
-  gap: 40px;
+  grid-template-columns: repeat(2, minmax(360px, auto));
+  gap: 40px 80px;
   padding: 60px;
-  border: 1px solid #69735D;
-  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
   position: absolute;
-  top: 94px;
+  top: 80px;
   left: 36px;
-  z-index: 1;
-  background-color: #FFFF;
+  background: var(--color-bg);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 10%);
+  z-index: 100;
 }
 
 .buttonContent {
