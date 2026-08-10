@@ -1,4 +1,3 @@
-import { Notifications } from '@/widgets/Notifications';
 import { FiltersSidebar, type FiltersSidebarValue } from '@/features/filters';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { selectFilters } from '@/entities/skill/model/selectors';
@@ -33,16 +32,6 @@ export default function CatalogPage() {
 
   return (
     <main className={styles.page}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'right',
-        alignItems: 'center',
-        minHeight: '100vh',
-        padding: '40px',
-        background: '#f0f0f0'
-      }}>
-        <Notifications />
-      </div>
       <FiltersSidebar value={value} onChange={handleChange} />
     </main>
   );

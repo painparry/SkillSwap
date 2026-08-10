@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { ExchangeIcon } from './ExchangeConfirmModal/ExchangeIcon';
 import clsx from 'clsx';
 import styles from './ExchangeAuthModal.module.css';
+import { ROUTES } from '@/shared/lib/constants';
 
 interface ExchangeAuthModalProps {
   isOpen: boolean;
@@ -16,12 +17,12 @@ export function ExchangeAuthModal({ isOpen, onClose, className }: ExchangeAuthMo
 
   const handleRegister = () => {
     onClose();
-    navigate('/register');
+    navigate(ROUTES.REGISTRATION_STEP_1);
   };
 
   const handleLogin = () => {
     onClose();
-    navigate('/login');
+    navigate(ROUTES.LOGIN);
   };
 
   return (
