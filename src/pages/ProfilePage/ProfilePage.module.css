@@ -1,0 +1,154 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: #f9faf7;
+}
+
+.main {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: flex-start;
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+}
+
+.sidebar {
+  width: 324px;
+  flex-shrink: 0;
+  padding: 40px;
+  border-radius: var(--radius-md);
+  background-color: #fff;
+}
+
+.card {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 96px;
+  padding: var(--space-2xl);
+  border-radius: var(--radius-md);
+  background-color: #fff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  width: 100%;
+  max-width: 460px;
+}
+
+.passwordLink {
+  align-self: flex-start;
+  margin-top: calc(-1 * var(--space-md));
+  color: var(--color-filter-form-accent);
+  font-size: var(--font-size-sm);
+}
+
+.passwordLink:hover {
+  text-decoration: underline;
+}
+
+.row {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.dateField {
+  max-width: none;
+  flex: 1 1 0;
+}
+
+.genderField {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.label {
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: 24px;
+  letter-spacing: 0.02em;
+}
+
+.selectWrapper {
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  height: 48px;
+  padding: 12px 40px 12px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  outline: none;
+  appearance: none;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  cursor: pointer;
+}
+
+.select:focus {
+  border-color: var(--color-filter-form-accent);
+}
+
+.selectChevron {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid var(--color-main-text);
+  border-bottom: 1.5px solid var(--color-main-text);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.saveButton {
+  width: 100%;
+}
+
+.avatarColumn {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.avatar {
+  width: 244px;
+  height: 244px;
+}
+
+@media (width <= 900px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .card {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+
+@media (width <= 480px) {
+  .main {
+    padding: var(--space-md);
+  }
+
+  .row {
+    flex-direction: column;
+  }
+}
