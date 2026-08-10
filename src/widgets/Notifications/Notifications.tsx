@@ -1,7 +1,6 @@
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import {
   markNotificationAsRead,
-  clearNotificationsForUser,
   clearReadNotificationsForUser,
 } from '@/entities/request/model/requestsSlice';
 import { NotificationItem } from './components/NotificationItem';
