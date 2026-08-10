@@ -42,6 +42,12 @@ export interface SwapRequest {
   updatedAt: string
 }
 
+// ─── City ────────────────────────────────────────────────
+export interface City {
+  id: number
+  name: string
+}
+
 // ─── Auth ────────────────────────────────────────────────
 export interface AuthUser {
   id: string
@@ -49,6 +55,10 @@ export interface AuthUser {
   email: string
   token: string
   avatarUrl: string | null
+  city?: string
+  birthDate?: string
+  gender?: GenderType
+  about?: string
 }
 
 // ─── Skill Categories and Subcategories ─────────────────────────────────────────────
