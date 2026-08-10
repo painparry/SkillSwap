@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { AuthUser } from '@/shared/types';
-import { getAuthUser, clearAuthUser } from './authUtils';
 
 interface AuthState {
   user: AuthUser | null;
@@ -8,8 +7,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: getAuthUser(),
-  isAuth: !!getAuthUser(),
+  user: null,
+  isAuth: false,
 };
 
 const authSlice = createSlice({
@@ -21,7 +20,6 @@ const authSlice = createSlice({
       state.isAuth = true;
     },
     logout: (state) => {
-      clearAuthUser();
       state.user = null;
       state.isAuth = false;
     },
