@@ -1,0 +1,105 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  padding: 36px;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonClose {
+  background-color: transparent;
+}
+
+.main {
+  padding: 0 152px;
+  flex: 1;
+  flex-direction: column;
+  display: flex;
+}
+
+.title {
+  font-family: Jost, sans-serif;
+  text-align: center;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.inner {
+  display: flex;
+  max-width: 1000px;
+  margin: auto;
+  gap: 100px;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.greetings {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-direction: column;
+  color: var(--color-main-text);
+  margin-bottom: 150px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 436px;
+}
+
+.inputError {
+  border-color: var(--color-form-error);
+}
+
+.error {
+  color: var(--color-form-error);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  font-family: Roboto, sans-serif;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+  gap: 5px;
+}
+
+.description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subtitle {
+  font-family: Jost, sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+}
+
+.text {
+  font-weight: 400;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  max-width: 436px;
+  text-align: center;
+}
