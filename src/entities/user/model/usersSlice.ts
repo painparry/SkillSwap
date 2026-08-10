@@ -1,5 +1,5 @@
 import type { User } from '@/shared/types'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit' // ← добавь PayloadAction
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit' 
 import { fetchUsers } from '@/api/users'
 
 export type TUserState = {
