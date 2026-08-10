@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 import { ROUTES } from '@/shared/lib/constants'
 import styles from './RouterProvider.module.css'
 import { AuthLayout, HeaderOnlyLayout, MainLayout } from '@/app/layouts'
+import { PrivateRoute } from './PrivateRoute'
 
 // Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
 
@@ -26,26 +27,75 @@ function AppLayout() {
 
         <Route element={<MainLayout />}>
           <Route path={ROUTES.SKILL} element={<SkillPage />} />
-          <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-          <Route path={ROUTES.CREATE} element={<CreateSkillPage />} />
-          <Route path={ROUTES.FAVORITES} element={<FavoritesPage />} />
+          <Route
+            path={ROUTES.PROFILE}
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.CREATE}
+            element={
+              <PrivateRoute>
+                <CreateSkillPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.FAVORITES}
+            element={
+              <PrivateRoute>
+                <FavoritesPage />
+              </PrivateRoute>
+            }
+          />
           <Route path={ROUTES.NOT_FOUND_ERROR} element={<NotFoundPage />} />
           <Route path="*" element={<NotFoundPage />} />
           <Route path={ROUTES.SERVER_ERROR} element={<ServerErrorPage />} />
         </Route>
 
         <Route element={<AuthLayout />}>
-          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route
+            path={ROUTES.LOGIN}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <LoginPage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path={ROUTES.REGISTER}
             element={<Navigate to={ROUTES.REGISTRATION_STEP_1} replace />}
           />
-          <Route path={ROUTES.REGISTRATION_STEP_1} element={<RegistrationStep1Page />} />
-          <Route path={ROUTES.REGISTRATION_STEP_2} element={<RegistrationStep1Page />} /> {/* TODO: заменить на RegistrationStep2Page */}
-          <Route path={ROUTES.REGISTRATION_STEP_3} element={<RegistrationStep1Page />} />{/* TODO: заменить на RegistrationStep3Page */}
+          <Route
+            path={ROUTES.REGISTRATION_STEP_1}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <RegistrationStep1Page />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.REGISTRATION_STEP_2}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <RegistrationStep1Page />
+              </PrivateRoute>
+            }
+          />
+          {/* TODO: заменить на RegistrationStep2Page */}
+          <Route
+            path={ROUTES.REGISTRATION_STEP_3}
+            element={
+              <PrivateRoute onlyUnAuth>
+                <RegistrationStep1Page />
+              </PrivateRoute>
+            }
+          />
+          {/* TODO: заменить на RegistrationStep3Page */}
         </Route>
-
-        {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
       </Routes>
     </div>
   )
