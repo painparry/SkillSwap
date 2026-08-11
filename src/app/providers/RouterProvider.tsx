@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import { ROUTES } from '@/shared/lib/constants'
 import styles from './RouterProvider.module.css'
@@ -44,8 +44,6 @@ function AppLayout() {
           <Route path={ROUTES.REGISTRATION_STEP_2} element={<RegistrationStep1Page />} /> {/* TODO: заменить на RegistrationStep2Page */}
           <Route path={ROUTES.REGISTRATION_STEP_3} element={<RegistrationStep1Page />} />{/* TODO: заменить на RegistrationStep3Page */}
         </Route>
-
-        {/* Защищённые маршруты — добавь PrivateRoute обёртку */}
       </Routes>
     </div>
   )
@@ -53,10 +51,8 @@ function AppLayout() {
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<div>Загрузка...</div>}>
-        <AppLayout />
-      </Suspense>
-    </BrowserRouter>
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <AppLayout />
+    </Suspense>
   )
 }
