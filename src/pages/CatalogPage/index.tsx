@@ -9,7 +9,6 @@ import {
   setSubcategoryFilter,
   setGenderFilter,
   setCityFilter,
-  resetFilters,
 } from '@/entities/skill/model/skillsSlice'
 import { UserSection } from '@/shared/ui/Section'
 import { UsersGrid } from '@/shared/ui/UsersGrid'
@@ -33,13 +32,19 @@ export default function CatalogPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [recommendedCount, setRecommendedCount] = useState(INITIAL_RECOMMENDED)
 
+  const filterType = useAppSelector((state) => state.skills.filters.type)
+  const filterCategory = useAppSelector((state) => state.skills.filters.category)
+  const filterSubcategory = useAppSelector((state) => state.skills.filters.subcategory)
+  const filterGender = useAppSelector((state) => state.skills.filters.gender)
+  const filterCity = useAppSelector((state) => state.skills.filters.city)
+
   const filters = useMemo(() => ({
-    type: useAppSelector((state) => state.skills.filters.type),
-    category: useAppSelector((state) => state.skills.filters.category),
-    subcategory: useAppSelector((state) => state.skills.filters.subcategory),
-    gender: useAppSelector((state) => state.skills.filters.gender),
-    city: useAppSelector((state) => state.skills.filters.city),
-  }), [])
+    type: filterType,
+    category: filterCategory,
+    subcategory: filterSubcategory,
+    gender: filterGender,
+    city: filterCity,
+  }), [filterType, filterCategory, filterSubcategory, filterGender, filterCity])
 
   const searchValue = useAppSelector((state) => state.search.value)
 
@@ -186,7 +191,7 @@ export default function CatalogPage() {
         }
     }
   }
-  
+
   if (isLoading) {
     return (
       <main className={styles.page}>
