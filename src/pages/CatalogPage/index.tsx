@@ -33,13 +33,13 @@ export default function CatalogPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [recommendedCount, setRecommendedCount] = useState(INITIAL_RECOMMENDED)
 
-  const filters = {
+  const filters = useMemo(() => ({
     type: useAppSelector((state) => state.skills.filters.type),
     category: useAppSelector((state) => state.skills.filters.category),
     subcategory: useAppSelector((state) => state.skills.filters.subcategory),
     gender: useAppSelector((state) => state.skills.filters.gender),
     city: useAppSelector((state) => state.skills.filters.city),
-  }
+  }), [])
 
   const searchValue = useAppSelector((state) => state.search.value)
 
@@ -186,9 +186,7 @@ export default function CatalogPage() {
         }
     }
   }
-
-  const handleReset = () => dispatch(resetFilters())
-
+  
   if (isLoading) {
     return (
       <main className={styles.page}>

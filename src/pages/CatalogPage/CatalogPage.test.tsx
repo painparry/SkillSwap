@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { MemoryRouter } from 'react-router-dom'
@@ -116,7 +116,7 @@ describe('CatalogPage', () => {
         renderCatalog(store)
 
         await screen.findByText('Фильтры')
-        
+
         expect(screen.queryByText('Популярное')).not.toBeInTheDocument()
         expect(screen.queryByText('Новое')).not.toBeInTheDocument()
     })
