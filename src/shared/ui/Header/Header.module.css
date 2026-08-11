@@ -5,6 +5,7 @@
   padding: 36px;
   padding-block: 36px 20px;
   background-color: #f9faf7;
+  gap: 32px;
 }
 
 .nav {
@@ -60,7 +61,9 @@
 
 .actions {
   display: flex;
-  gap: 32px;
+    align-items: center;      
+  gap: 12px;               
+  margin-left: auto;  
 }
 
 .navGroup .navLinkBtn {
@@ -68,12 +71,19 @@
 }
 
 .themeBtn {
-  padding: 8px;
   border-radius: 50%;
 }
 
 .icontheme {
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
+
+
+
+
+
+
+
+

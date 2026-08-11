@@ -47,11 +47,12 @@ export const HeaderUI = () => {
         />
 
         <div className={clsx(styles.actions)}>
-          <Button variant="tertiary" aria-label="Переключить тему">
+          <Button variant="tertiary" aria-label="Переключить тему"   className={clsx(styles.themeBtn)} >
             <img
               src={themeLogo}
               alt=""
               className={clsx(styles.icontheme)}
+           
               aria-hidden="true"
             />
           </Button>
