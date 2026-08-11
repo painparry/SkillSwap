@@ -1,24 +1,29 @@
-
-import clsx from 'clsx';
-import styles from './Header.module.css';
-import { Logo } from '../logo';
-import { Button } from '@/shared/ui/Button';
-import { SearchInput } from '@/shared/ui/SearchInput';
-import { SkillsDropdown } from '@/shared/ui/SkillsDropdown';
-import { useAboutProjectModal } from '@/features/filters/about-project/model/useAboutProjectModal';
-import { AboutProjectModal } from '@/features/filters/about-project/ui/AboutProjectModal';
-import { useState } from 'react';
-import type { SkillCategory } from '../../types/index'; 
-import categories from '../../lib/categories.json';
-import themeLogo from '../../../assets/images/themeLogo.svg';
+import clsx from 'clsx'
+import styles from './Header.module.css'
+import categories from '../../lib/categories.json'
+import themeLogo from '../../../assets/images/themeLogo.svg'
+import { Logo } from '../logo'
+import { Button } from '@/shared/ui/Button'
+import { SearchInput } from '@/shared/ui/SearchInput'
+import { SkillsDropdown } from '@/shared/ui/SkillsDropdown'
+import { useAboutProjectModal } from '@/features/filters/about-project/model/useAboutProjectModal'
+import { AboutProjectModal } from '@/features/filters/about-project/ui/AboutProjectModal'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { setSearchValue } from '@/features/search'
+import type { SkillCategory } from '../../types/index'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/shared/lib/constants'
 
 export const HeaderUI = () => {
-  const { isOpen: isAboutOpen, open: openAbout, close: closeAbout } = useAboutProjectModal();
-  const [query, setQuery] = useState('');
+  const { isOpen: isAboutOpen, open: openAbout, close: closeAbout } = useAboutProjectModal()
+  const dispatch = useAppDispatch()
+  const searchValue = useAppSelector((state) => state.search.value)
+
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  };
+    dispatch(setSearchValue(e.target.value))
+  }
 
   return (
     <>
@@ -26,40 +31,28 @@ export const HeaderUI = () => {
         <nav className={clsx(styles.nav)}>
           <Logo />
           <div className={clsx(styles.navGroup)}>
-            <Button
-              variant="tertiary"
-              onClick={openAbout}
-              className={clsx(styles.navLinkBtn)}
-            >
+            <Button variant="tertiary" onClick={openAbout} className={clsx(styles.navLinkBtn)}>
               О проекте
             </Button>
-
-
             <SkillsDropdown sections={categories as unknown as SkillCategory[]} />
           </div>
         </nav>
 
         <SearchInput
-          value={query}
+          value={searchValue}
           onChange={handleChange}
           placeholder="Искать навык"
           className={clsx(styles.searchInputField)}
         />
 
         <div className={clsx(styles.actions)}>
-          <Button variant="tertiary" aria-label="Переключить тему"   className={clsx(styles.themeBtn)} >
-            <img
-              src={themeLogo}
-              alt=""
-              className={clsx(styles.icontheme)}
-           
-              aria-hidden="true"
-            />
+          <Button variant="tertiary" aria-label="Переключить тему" className={clsx(styles.themeBtn)}>
+            <img src={themeLogo} alt="" className={clsx(styles.icontheme)} aria-hidden="true" />
           </Button>
-          <Button variant="secondary" className={clsx(styles.authBtn)}>
+          <Button variant="secondary" onClick={() => navigate(ROUTES.LOGIN)}>
             Войти
           </Button>
-          <Button variant="primary" className={clsx(styles.authBtn)}>
+          <Button variant="primary" onClick={() => navigate(ROUTES.REGISTRATION_STEP_1)}>
             Регистрация
           </Button>
         </div>
@@ -67,5 +60,5 @@ export const HeaderUI = () => {
 
       <AboutProjectModal isOpen={isAboutOpen} onClose={closeAbout} />
     </>
-  );
-};
+  )
+}
