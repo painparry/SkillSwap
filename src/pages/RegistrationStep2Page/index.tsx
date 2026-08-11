@@ -22,8 +22,8 @@ export default function RegistrationStep1Page() {
   const [cities, setCities] = useState<City[]>([]);
   const [cityId, setCityId] = useState('');
   const [categories, setCategories] = useState<SkillCategory[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
+  const [selectedCategoriesLearn, setSelectedCategoriesLearn] = useState<string[]>([]);
+  const [selectedSubcategoriesLearn, setSelectedSubcategoriesLearn] = useState<string[]>([]);
 
   const genderOptions: SingleSelectOption[] = [
     {value: 'male', label: 'Мужской'},
@@ -47,7 +47,7 @@ export default function RegistrationStep1Page() {
   const categoryOptions: MultiSelectOption[] = categories.map(category =>
     ({value: category.id, label: category.name})
   )
-  const selectedCategoryObjects = categories.filter(category => (selectedCategories.includes(category.id)));
+  const selectedCategoryObjects = categories.filter(category => (selectedCategoriesLearn.includes(category.id)));
   const subcategoryOptions: MultiSelectOption[] = selectedCategoryObjects.flatMap(category => category.subcategories.map(subcategory => ({value: subcategory.id, label: subcategory.name})));
 
   const navigate = useNavigate();
@@ -64,7 +64,7 @@ export default function RegistrationStep1Page() {
       <div className={styles.header}>
         <Logo />
         <Button variant="tertiary">
-          <span className={styles.buttonContent}>
+          <span className={styles.buttonContent}  onClick={()=>navigate('/')}>
             Закрыть
             <CrossIcon />
           </span>
@@ -89,8 +89,8 @@ export default function RegistrationStep1Page() {
             <div className={styles.selectCitytWrapper}>
               <SingleSelect options={CityOptions} value={cityId} onChange={setCityId} label='Город' placeholder='Не указан' />
             </div>
-            <MultiSelect options={categoryOptions} selectedValues={selectedCategories} onChange={setSelectedCategories} placeholder='Выберите категорию' label='Категория навыка, которому хотите научиться' />
-            <MultiSelect options={subcategoryOptions} selectedValues={selectedSubcategories} onChange={setSelectedSubcategories} placeholder='Выберите подкатегорию' label='Подкатегория навыка, которому хотите научиться' />
+            <MultiSelect options={categoryOptions} selectedValues={selectedCategoriesLearn} onChange={setSelectedCategoriesLearn} placeholder='Выберите категорию' label='Категория навыка, которому хотите научиться' />
+            <MultiSelect options={subcategoryOptions} selectedValues={selectedSubcategoriesLearn} onChange={setSelectedSubcategoriesLearn} placeholder='Выберите подкатегорию' label='Подкатегория навыка, которому хотите научиться' />
             <div className={styles.buttonsWrapper}>
               <Button variant='secondary' className={styles.button} onClick={() => navigate(ROUTES.REGISTRATION_STEP_1)}>Назад</Button>
               <Button variant='primary' type="submit" className={styles.button}>Продолжить</Button>

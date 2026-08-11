@@ -78,7 +78,7 @@
   text-align: center;
 }
 
-.birthdateGenderWrapper, .buttonsWrapper {
+.buttonsWrapper {
   display: flex;
   align-items: flex-start;
   gap: 20px;
@@ -87,19 +87,4 @@
 
 .button {
   flex: 1;
-}
-
-.birthdate {
-  flex: 1;
-  min-width: 0;
-}
-
-.selectGendertWrapper {
-  width: 206px;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.selectCitytWrapper {
-  width: 100%;
 }
