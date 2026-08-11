@@ -1,0 +1,89 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 36px;
+  padding-block: 36px 20px;
+  background-color: #f9faf7;
+  gap: 32px;
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logoText {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  color: #253017;
+  letter-spacing: -1.1%;
+}
+
+.navGroup {
+  display: flex;
+  gap: 24px;
+  line-height: 24px;
+  letter-spacing: 2%;
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 2%;
+  line-height: 24px;
+}
+
+.searchWrapper {
+  display: flex;
+  padding: 12px;
+  background-color: #ffff;
+  border-radius: 12px;
+  gap: 8px;
+  min-width: 520px;
+}
+
+.searchInput {
+  border: none;
+  color: #69735d;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 2%;
+}
+
+.actions {
+  display: flex;
+    align-items: center;      
+  gap: 12px;               
+  margin-left: auto;  
+}
+
+.navGroup .navLinkBtn {
+  background-color: transparent;
+}
+
+.themeBtn {
+  border-radius: 50%;
+}
+
+.icontheme {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+
+
+
+
+
+
+

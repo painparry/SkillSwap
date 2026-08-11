@@ -1,0 +1,43 @@
+
+.content {
+  padding: 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #69735d;
+  background-color: #ffff;
+  max-width: 800px;
+}
+
+.description {
+  font-size: 24px;
+}
+
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 10px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid transparent;
+}
+
+.avatarPlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #eef2ff;
+  color: #69735d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+}
