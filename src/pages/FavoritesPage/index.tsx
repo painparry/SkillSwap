@@ -7,28 +7,36 @@ import styles from './FavoritePage.module.css'
 import { Button } from '@/shared/ui/Button'
 import noFavoritesImage from '../../assets/images/no-favorites.png'
 import { useNavigate } from 'react-router-dom'
+import { RootState } from '@/store'
+import { SkillItem } from '@/shared/ui/SkillList'
+import { Skill } from '@/shared/types'
 
 export default function FavoritesPage() {
   const users = useSelector(selectFavoritesUsers)
   const navigate = useNavigate()
+  const skills = useSelector((state: RootState) => state.skills.skills)
 
   const { toggleFavorite } = useFavorites()
-  const cards: UserCardProps[] = users.map((user) => ({
-    id: user.id,
-    name: user.name,
-    city: user.city,
-    age: user.age,
-    avatarUrl: user.avatarUrl,
 
-    canTeach: [],
-    wantsToLearn: [],
+  const cards: UserCardProps[] = users.map((user) => {
+    const userSkills = skills.filter((skill) => skill.authorId === user.id)
+    return {
+      id: user.id,
+      name: user.name,
+      city: user.city,
+      age: user.age,
+      avatarUrl: user.avatarUrl,
 
-    liked: true,
-    likesCount: user.likes,
-    onToggleLike: () => {
-      toggleFavorite(user.id)
-    },
-  }))
+      canTeach: userSkills.filter((skill) => skill.type === 'teach').map(toSkillItem),
+      wantsToLearn: userSkills.filter((skill) => skill.type === 'teach').map(toSkillItem),
+
+      liked: true,
+      likesCount: user.likes,
+      onToggleLike: () => {
+        toggleFavorite(user.id)
+      },
+    }
+  })
 
   const isEmpty = cards.length === 0
 
@@ -54,4 +62,8 @@ export default function FavoritesPage() {
       </>
     </main>
   )
+}
+
+function toSkillItem(skill: Skill): SkillItem {
+  return { title: skill.title, category: skill.category as SkillItem['category'] }
 }
