@@ -35,7 +35,7 @@ export default function RegistrationStep1Page() {
       <div className={styles.header}>
         <Logo />
         <Button variant="tertiary">
-          <span className={styles.buttonContent}>
+          <span className={styles.buttonContent}  onClick={()=>navigate('/')}>
             Закрыть
             <CrossIcon />
           </span>
