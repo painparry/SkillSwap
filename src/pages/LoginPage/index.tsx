@@ -10,6 +10,9 @@ import bulb from './light-bulb.png'
 import clsx from 'clsx'
 import { getAuthUser } from '@/features/auth/model/authUtils'
 import style from './loginPage.module.css'
+import { useAppDispatch } from '@/store/hooks'
+import { setUser } from '@/features/auth/model/authSlice'
+import { ROUTES } from '@/shared/lib/constants'
 
 export default function LoginPage() {
   const navigate = useNavigate()
@@ -17,6 +20,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState<string>('')
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
+  const dispatch = useAppDispatch()
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev)
@@ -38,14 +42,14 @@ export default function LoginPage() {
     //   setError(true)
     //   return
     // }
-    navigate('/')
+    dispatch(setUser(user))
   }
 
   return (
     <div className={style.page}>
       <header className={style.header}>
         <Logo />
-        <Button className={style.buttonClose} onClick={() => navigate('/')}>
+        <Button className={style.buttonClose} onClick={() => navigate(ROUTES.HOME)}>
           Закрыть <CrossIcon />
         </Button>
       </header>
