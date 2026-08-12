@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import { ROUTES } from '@/shared/lib/constants'
 import styles from './RouterProvider.module.css'
-import { AuthLayout, HeaderOnlyLayout, MainLayout } from '@/app/layouts'
+import { AuthLayout, MainLayout } from '@/app/layouts'
 
 // Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
 
@@ -22,11 +22,8 @@ function AppLayout() {
   return (
     <div className={styles.app}>
       <Routes>
-        <Route element={<HeaderOnlyLayout />}>
-          <Route path={ROUTES.HOME} element={<CatalogPage />} />
-        </Route>
-
         <Route element={<MainLayout />}>
+          <Route path={ROUTES.HOME} element={<CatalogPage />} />
           <Route path={ROUTES.SKILL} element={<SkillPage />} />
           <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
           <Route path={ROUTES.CREATE} element={<CreateSkillPage />} />

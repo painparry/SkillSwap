@@ -1,19 +1,19 @@
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { User } from '@/shared/types'
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit' 
 import { fetchUsers } from '@/api/users'
 
 export type TUserState = {
   users: User[]
   isLoading: boolean
   error: string | null
-  selectedUserId: string | null 
+  selectedUserId: string | null
 }
 
 export const initialState: TUserState = {
   users: [],
   isLoading: false,
   error: null,
-  selectedUserId: null, 
+  selectedUserId: null,
 }
 
 export const fetchUsersThunk = createAsyncThunk('users/fetchUsers', async () => {
@@ -30,6 +30,18 @@ export const userSlice = createSlice({
     },
     clearSelectedUser: (state) => {
       state.selectedUserId = null
+    },
+    toggleLike: (state, action: PayloadAction<string>) => {
+      const user = state.users.find((u) => u.id === action.payload)
+      if (user) {
+        user.likes += 1
+      }
+    },
+    removeLike: (state, action: PayloadAction<string>) => {
+      const user = state.users.find((u) => u.id === action.payload)
+      if (user) {
+        user.likes = Math.max(0, user.likes - 1)
+      }
     },
   },
   extraReducers: (builder) => {
@@ -50,7 +62,5 @@ export const userSlice = createSlice({
   },
 })
 
-
-export const { setSelectedUser, clearSelectedUser } = userSlice.actions
-
+export const { setSelectedUser, clearSelectedUser, toggleLike, removeLike } = userSlice.actions
 export default userSlice.reducer
