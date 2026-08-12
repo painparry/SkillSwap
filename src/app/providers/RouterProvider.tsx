@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import { ROUTES } from '@/shared/lib/constants'
 import styles from './RouterProvider.module.css'
-import { AuthLayout, HeaderOnlyLayout, MainLayout } from '@/app/layouts'
+import { AuthLayout, MainLayout } from '@/app/layouts'
 import { PrivateRoute } from './PrivateRoute'
 
 // Lazy-загрузка страниц — каждая страница грузится только при переходе на неё
@@ -16,16 +16,15 @@ const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'))
 const RegistrationStep1Page = lazy(() => import('@/pages/RegistrationStep1Page'))
+const RegistrationStep2Page = lazy(() => import('@/pages/RegistrationStep2Page'))
+const RegistrationStep3Page = lazy(() => import('@/pages/RegistrationStep3Page'))
 
 function AppLayout() {
   return (
     <div className={styles.app}>
       <Routes>
-        <Route element={<HeaderOnlyLayout />}>
-          <Route path={ROUTES.HOME} element={<CatalogPage />} />
-        </Route>
-
         <Route element={<MainLayout />}>
+          <Route path={ROUTES.HOME} element={<CatalogPage />} />
           <Route path={ROUTES.SKILL} element={<SkillPage />} />
           <Route
             path={ROUTES.PROFILE}
@@ -81,20 +80,18 @@ function AppLayout() {
             path={ROUTES.REGISTRATION_STEP_2}
             element={
               <PrivateRoute onlyUnAuth>
-                <RegistrationStep1Page />
+                <RegistrationStep2Page />
               </PrivateRoute>
             }
           />
-          {/* TODO: заменить на RegistrationStep2Page */}
           <Route
             path={ROUTES.REGISTRATION_STEP_3}
             element={
               <PrivateRoute onlyUnAuth>
-                <RegistrationStep1Page />
+                <RegistrationStep3Page />
               </PrivateRoute>
             }
           />
-          {/* TODO: заменить на RegistrationStep3Page */}
         </Route>
       </Routes>
     </div>
@@ -103,10 +100,8 @@ function AppLayout() {
 
 export function AppRouter() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<div>Загрузка...</div>}>
-        <AppLayout />
-      </Suspense>
-    </BrowserRouter>
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <AppLayout />
+    </Suspense>
   )
 }
