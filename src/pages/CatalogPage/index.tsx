@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, useCallback } from 'react'
 import { FiltersSidebar, type FiltersSidebarValue } from '@/features/filters'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { fetchUsersThunk } from '@/entities/user/model/usersSlice'
+import { fetchUsersThunk, toggleLike, removeLike } from '@/entities/user/model/usersSlice'
 import { selectUsers } from '@/entities/user/model/selectors'
 import {
   setTypeFilter,
@@ -14,15 +14,16 @@ import { UserSection } from '@/shared/ui/Section'
 import { UsersGrid } from '@/shared/ui/UsersGrid'
 import { useInfiniteScroll } from '@/shared/ui/InfiniteScroll/useInfiniteScroll'
 import { Tag } from '@/shared/ui/Tag'
+import { skillCategories } from '@/shared/lib/skillCategories'
+import { useLocalStorage } from '@/shared/hooks/useLocalStorage'
+import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
 import type { UserCardProps } from '@/entities/user/ui/UserCard'
-import { Footer } from '@/widgets/Footer'
+import type { SkillItem } from '@/shared/ui/SkillList'
 import type { Skill } from '@/shared/types'
 import styles from './CatalogPage.module.css'
 
 const INITIAL_RECOMMENDED = 9
 const LOAD_MORE_COUNT = 6
-
-type SkillCategory = 'business' | 'languages' | 'home' | 'art' | 'education' | 'health' | 'other'
 
 export default function CatalogPage() {
   const dispatch = useAppDispatch()
@@ -31,6 +32,9 @@ export default function CatalogPage() {
   const [skills, setSkills] = useState<Skill[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [recommendedCount, setRecommendedCount] = useState(INITIAL_RECOMMENDED)
+  const [favorites, setFavorites] = useLocalStorage<string[]>(LOCAL_STORAGE_KEYS.FAVORITES, [])
+
+  const isAuth = useAppSelector((state) => state.auth.isAuth)
 
   const filterType = useAppSelector((state) => state.skills.filters.type)
   const filterCategory = useAppSelector((state) => state.skills.filters.category)
@@ -97,8 +101,17 @@ export default function CatalogPage() {
         avatarUrl: user.avatarUrl,
         canTeach,
         wantsToLearn,
-        liked: false,
-        onToggleLike: () => { },
+        liked: isAuth && favorites.includes(user.id),
+        onToggleLike: () => {
+          if (!isAuth) return
+          if (favorites.includes(user.id)) {
+            setFavorites((prev: string[]) => prev.filter((id) => id !== user.id))
+            dispatch(removeLike(user.id))
+          } else {
+            setFavorites((prev: string[]) => [...prev, user.id])
+            dispatch(toggleLike(user.id))
+          }
+        },
         likesCount: user.likes,
       })
     })
@@ -115,7 +128,7 @@ export default function CatalogPage() {
     }
 
     return result
-  }, [filteredSkills, users, skills, searchValue])
+  }, [filteredSkills, users, skills, searchValue, favorites, setFavorites, isAuth, dispatch])
 
   const popularCards = useMemo(
     () => [...allCards].sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0)),
@@ -124,8 +137,9 @@ export default function CatalogPage() {
 
   const newCards = useMemo(() => {
     const getCreatedAt = (card: UserCardProps): number => {
-      const skill = skills.find((s) => s.authorId === card.id)
-      return skill ? new Date(skill.createdAt).getTime() : 0
+      const authorSkills = skills.filter((s) => s.authorId === card.id)
+      if (authorSkills.length === 0) return 0
+      return Math.max(...authorSkills.map((s) => new Date(s.createdAt).getTime()))
     }
     return [...allCards].sort((a, b) => getCreatedAt(b) - getCreatedAt(a))
   }, [allCards, skills])
@@ -148,9 +162,17 @@ export default function CatalogPage() {
 
   const activeFiltersList = useMemo(() => {
     const list: { id: string; label: string }[] = []
-    if (filters.type) list.push({ id: filters.type, label: filters.type === 'teach' ? 'Могу научить' : 'Хочу научиться' })
-    filters.subcategory?.forEach((id) => list.push({ id, label: id }))
-    if (filters.gender) list.push({ id: filters.gender, label: filters.gender === 'male' ? 'Мужской' : 'Женский' })
+    if (filters.type) {
+      list.push({ id: filters.type, label: filters.type === 'teach' ? 'Могу научить' : 'Хочу научиться' })
+    }
+    filters.subcategory?.forEach((id) => {
+      const category = skillCategories.find((c) => c.subcategories.some((s) => s.id === id))
+      const subcategory = category?.subcategories.find((s) => s.id === id)
+      list.push({ id, label: subcategory?.name || id })
+    })
+    if (filters.gender) {
+      list.push({ id: filters.gender, label: filters.gender === 'male' ? 'Мужской' : 'Женский' })
+    }
     filters.city?.forEach((id) => list.push({ id, label: id }))
     return list
   }, [filters])
@@ -201,38 +223,35 @@ export default function CatalogPage() {
   }
 
   return (
-    <>
-      <main className={styles.page}>
-        <FiltersSidebar value={sidebarValue} onChange={handleFilterChange} />
-        <div className={styles.content}>
-          {hasActiveFilters ? (
-            <>
-              {activeFiltersList.length > 0 && (
-                <div className={styles.activeTags}>
-                  {activeFiltersList.map((filter) => (
-                    <Tag key={filter.id} label={filter.label} onRemove={() => handleRemoveFilter(filter.id)} />
-                  ))}
-                </div>
-              )}
-              <h2 className={styles.sectionTitle}>Подходящие предложения ({allCards.length})</h2>
-              <UsersGrid users={allCards} />
-            </>
-          ) : (
-            <>
-              <UserSection title="Популярное" users={popularCards} />
-              <UserSection title="Новое" users={newCards} />
-              <h2 className={styles.sectionTitle}>Рекомендуемые</h2>
-              <UsersGrid users={allCards.slice(0, recommendedCount)} />
-              {hasMore && <div ref={sentinelRef} className={styles.sentinel} />}
-            </>
-          )}
-        </div>
-      </main>
-      {hasActiveFilters && <Footer />}
-    </>
+    <main className={styles.page}>
+      <FiltersSidebar value={sidebarValue} onChange={handleFilterChange} />
+      <div className={styles.content}>
+        {hasActiveFilters ? (
+          <>
+            {activeFiltersList.length > 0 && (
+              <div className={styles.activeTags}>
+                {activeFiltersList.map((filter) => (
+                  <Tag key={filter.id} label={filter.label} onRemove={() => handleRemoveFilter(filter.id)} />
+                ))}
+              </div>
+            )}
+            <h2 className={styles.sectionTitle}>Подходящие предложения ({allCards.length})</h2>
+            <UsersGrid users={allCards} />
+          </>
+        ) : (
+          <>
+            <UserSection title="Популярное" users={popularCards} />
+            <UserSection title="Новое" users={newCards} />
+            <h2 className={styles.sectionTitle}>Рекомендуемые</h2>
+            <UsersGrid users={allCards.slice(0, recommendedCount)} />
+            {hasMore && <div ref={sentinelRef} className={styles.sentinel} />}
+          </>
+        )}
+      </div>
+    </main>
   )
 }
 
-function toSkillItem(skill: Skill) {
-  return { title: skill.title, category: skill.category as SkillCategory }
+function toSkillItem(skill: Skill): SkillItem {
+  return { title: skill.title, category: skill.category as SkillItem['category'] }
 }

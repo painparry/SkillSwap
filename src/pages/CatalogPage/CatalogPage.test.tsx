@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen} from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import { MemoryRouter } from 'react-router-dom'
@@ -121,24 +121,7 @@ describe('CatalogPage', () => {
         expect(screen.queryByText('Новое')).not.toBeInTheDocument()
     })
 
-    // 4. Footer при фильтрации
-    it('показывает Footer при активных фильтрах', async () => {
-        const store = createStore({
-            skills: {
-                skills: [],
-                isLoading: false,
-                error: null,
-                filters: { type: 'teach', category: null, subcategory: null, gender: null, city: null },
-            },
-        })
-        renderCatalog(store)
-
-        await waitFor(() => {
-            expect(screen.getByText('SkillSwap — 2025')).toBeInTheDocument()
-        })
-    })
-
-    // 5. Переключение на «Подходящие предложения»
+    // 4. Переключение на «Подходящие предложения»
     it('показывает «Подходящие предложения» при активных фильтрах вместо секций', async () => {
         const store = createStore({
             skills: {
