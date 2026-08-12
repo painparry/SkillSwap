@@ -1,0 +1,63 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: var(--space-xl);
+  background-color: #f9faf7;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  width: 100%;
+  max-width: 1368px;
+  margin: 0 auto;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xl);
+  padding-left: 25px;
+}
+
+.userCard {
+  flex-shrink: 0;
+}
+
+.skillDetails {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+}
+
+.similar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.similarTitle {
+  margin: 0;
+  padding-left: 25px;
+  color: var(--color-main-text);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+}
+
+.cardWrapper {
+  flex: 0 0 324px;
+}
+
+@media (width <= 900px) {
+  .top {
+    flex-direction: column;
+  }
+
+  .userCard {
+    max-width: 100%;
+  }
+}
