@@ -1,0 +1,52 @@
+.skillCard{
+    display: grid;
+    gap: 27px;
+    padding: 80px 52px 40px 52px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    height: 440px;
+    background-color: #FFFF;
+}
+
+.content{
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.title{
+    font-size: 32px;
+}
+
+.category{
+    margin-block-end: 20px;
+    color: #8E8E93;
+    font-size: 12px;
+
+}
+
+.description{
+  color: #253017;
+  line-height: 24px;
+
+}
+
+.contentbtn{
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.actionBtn{
+    width: 100%;
+}
+
+.controls, .carouselWrapper{
+    grid-column: 2;
+}
+
+.controls{
+    display: flex;
+    gap: 16px;
+    justify-content: end;
+}
