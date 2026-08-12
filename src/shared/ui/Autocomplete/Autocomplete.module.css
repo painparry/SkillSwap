@@ -64,13 +64,36 @@
   width: 24px;
   height: 24px;
   color: var(--color-main-text);
-  font-size: 24px;
-  line-height: 1;
   transform: translateY(-50%);
 }
 
 .clearButton:hover {
   color: var(--color-filter-form-accent);
+}
+
+.chevronButton {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--color-main-text);
+  transform: translateY(-50%);
+}
+
+.chevronButton:hover {
+  color: var(--color-filter-form-accent);
+}
+
+.chevron {
+  width: 9px;
+  height: 9px;
+  border-right: 1.5px solid currentcolor;
+  border-bottom: 1.5px solid currentcolor;
+  transform: translateY(-2px) rotate(45deg);
 }
 
 .listbox {

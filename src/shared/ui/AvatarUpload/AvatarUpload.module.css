@@ -1,17 +1,16 @@
 .avatarContainer {
-  width: 54px;
-  height: 54px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
+  flex-shrink: 0;
 }
 
 .iconPlaceholder {
-  width: 54px;
-  height: 54px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   display: block;
   margin: 0;
@@ -21,6 +20,22 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.editBadge {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 56px;
+  height: 56px;
+}
+
+.editBadge img {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .fileInput {
