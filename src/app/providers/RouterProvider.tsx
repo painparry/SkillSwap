@@ -16,6 +16,7 @@ const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'))
 const RegistrationStep1Page = lazy(() => import('@/pages/RegistrationStep1Page'))
 const RegistrationStep2Page = lazy(() => import('@/pages/RegistrationStep2Page'))
+const RegistrationStep3Page = lazy(() => import('@/pages/RegistrationStep3Page'))
 
 function AppLayout() {
   return (
@@ -40,7 +41,7 @@ function AppLayout() {
           />
           <Route path={ROUTES.REGISTRATION_STEP_1} element={<RegistrationStep1Page />} />
           <Route path={ROUTES.REGISTRATION_STEP_2} element={<RegistrationStep2Page />} />
-          <Route path={ROUTES.REGISTRATION_STEP_3} element={<RegistrationStep1Page />} />{/* TODO: заменить на RegistrationStep3Page */}
+          <Route path={ROUTES.REGISTRATION_STEP_3} element={<RegistrationStep3Page />} />
         </Route>
       </Routes>
     </div>

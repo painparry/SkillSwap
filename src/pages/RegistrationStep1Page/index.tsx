@@ -32,7 +32,7 @@ export default function RegistrationStep1Page() {
 
   return (
     <main className={styles.page}>
-      <div className={styles.header}>
+            <div className={styles.header}>
         <Logo />
         <Button className={styles.closeButton} onClick={() => navigate(ROUTES.HOME)}>
           Закрыть <CrossIcon />
