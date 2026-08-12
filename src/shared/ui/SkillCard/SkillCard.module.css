@@ -1,11 +1,13 @@
 .skillCard{
     display: grid;
     gap: 27px;
-    padding: 80px 52px 40px 52px;
+    padding: 80px 52px 40px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     height: 440px;
     background-color: #FFFF;
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
 }
 
 .content{
@@ -17,6 +19,8 @@
 
 .title{
     font-size: 32px;
+    font-family: Jost, sans-serif;
+    font-weight: 500;
 }
 
 .category{
@@ -49,4 +53,9 @@
     display: flex;
     gap: 16px;
     justify-content: end;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
 }
