@@ -25,20 +25,17 @@ export default function RegistrationStep1Page() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-     // TODO: сохранить введённые email и password при отправке формы
+    // TODO: сохранить введённые email и password при отправке формы
 
     navigate(ROUTES.REGISTRATION_STEP_2);
   }
 
   return (
     <main className={styles.page}>
-      <div className={styles.header}>
+            <div className={styles.header}>
         <Logo />
-        <Button variant="tertiary">
-          <span className={styles.buttonContent}>
-            Закрыть
-            <CrossIcon />
-          </span>
+        <Button className={styles.closeButton} onClick={() => navigate(ROUTES.HOME)}>
+          Закрыть <CrossIcon />
         </Button>
       </div>
       <div className={styles.stepper}>
@@ -47,7 +44,7 @@ export default function RegistrationStep1Page() {
       <div className={styles.content}>
         <div className={styles.formCard}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} helperText={emailHelper}placeholder='Введите email' label='Email' />
+            <Input value={email} onChange={(e) => setEmail(e.target.value)} helperText={emailHelper} placeholder='Введите email' label='Email' />
             <Input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} helperText={passwordHelper} error={emailError} rightIcon={<EyeIcon onClick={() => setShowPassword(prev => !prev)} className={styles.eyeIcon} />} placeholder='Придумайте надёжный пароль' label='Пароль' />
             <Button variant='primary' type="submit">Далее</Button>
           </form>

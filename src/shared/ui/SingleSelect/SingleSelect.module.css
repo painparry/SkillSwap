@@ -1,0 +1,91 @@
+.root {
+  position: relative;
+  width: 100%;
+  color: var(--color-main-text);
+  font-family: var(--font-sans);
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: var(--font-size-base);
+  line-height: 24px;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 48px;
+  padding: 12px 20px;
+  border: 1px solid #69735D;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-bg);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.trigger:hover {
+  border-color: var(--color-filter-form-accent);
+}
+
+.triggerOpen {
+  border-bottom-color: var(--color-button-hover);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.placeholder {
+  color: #69735d;
+}
+
+.value {
+  color: var(--color-main-text);
+}
+
+.chevron {
+  width: 10px;
+  height: 10px;
+  border-right: 1.5px solid var(--color-main-text);
+  border-bottom: 1.5px solid var(--color-main-text);
+  transform: rotate(45deg);
+  transition: transform 0.15s;
+}
+
+.chevronOpen {
+  transform: translateY(4px) rotate(225deg);
+}
+
+.list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+  border: 1px solid #69735d;
+  border-top: none;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  background-color: var(--color-bg);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 6%);
+}
+
+.option {
+  min-height: 36px;
+  padding: 6px 20px;
+  font-size: var(--font-size-base);
+  line-height: 24px;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: #f8faf4;
+}
+
+.optionSelected {
+  background-color: #f0f4eb;
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "req-1",
+    "skillId": "skill-1",
+    "fromUserId": "user-1",
+    "toUserId": "user-2",
+    "fromUserName": "Анна Иванова",
+    "toUserName": "Пётр Сидоров",
+    "skillTitle": "React разработка",
+    "status": "pending",
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "req-2",
+    "skillId": "skill-2",
+    "fromUserId": "user-2",
+    "toUserId": "user-1",
+    "fromUserName": "Пётр Сидоров",
+    "toUserName": "Анна Иванова",
+    "skillTitle": "Игра на гитаре",
+    "status": "accepted",
+    "createdAt": "2024-01-16T10:00:00Z",
+    "updatedAt": "2024-01-17T10:00:00Z"
+  }
+]
