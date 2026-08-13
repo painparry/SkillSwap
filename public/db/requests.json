@@ -1,26 +1,54 @@
 [
   {
-    "id": "req-1",
-    "skillId": "skill-1",
-    "fromUserId": "user-1",
-    "toUserId": "user-2",
-    "fromUserName": "Анна Иванова",
-    "toUserName": "Пётр Сидоров",
-    "skillTitle": "React разработка",
+    "id": "req-001",
+    "skillId": "skill_001",
+    "fromUserId": "user_001",
+    "toUserId": "user_003",
+    "fromUserName": "Иван",
+    "toUserName": "Мария",
+    "skillTitle": "Маркетинг и реклама",
     "status": "pending",
-    "createdAt": "2024-01-15T10:00:00Z",
-    "updatedAt": "2024-01-15T10:00:00Z"
+    "createdAt": "2026-08-13T10:00:00.000Z",
+    "updatedAt": "2026-08-13T10:00:00.000Z",
+    "notificationIsRead": false
   },
   {
-    "id": "req-2",
-    "skillId": "skill-2",
-    "fromUserId": "user-2",
-    "toUserId": "user-1",
-    "fromUserName": "Пётр Сидоров",
-    "toUserName": "Анна Иванова",
-    "skillTitle": "Игра на гитаре",
-    "status": "accepted",
-    "createdAt": "2024-01-16T10:00:00Z",
-    "updatedAt": "2024-01-17T10:00:00Z"
+    "id": "req-002",
+    "skillId": "skill_140",
+    "fromUserId": "user_050",
+    "toUserId": "user_003",
+    "fromUserName": "Татьяна",
+    "toUserName": "Мария",
+    "skillTitle": "Фотография",
+    "status": "pending",
+    "createdAt": "2026-08-13T11:30:00.000Z",
+    "updatedAt": "2026-08-13T11:30:00.000Z",
+    "notificationIsRead": false
+  },
+  {
+    "id": "req-003",
+    "skillId": "skill_013",
+    "fromUserId": "user_005",
+    "toUserId": "user_003",
+    "fromUserName": "Анна",
+    "toUserName": "Мария",
+    "skillTitle": "Рисование и иллюстрация",
+    "status": "pending",
+    "createdAt": "2026-08-12T14:00:00.000Z",
+    "updatedAt": "2026-08-12T14:00:00.000Z",
+    "notificationIsRead": true
+  },
+  {
+    "id": "req-004",
+    "skillId": "skill_080",
+    "fromUserId": "user_032",
+    "toUserId": "user_003",
+    "fromUserName": "Игорь",
+    "toUserName": "Мария",
+    "skillTitle": "Навыки обучения",
+    "status": "pending",
+    "createdAt": "2026-05-23T09:00:00.000Z",
+    "updatedAt": "2026-05-23T09:00:00.000Z",
+    "notificationIsRead": true
   }
 ]
