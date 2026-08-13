@@ -35,6 +35,22 @@ describe('FiltersSidebar', () => {
     expect(screen.getByRole('checkbox', { name: 'Маркетинг и реклама' })).toBeInTheDocument()
   })
 
+  it('hides extra categories under all categories button and excludes unrelated categories', () => {
+    render(<FiltersSidebar />)
+
+    expect(screen.queryByRole('button', { name: 'Показать подкатегории Здоровье и лайфстайл' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Показать подкатегории Дом и уют' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Показать подкатегории Программирование' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Показать подкатегории Дизайн' })).not.toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Все категории' }))
+
+    expect(screen.getByRole('button', { name: 'Показать подкатегории Здоровье и лайфстайл' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Показать подкатегории Дом и уют' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Показать подкатегории Программирование' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Показать подкатегории Дизайн' })).not.toBeInTheDocument()
+  })
+
   it('allows multiple subcategory selection', () => {
     render(<FiltersSidebar />)
 
