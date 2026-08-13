@@ -17,7 +17,7 @@ export function ExchangeAuthModal({ isOpen, onClose, className }: ExchangeAuthMo
 
   const handleRegister = () => {
     onClose();
-    navigate(ROUTES.REGISTRATION_STEP_1);
+    navigate(ROUTES.REGISTER);
   };
 
   const handleLogin = () => {

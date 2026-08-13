@@ -52,7 +52,7 @@ export const HeaderUI = () => {
           <Button variant="secondary" onClick={() => navigate(ROUTES.LOGIN)}>
             Войти
           </Button>
-          <Button variant="primary" onClick={() => navigate(ROUTES.REGISTRATION_STEP_1)}>
+          <Button variant="primary" onClick={() => navigate(ROUTES.REGISTER)}>
             Регистрация
           </Button>
         </div>
