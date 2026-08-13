@@ -1,0 +1,253 @@
+.container {
+  width: 1024px;
+  max-width: 90vw;
+  height: 532px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 44px 60px 72px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-family: Jost, sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: -0.011em;
+  text-align: center;
+  color: #000000;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #69735d;
+  margin: 0;
+}
+
+.content {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  gap: 44px;
+  box-sizing: border-box;
+}
+
+.infoSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  height: 100%;
+}
+
+.skillHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.skillTitle {
+  font-family: Jost, sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.011em;
+  color: #000000;
+  margin: 0;
+  text-align: left;
+}
+
+.skillCategory {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.02em;
+  color: #69735d;
+  margin: 0;
+  text-align: left;
+}
+
+.descriptionWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 32px;
+  min-height: 0;
+  box-sizing: border-box;
+}
+
+.skillDescription {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  color: #253017;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  overflow-y: auto;
+  word-wrap: break-word;
+  flex: 1;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.buttons button {
+  flex: 1;
+  height: 48px;
+  border-radius: 12px;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+}
+
+.editButton {
+  background: #ffffff;
+  color: #253017;
+  border: 1px solid #abd27a !important;
+}
+
+.editButton:hover {
+  background: #f5f9f0;
+  border-color: #9bc06a;
+}
+
+.editButton svg {
+  flex-shrink: 0;
+}
+
+.continueButton {
+  background: #abd27a;
+  color: #253017;
+}
+
+.continueButton:hover {
+  background: #9bc06a;
+}
+
+.continueButton:active {
+  background: #8ab05a;
+}
+
+.carouselSection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.carouselSection :global(.carousel) {
+  width: 100%;
+  height: 100%;
+}
+
+.carouselSection :global(.mainImage) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    width: 90vw;
+    height: auto;
+    min-height: 500px;
+    padding: 32px 30px 40px 30px;
+    gap: 24px;
+  }
+
+  .content {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .infoSection {
+    flex: none;
+  }
+
+  .carouselSection {
+    flex: none;
+    height: 200px;
+  }
+
+  .skillTitle {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .buttons button {
+    height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 24px 16px 32px 16px;
+    min-height: 400px;
+  }
+
+  .title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  .skillTitle {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .skillDescription {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .carouselSection {
+    height: 150px;
+  }
+}
