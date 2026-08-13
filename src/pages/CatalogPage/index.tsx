@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FiltersSidebar, type FiltersSidebarValue } from '@/features/filters'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { fetchUsersThunk, toggleLike, removeLike } from '@/entities/user/model/usersSlice'
+import { fetchUsersThunk } from '@/entities/user/model/usersSlice'
 import { selectUsers } from '@/entities/user/model/selectors'
 import {
   setTypeFilter,
@@ -108,13 +108,11 @@ export default function CatalogPage() {
           if (!isAuth) return
           if (favorites.includes(user.id)) {
             setFavorites((prev: string[]) => prev.filter((id) => id !== user.id))
-            dispatch(removeLike(user.id))
           } else {
             setFavorites((prev: string[]) => [...prev, user.id])
-            dispatch(toggleLike(user.id))
           }
         },
-        likesCount: user.likes,
+        likesCount: user.likes + (favorites.includes(user.id) ? 1 : 0),
         onDetailsClick: () => {
           const firstSkill = skills.find((s) => s.authorId === user.id)
           if (firstSkill) {
@@ -136,7 +134,7 @@ export default function CatalogPage() {
     }
 
     return result
-  }, [filteredSkills, users, skills, searchValue, favorites, setFavorites, isAuth, dispatch, navigate])
+  }, [filteredSkills, users, skills, searchValue, favorites, setFavorites, isAuth, navigate])
 
   const popularCards = useMemo(
     () => [...allCards].sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0)),
