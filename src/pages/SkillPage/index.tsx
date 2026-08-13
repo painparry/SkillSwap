@@ -153,13 +153,16 @@ export default function SkillPage() {
           />
 
           <SkillCard
+            skillId={skill.id}
+            authorId={author.id}
+            authorName={author.name}
             title={skill.title}
             category={category?.name ?? ''}
             subcategory={subcategory?.name ?? ''}
             description={skill.description}
             images={skill.imageUrl ? [skill.imageUrl] : []}
             liked={false}
-            onToggleLike={() => {}}
+            onToggleLike={() => { }}
           />
         </div>
 
