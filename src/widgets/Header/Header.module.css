@@ -64,6 +64,33 @@
   flex-shrink: 0;
 }
 
+.notifications {
+  position: relative;
+  display: inline-flex;
+}
+
+.notificationTrigger {
+  position: relative;
+  display: inline-flex;
+  border-radius: 8px;
+}
+
+.notificationTriggerOpen {
+  background: rgb(0 0 0 / 4%);
+}
+
+.notificationDot {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background-color: #e2574c;
+  pointer-events: none;
+}
+
 .iconButton {
   display: inline-flex;
   align-items: center;

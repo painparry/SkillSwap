@@ -6,6 +6,7 @@ export interface ExchangeRequest extends SwapRequest {
   fromUserName: string;
   toUserName: string;
   skillTitle: string;
+  notificationIsRead?: boolean;
 }
 
 export async function fetchRequests(): Promise<ExchangeRequest[]> {

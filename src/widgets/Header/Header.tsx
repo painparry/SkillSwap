@@ -1,13 +1,17 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import clsx from 'clsx'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { Logo } from '@/shared/ui/logo'
 import { SearchInput } from '@/shared/ui/SearchInput'
 import { SkillsDropdown } from '@/shared/ui/SkillsDropdown'
 import { HeartIcon } from '@/shared/ui/Toggle/HeartIcon'
 import { skillCategories } from '@/shared/lib/skillCategories'
+import { fetchRequestsThunk, syncNotificationsForUser } from '@/entities/request/model/requestsSlice'
 import { setSubcategoryFilter } from '@/entities/skill/model/skillsSlice'
 import { UserMenu } from '@/features/user-menu'
 import { NotificationButton } from '@/features/notification'
+import { NotificationsDropdown } from '@/features/notifications'
 import { ThemeToggle } from '@/features/theme'
 import { setSearchValue } from '@/features/search'
 import { useAboutProjectModal } from '@/features/filters/about-project/model/useAboutProjectModal'
@@ -18,10 +22,47 @@ import styles from './Header.module.css'
 export function Header() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const notificationsRef = useRef<HTMLDivElement>(null)
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
   const isAuth = useAppSelector((state) => state.auth.isAuth)
+  const currentUser = useAppSelector((state) => state.auth.user)
   const searchValue = useAppSelector((state) => state.search.value)
   const subcategoryFilter = useAppSelector((state) => state.skills.filters.subcategory)
+  const requests = useAppSelector((state) => state.requests.requests)
+  const requestsLoading = useAppSelector((state) => state.requests.loading)
+  const notifications = useAppSelector((state) =>
+    currentUser ? state.requests.notifications[currentUser.id] ?? [] : [],
+  )
   const { isOpen: isAboutOpen, open: openAbout, close: closeAbout } = useAboutProjectModal()
+  const hasUnreadNotifications = notifications.some((notification) => !notification.isRead)
+
+  useEffect(() => {
+    if (isAuth && currentUser && requests.length === 0 && !requestsLoading) {
+      dispatch(fetchRequestsThunk())
+    }
+  }, [currentUser, dispatch, isAuth, requests.length, requestsLoading])
+
+  useEffect(() => {
+    if (isAuth && currentUser && requests.length > 0) {
+      dispatch(syncNotificationsForUser(currentUser.id))
+    }
+  }, [currentUser, dispatch, isAuth, requests.length])
+
+  useEffect(() => {
+    if (!isNotificationsOpen) return
+
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (!notificationsRef.current?.contains(event.target as Node)) {
+        setIsNotificationsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick)
+    }
+  }, [isNotificationsOpen])
 
   const handleSelectCategory = (categoryId: string) => {
     const category = skillCategories.find((item) => item.id === categoryId)
@@ -75,7 +116,21 @@ export function Header() {
 
           {isAuth && (
             <>
-              <NotificationButton />
+              <div className={styles.notifications} ref={notificationsRef}>
+                <div
+                  className={clsx(
+                    styles.notificationTrigger,
+                    isNotificationsOpen && styles.notificationTriggerOpen,
+                  )}
+                >
+                  <NotificationButton
+                    isActive={isNotificationsOpen}
+                    onClick={() => setIsNotificationsOpen((currentValue) => !currentValue)}
+                  />
+                  {hasUnreadNotifications && <span className={styles.notificationDot} aria-hidden="true" />}
+                </div>
+                {isNotificationsOpen && <NotificationsDropdown />}
+              </div>
               <Link to={ROUTES.FAVORITES} className={styles.iconButton} aria-label="Избранное">
                 <HeartIcon filled={false} />
               </Link>
