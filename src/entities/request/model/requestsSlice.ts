@@ -315,6 +315,15 @@ const requestsSlice = createSlice({
           action.payload.createdAt,
           { skillId: action.payload.skillId, fromUserId: action.payload.fromUserId, isRead: false },
         )
+
+        addNotificationForUser(
+          state,
+          action.payload.fromUserId,
+          `Вы предлагаете ${action.payload.toUserName} обмен`,
+          action.payload.createdAt,
+          { skillId: action.payload.skillId, fromUserId: action.payload.toUserId, isRead: false },
+        )
+
         saveNotifications(state.notifications)
       })
   },
