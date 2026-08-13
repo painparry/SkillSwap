@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FiltersSidebar, type FiltersSidebarValue } from '@/features/filters'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
-import { fetchUsersThunk, toggleLike, removeLike } from '@/entities/user/model/usersSlice'
+import { fetchUsersThunk } from '@/entities/user/model/usersSlice'
 import { selectUsers } from '@/entities/user/model/selectors'
 import {
   setTypeFilter,
@@ -16,12 +16,12 @@ import { UsersGrid } from '@/shared/ui/UsersGrid'
 import { useInfiniteScroll } from '@/shared/ui/InfiniteScroll/useInfiniteScroll'
 import { Tag } from '@/shared/ui/Tag'
 import { skillCategories } from '@/shared/lib/skillCategories'
-import { useLocalStorage } from '@/shared/hooks/useLocalStorage'
-import { LOCAL_STORAGE_KEYS, ROUTES } from '@/shared/lib/constants'
+import { ROUTES } from '@/shared/lib/constants'
 import type { UserCardProps } from '@/entities/user/ui/UserCard'
 import type { SkillItem } from '@/shared/ui/SkillList'
 import type { Skill } from '@/shared/types'
 import styles from './CatalogPage.module.css'
+import { useFavorites } from '@/entities/favorite/model/useFavorites'
 
 const INITIAL_RECOMMENDED = 9
 const LOAD_MORE_COUNT = 6
@@ -34,7 +34,8 @@ export default function CatalogPage() {
   const [skills, setSkills] = useState<Skill[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [recommendedCount, setRecommendedCount] = useState(INITIAL_RECOMMENDED)
-  const [favorites, setFavorites] = useLocalStorage<string[]>(LOCAL_STORAGE_KEYS.FAVORITES, [])
+
+  const { toggleFavorite, isFavorite } = useFavorites()
 
   const isAuth = useAppSelector((state) => state.auth.isAuth)
 
@@ -44,13 +45,16 @@ export default function CatalogPage() {
   const filterGender = useAppSelector((state) => state.skills.filters.gender)
   const filterCity = useAppSelector((state) => state.skills.filters.city)
 
-  const filters = useMemo(() => ({
-    type: filterType,
-    category: filterCategory,
-    subcategory: filterSubcategory,
-    gender: filterGender,
-    city: filterCity,
-  }), [filterType, filterCategory, filterSubcategory, filterGender, filterCity])
+  const filters = useMemo(
+    () => ({
+      type: filterType,
+      category: filterCategory,
+      subcategory: filterSubcategory,
+      gender: filterGender,
+      city: filterCity,
+    }),
+    [filterType, filterCategory, filterSubcategory, filterGender, filterCity],
+  )
 
   const searchValue = useAppSelector((state) => state.search.value)
 
@@ -77,7 +81,8 @@ export default function CatalogPage() {
       if (!user) return false
       if (filters.type && skill.type !== filters.type) return false
       if (filters.category?.length && !filters.category.includes(skill.category)) return false
-      if (filters.subcategory?.length && !filters.subcategory.includes(skill.subcategory)) return false
+      if (filters.subcategory?.length && !filters.subcategory.includes(skill.subcategory))
+        return false
       if (filters.gender && user.gender !== filters.gender) return false
       if (filters.city?.length && !filters.city.includes(user.city)) return false
       return true
@@ -103,16 +108,10 @@ export default function CatalogPage() {
         avatarUrl: user.avatarUrl,
         canTeach,
         wantsToLearn,
-        liked: isAuth && favorites.includes(user.id),
+        liked: isAuth && isFavorite(user.id),
         onToggleLike: () => {
           if (!isAuth) return
-          if (favorites.includes(user.id)) {
-            setFavorites((prev: string[]) => prev.filter((id) => id !== user.id))
-            dispatch(removeLike(user.id))
-          } else {
-            setFavorites((prev: string[]) => [...prev, user.id])
-            dispatch(toggleLike(user.id))
-          }
+          toggleFavorite(user.id)
         },
         likesCount: user.likes,
         onDetailsClick: () => {
@@ -136,7 +135,7 @@ export default function CatalogPage() {
     }
 
     return result
-  }, [filteredSkills, users, skills, searchValue, favorites, setFavorites, isAuth, dispatch, navigate])
+  }, [filteredSkills, users, skills, searchValue, isFavorite, toggleFavorite, isAuth, navigate])
 
   const popularCards = useMemo(
     () => [...allCards].sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0)),
@@ -171,7 +170,10 @@ export default function CatalogPage() {
   const activeFiltersList = useMemo(() => {
     const list: { id: string; label: string }[] = []
     if (filters.type) {
-      list.push({ id: filters.type, label: filters.type === 'teach' ? 'Могу научить' : 'Хочу научиться' })
+      list.push({
+        id: filters.type,
+        label: filters.type === 'teach' ? 'Могу научить' : 'Хочу научиться',
+      })
     }
     filters.subcategory?.forEach((id) => {
       const category = skillCategories.find((c) => c.subcategories.some((s) => s.id === id))
@@ -239,7 +241,11 @@ export default function CatalogPage() {
             {activeFiltersList.length > 0 && (
               <div className={styles.activeTags}>
                 {activeFiltersList.map((filter) => (
-                  <Tag key={filter.id} label={filter.label} onRemove={() => handleRemoveFilter(filter.id)} />
+                  <Tag
+                    key={filter.id}
+                    label={filter.label}
+                    onRemove={() => handleRemoveFilter(filter.id)}
+                  />
                 ))}
               </div>
             )}
