@@ -16,9 +16,6 @@ const LoginPage = lazy(() => import('@/pages/LoginPage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 const ServerErrorPage = lazy(() => import('@/pages/ServerErrorPage'))
 const RegisterPage = lazy(() => import('@/pages/RegisterPage'))
-const RegistrationStep1Page = lazy(() => import('@/pages/RegistrationStep1Page'))
-const RegistrationStep2Page = lazy(() => import('@/pages/RegistrationStep2Page'))
-const RegistrationStep3Page = lazy(() => import('@/pages/RegistrationStep3Page'))
 
 function AppLayout() {
   return (
@@ -70,30 +67,6 @@ function AppLayout() {
             element={
               <PrivateRoute onlyUnAuth>
                 <RegisterPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={ROUTES.REGISTRATION_STEP_1}
-            element={
-              <PrivateRoute onlyUnAuth>
-                <RegistrationStep1Page />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={ROUTES.REGISTRATION_STEP_2}
-            element={
-              <PrivateRoute onlyUnAuth>
-                <RegistrationStep2Page />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path={ROUTES.REGISTRATION_STEP_3}
-            element={
-              <PrivateRoute onlyUnAuth>
-                <RegistrationStep3Page />
               </PrivateRoute>
             }
           />

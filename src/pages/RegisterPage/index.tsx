@@ -99,6 +99,8 @@ export default function RegisterPage() {
   const [categories, setCategories] = useState<SkillCategory[]>([])
   const [isProposalModalOpen, setIsProposalModalOpen] = useState(false)
   const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(false)
+  const [emailError, setEmailError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
 
   useEffect(() => {
     fetch('/db/cities.json')
@@ -192,10 +194,22 @@ export default function RegisterPage() {
     }))
   }
 
+  const validateEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+
   const handleNext = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     if (step === 1) {
+      if (!validateEmail(form.email)) {
+        setEmailError('Введите корректный email (например, user@example.com)')
+        return
+      }
+      if (form.password.length < 8) {
+        setPasswordError('Пароль должен содержать не менее 8 знаков')
+        return
+      }
+      setEmailError('')
+      setPasswordError('')
       setStep(2)
       return
     }
@@ -282,11 +296,15 @@ export default function RegisterPage() {
                   onChange={(event) => setField('email', event.target.value)}
                   placeholder="Введите email"
                   label="Email"
+                  helperText={emailError || undefined}
+                  error={!!emailError}
                 />
                 <Input
                   value={form.password}
                   onChange={(event) => setField('password', event.target.value)}
                   type={showPassword ? 'text' : 'password'}
+                  helperText={passwordError || undefined}
+                  error={!!passwordError}
                   rightIcon={
                     <EyeIcon
                       className={styles.eyeIcon}
