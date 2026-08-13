@@ -10,6 +10,8 @@ import { UserMenu } from '@/features/user-menu'
 import { NotificationButton } from '@/features/notification'
 import { ThemeToggle } from '@/features/theme'
 import { setSearchValue } from '@/features/search'
+import { useAboutProjectModal } from '@/features/filters/about-project/model/useAboutProjectModal'
+import { AboutProjectModal } from '@/features/filters/about-project/ui/AboutProjectModal'
 import { ROUTES } from '@/shared/lib/constants'
 import styles from './Header.module.css'
 
@@ -19,6 +21,7 @@ export function Header() {
   const isAuth = useAppSelector((state) => state.auth.isAuth)
   const searchValue = useAppSelector((state) => state.search.value)
   const subcategoryFilter = useAppSelector((state) => state.skills.filters.subcategory)
+  const { isOpen: isAboutOpen, open: openAbout, close: closeAbout } = useAboutProjectModal()
 
   const handleSelectCategory = (categoryId: string) => {
     const category = skillCategories.find((item) => item.id === categoryId)
@@ -43,42 +46,46 @@ export function Header() {
   }
 
   return (
-    <header className={styles.header}>
-      <div className={styles.left}>
-        <Logo />
-        <nav className={styles.nav}>
-          <Link to={ROUTES.ABOUT} className={styles.navLink}>
-            О проекте
-          </Link>
-          <SkillsDropdown
-            sections={skillCategories}
-            onSelectCategory={handleSelectCategory}
-            onSelectSubcategory={handleSelectSubcategory}
+    <>
+      <header className={styles.header}>
+        <div className={styles.left}>
+          <Logo />
+          <nav className={styles.nav}>
+            <button type="button" className={styles.navLink} onClick={openAbout}>
+              О проекте
+            </button>
+            <SkillsDropdown
+              sections={skillCategories}
+              onSelectCategory={handleSelectCategory}
+              onSelectSubcategory={handleSelectSubcategory}
+            />
+          </nav>
+        </div>
+
+        <div className={styles.search}>
+          <SearchInput
+            value={searchValue}
+            onChange={(event) => dispatch(setSearchValue(event.target.value))}
+            placeholder="Искать навык"
           />
-        </nav>
-      </div>
+        </div>
 
-      <div className={styles.search}>
-        <SearchInput
-          value={searchValue}
-          onChange={(event) => dispatch(setSearchValue(event.target.value))}
-          placeholder="Искать навык"
-        />
-      </div>
+        <div className={styles.actions}>
+          <ThemeToggle />
 
-      <div className={styles.actions}>
-        <ThemeToggle />
+          {isAuth && (
+            <>
+              <NotificationButton />
+              <Link to={ROUTES.FAVORITES} className={styles.iconButton} aria-label="Избранное">
+                <HeartIcon filled={false} />
+              </Link>
+              <UserMenu />
+            </>
+          )}
+        </div>
+      </header>
 
-        {isAuth && (
-          <>
-            <NotificationButton />
-            <Link to={ROUTES.FAVORITES} className={styles.iconButton} aria-label="Избранное">
-              <HeartIcon filled={false} />
-            </Link>
-            <UserMenu />
-          </>
-        )}
-      </div>
-    </header>
+      <AboutProjectModal isOpen={isAboutOpen} onClose={closeAbout} />
+    </>
   )
 }

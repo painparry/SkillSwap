@@ -6,8 +6,47 @@
   background-color: #f9faf7;
 }
 
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  margin-left: var(--space-xl);
+  max-width: 1020px;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: 28px;
+  color: #253017;
+  margin: 0;
+}
+
+.sentinel {
+  height: 1px;
+}
+
+.loading {
+  margin: auto;
+  font-size: var(--font-size-lg);
+  color: #69735d;
+}
+
+.activeTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
 @media (width <= 768px) {
   .page {
+    flex-direction: column;
     padding: var(--space-md);
+  }
+
+  .content {
+    margin-left: 0;
+    margin-top: var(--space-xl);
   }
 }
