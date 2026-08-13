@@ -122,24 +122,6 @@ const filterCategories: FilterCategory[] = [
       { id: 'storage', label: 'Хранение вещей' },
     ],
   },
-  {
-    id: 'programming',
-    label: 'Программирование',
-    subcategories: [
-      { id: 'frontend', label: 'Frontend' },
-      { id: 'backend', label: 'Backend' },
-      { id: 'testing', label: 'Тестирование' },
-    ],
-  },
-  {
-    id: 'design',
-    label: 'Дизайн',
-    subcategories: [
-      { id: 'web-design', label: 'Веб-дизайн' },
-      { id: 'ux-ui', label: 'UX/UI' },
-      { id: 'illustration', label: 'Иллюстрация' },
-    ],
-  },
 ]
 
 const cities = [
@@ -175,7 +157,7 @@ const defaultFiltersValue: FiltersSidebarValue = {
   cities: [],
 }
 
-const visibleCategoriesCount = 6
+const visibleCategoriesCount = 4
 const visibleCitiesCount = 5
 
 function toggleValue(values: string[], value: string) {
