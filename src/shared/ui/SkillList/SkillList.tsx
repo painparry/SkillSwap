@@ -58,7 +58,7 @@ function SkillSection({ title, skills, maxVisible }: SkillSectionProps) {
 export function SkillList({
   canTeach,
   wantsToLearn,
-  maxVisible = 2,
+  maxVisible = 1,
   className,
 }: SkillListProps) {
   const classNames = [styles.list, className].filter(Boolean).join(' ')
