@@ -96,46 +96,6 @@
   width: 100%;
 }
 
-.proposal {
-  display: grid;
-  gap: 20px;
-}
-
-.proposalTitle {
-  margin: 0;
-  color: #253017;
-  font-family: Jost, sans-serif;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 28px;
-  text-align: center;
-}
-
-.proposalText {
-  margin: 0;
-  color: #69735d;
-  line-height: 24px;
-  text-align: center;
-}
-
-.modalButtons {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.welcomeIcon {
-  display: grid;
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 20px;
-  place-items: center;
-  border-radius: 50%;
-  background-color: #abd27a;
-  color: #253017;
-  font-size: 34px;
-}
-
 @media (width <= 1100px) {
   .page {
     padding: 28px;

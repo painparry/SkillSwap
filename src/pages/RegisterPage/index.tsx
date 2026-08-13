@@ -11,10 +11,12 @@ import { Autocomplete, type AutocompleteOption } from '@/shared/ui/Autocomplete'
 import { MultiSelect, type MultiSelectOption } from '@/shared/ui/MultiSelect'
 import { SingleSelect, type SingleSelectOption } from '@/shared/ui/SingleSelect'
 import { Textarea } from '@/shared/ui/Textarea'
-import { Modal } from '@/shared/ui/Modal'
 import { SkillImageUpload } from '@/features/skill-image-upload'
 import { setUser } from '@/features/auth/model/authSlice'
-import { LOCAL_STORAGE_KEYS, ROUTES } from '@/shared/lib/constants'
+import { saveAuthUser } from '@/features/auth/model/authUtils'
+import { RegistrationSuccessModal } from '@/features/auth/ui/RegistrationSuccessModal'
+import { WelcomeModal } from '@/features/auth/ui/WelcomeModal'
+import { ROUTES } from '@/shared/lib/constants'
 import type { City, GenderType, SkillCategory } from '@/shared/types'
 import { useAppDispatch } from '@/store/hooks'
 import lampImg from '@/assets/images/lamp.svg'
@@ -41,6 +43,7 @@ type RegisterForm = {
   teachSubcategories: string[]
   description: string
   skillImageName: string
+  skillImagePreview: string | null
 }
 
 const initialForm: RegisterForm = {
@@ -58,6 +61,7 @@ const initialForm: RegisterForm = {
   teachSubcategories: [],
   description: '',
   skillImageName: '',
+  skillImagePreview: null,
 }
 
 const genderOptions: SingleSelectOption[] = [
@@ -78,6 +82,12 @@ const updateSelectedSubcategories = (
 
   return currentValues.filter((value) => allowedSubcategoryIds.has(value))
 }
+
+const getSelectedLabels = (options: MultiSelectOption[], selectedValues: string[]) =>
+  selectedValues
+    .map((value) => options.find((option) => option.value === value)?.label)
+    .filter(Boolean)
+    .join(', ')
 
 export default function RegisterPage() {
   const navigate = useNavigate()
@@ -101,6 +111,14 @@ export default function RegisterPage() {
       .then((response) => response.json())
       .then((data: SkillCategory[]) => setCategories(data))
   }, [])
+
+  useEffect(() => {
+    return () => {
+      if (form.skillImagePreview) {
+        URL.revokeObjectURL(form.skillImagePreview)
+      }
+    }
+  }, [form.skillImagePreview])
 
   const cityOptions: AutocompleteOption[] = useMemo(
     () => cities.map((city) => ({ value: String(city.id), label: city.name })),
@@ -166,6 +184,14 @@ export default function RegisterPage() {
     }))
   }
 
+  const handleSkillImageSelect = (file: File) => {
+    setForm((currentForm) => ({
+      ...currentForm,
+      skillImageName: file.name,
+      skillImagePreview: URL.createObjectURL(file),
+    }))
+  }
+
   const handleNext = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
@@ -184,29 +210,36 @@ export default function RegisterPage() {
 
   const handleReady = () => {
     setIsProposalModalOpen(false)
+    setIsWelcomeModalOpen(true)
+  }
 
-    const authUser = {
+  const handleWelcomeDone = () => {
+    const authUser = saveAuthUser({
       id: 'registered-user',
       name: form.name || 'Мария',
       email: form.email,
-      token: 'mock_registration_token',
       avatarUrl: form.avatarPreview,
       city: form.city,
       birthDate: form.birthDate,
       gender:
         form.gender === 'male' || form.gender === 'female' ? (form.gender as GenderType) : undefined,
       about: form.description,
-    }
+    })
 
-    localStorage.setItem(LOCAL_STORAGE_KEYS.AUTH_USER, JSON.stringify(authUser))
     dispatch(setUser(authUser))
-    setIsWelcomeModalOpen(true)
+    setIsWelcomeModalOpen(false)
+    navigate(ROUTES.PROFILE, { replace: true })
   }
 
-  const handleWelcomeDone = () => {
-    setIsWelcomeModalOpen(false)
-    navigate(ROUTES.PROFILE)
+  const handleEditProposal = () => {
+    setIsProposalModalOpen(false)
+    setStep(3)
   }
+
+  const selectedTeachCategoryLabels =
+    getSelectedLabels(categoryOptions, form.teachCategories) || 'Не указано'
+  const selectedTeachSubcategoryLabels =
+    getSelectedLabels(teachSubcategoryOptions, form.teachSubcategories) || 'Не указано'
 
   const asideByStep = {
     1: {
@@ -353,7 +386,7 @@ export default function RegisterPage() {
                   placeholder="Коротко опишите, чему можете научить"
                 />
                 <SkillImageUpload
-                  onFileSelect={(file) => setField('skillImageName', file.name)}
+                  onFileSelect={handleSkillImageSelect}
                   label="Выберите изображения навыка"
                 />
                 <div className={styles.buttons}>
@@ -376,37 +409,24 @@ export default function RegisterPage() {
         </aside>
       </div>
 
-      <Modal isOpen={isProposalModalOpen} onClose={() => setIsProposalModalOpen(false)}>
-        <div className={styles.proposal}>
-          <h2 className={styles.proposalTitle}>Ваше предложение</h2>
-          <p className={styles.proposalText}>
-            Проверьте данные навыка перед публикацией. Позже здесь будет модалка из задачи #87.
-          </p>
-          <div className={styles.modalButtons}>
-            <Button variant="secondary" onClick={() => setIsProposalModalOpen(false)}>
-              Редактировать
-            </Button>
-            <Button variant="primary" onClick={handleReady}>
-              Готово
-            </Button>
-          </div>
-        </div>
-      </Modal>
+      <RegistrationSuccessModal
+        isOpen={isProposalModalOpen}
+        onClose={() => setIsProposalModalOpen(false)}
+        onEdit={handleEditProposal}
+        onContinue={handleReady}
+        userName={form.name}
+        skillTitle={form.skillTitle || 'Не указано'}
+        skillCategory={selectedTeachCategoryLabels}
+        skillSubcategory={selectedTeachSubcategoryLabels}
+        skillDescription={form.description || 'Описание не заполнено'}
+        photos={form.skillImagePreview ? [form.skillImagePreview] : []}
+      />
 
-      <Modal isOpen={isWelcomeModalOpen} onClose={handleWelcomeDone}>
-        <span className={styles.welcomeIcon} aria-hidden="true">
-          *
-        </span>
-        <div className={styles.proposal}>
-          <h2 className={styles.proposalTitle}>Добро пожаловать!</h2>
-          <p className={styles.proposalText}>
-            Регистрация завершена. Дальше откроется расширенная страница пользователя.
-          </p>
-          <Button variant="primary" onClick={handleWelcomeDone}>
-            Готово
-          </Button>
-        </div>
-      </Modal>
+      <WelcomeModal
+        isOpen={isWelcomeModalOpen}
+        onClose={handleWelcomeDone}
+        userName={form.name}
+      />
     </main>
   )
 }
