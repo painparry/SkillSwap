@@ -8,7 +8,7 @@ import { Eye } from './Eye'
 import { CloseEye } from './CloseEye'
 import bulb from './light-bulb.png'
 import clsx from 'clsx'
-import { getAuthUser } from '@/features/auth/model/authUtils'
+import { getAuthUser, findRegisteredUserByEmail, saveAuthUser } from '@/features/auth/model/authUtils'
 import style from './loginPage.module.css'
 import { useAppDispatch } from '@/store/hooks'
 import { setUser } from '@/features/auth/model/authSlice'
@@ -29,19 +29,19 @@ export default function LoginPage() {
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError(false)
-    const user = getAuthUser()
-    if (!user) {
+
+    let user = getAuthUser()
+
+    if (!user || user.email !== email) {
+      user = findRegisteredUserByEmail(email)
+    }
+
+    if (!user || user.password !== password) {
       setError(true)
       return
     }
-    if (user.email !== email) {
-      setError(true)
-      return
-    }
-    // if (user.password !== password) { У нас сейчас в типе данных AuthUser нет пароля, поэтому проверки на него пока нет
-    //   setError(true)
-    //   return
-    // }
+
+    saveAuthUser(user)
     dispatch(setUser(user))
   }
 

@@ -160,9 +160,13 @@ export default function SkillPage() {
             category={category?.name ?? ''}
             subcategory={subcategory?.name ?? ''}
             description={skill.description}
-            images={skill.imageUrl ? [skill.imageUrl] : []}
+            images={
+              skill.photos && skill.photos.length > 0
+                ? skill.photos
+                : ['/db/images/users/user-01.jpg', '/db/images/users/user-02.jpg']
+            }
             liked={false}
-            onToggleLike={() => { }}
+            onToggleLike={() => {}}
           />
         </div>
 

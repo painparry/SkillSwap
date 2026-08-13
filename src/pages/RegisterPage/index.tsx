@@ -13,7 +13,7 @@ import { SingleSelect, type SingleSelectOption } from '@/shared/ui/SingleSelect'
 import { Textarea } from '@/shared/ui/Textarea'
 import { SkillImageUpload } from '@/features/skill-image-upload'
 import { setUser } from '@/features/auth/model/authSlice'
-import { saveAuthUser } from '@/features/auth/model/authUtils'
+import { saveAuthUser, saveRegisteredUser } from '@/features/auth/model/authUtils'
 import { RegistrationSuccessModal } from '@/features/auth/ui/RegistrationSuccessModal'
 import { WelcomeModal } from '@/features/auth/ui/WelcomeModal'
 import { ROUTES } from '@/shared/lib/constants'
@@ -232,12 +232,25 @@ export default function RegisterPage() {
       id: 'registered-user',
       name: form.name || 'Мария',
       email: form.email,
+      password: form.password,
       avatarUrl: form.avatarPreview,
       city: form.city,
       birthDate: form.birthDate,
       gender:
         form.gender === 'male' || form.gender === 'female' ? (form.gender as GenderType) : undefined,
       about: form.description,
+    })
+
+    saveRegisteredUser({
+      id: authUser.id,
+      name: authUser.name,
+      email: authUser.email,
+      password: form.password,
+      avatarUrl: authUser.avatarUrl,
+      city: authUser.city,
+      birthDate: authUser.birthDate,
+      gender: authUser.gender,
+      about: authUser.about,
     })
 
     dispatch(setUser(authUser))
