@@ -14,49 +14,75 @@ import userimg from '@/assets/images/user.svg'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/shared/lib/constants'
 
-export default function RegistrationStep1Page() {
-  const [, setAvatar] = useState<File|null>(null); //переменная avatar пока убрана, чтобы избежать ошибок линтера
-  const [name, setName] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [gender, setGender] = useState('');
-  const [cities, setCities] = useState<City[]>([]);
-  const [cityId, setCityId] = useState('');
-  const [categories, setCategories] = useState<SkillCategory[]>([]);
-  const [selectedCategoriesLearn, setSelectedCategoriesLearn] = useState<string[]>([]);
-  const [selectedSubcategoriesLearn, setSelectedSubcategoriesLearn] = useState<string[]>([]);
+const REGISTRATION_KEY = 'skillswap_registration'
+
+function getRegistrationData() {
+  try {
+    const raw = localStorage.getItem(REGISTRATION_KEY)
+    return raw ? JSON.parse(raw) : {}
+  } catch {
+    return {}
+  }
+}
+
+function saveRegistrationData(data: Record<string, unknown>) {
+  localStorage.setItem(REGISTRATION_KEY, JSON.stringify({ ...getRegistrationData(), ...data }))
+}
+
+export default function RegistrationStep2Page() {
+  const stored = getRegistrationData()
+  const [, setAvatar] = useState<File | null>(null)
+  const [name, setName] = useState(stored.name ?? '')
+  const [birthDate, setBirthDate] = useState(stored.birthDate ?? '')
+  const [gender, setGender] = useState(stored.gender ?? '')
+  const [cities, setCities] = useState<City[]>([])
+  const [cityId, setCityId] = useState(stored.cityId ?? '')
+  const [categories, setCategories] = useState<SkillCategory[]>([])
+  const [selectedCategoriesLearn, setSelectedCategoriesLearn] = useState<string[]>(stored.categoriesLearn ?? [])
+  const [selectedSubcategoriesLearn, setSelectedSubcategoriesLearn] = useState<string[]>(stored.subcategoriesLearn ?? [])
 
   const genderOptions: SingleSelectOption[] = [
-    {value: 'male', label: 'Мужской'},
-    {value:'female', label: 'Женский'}
+    { value: 'male', label: 'Мужской' },
+    { value: 'female', label: 'Женский' },
   ]
 
   useEffect(() => {
-  fetch('/db/cities.json')
-    .then((response) => response.json())
-    .then((data: City[]) => setCities(data));
-  }, []);
+    fetch('/db/cities.json')
+      .then((response) => response.json())
+      .then((data: City[]) => setCities(data))
+  }, [])
 
-  const CityOptions: SingleSelectOption[] = cities.map(city => ({value: String(city.id), label: city.name}));
+  const CityOptions: SingleSelectOption[] = cities.map(city => ({ value: String(city.id), label: city.name }))
 
   useEffect(() => {
-  fetch('/db/skills.json')
-    .then((response) => response.json())
-    .then((data: SkillCategory[]) => setCategories(data));
-  }, []);
+    fetch('/db/skills.json')
+      .then((response) => response.json())
+      .then((data: SkillCategory[]) => setCategories(data))
+  }, [])
 
-  const categoryOptions: MultiSelectOption[] = categories.map(category =>
-    ({value: category.id, label: category.name})
+  const categoryOptions: MultiSelectOption[] = categories.map(category => ({
+    value: category.id,
+    label: category.name,
+  }))
+
+  const selectedCategoryObjects = categories.filter(category => selectedCategoriesLearn.includes(category.id))
+  const subcategoryOptions: MultiSelectOption[] = selectedCategoryObjects.flatMap(category =>
+    category.subcategories.map(subcategory => ({ value: subcategory.id, label: subcategory.name })),
   )
-  const selectedCategoryObjects = categories.filter(category => (selectedCategoriesLearn.includes(category.id)));
-  const subcategoryOptions: MultiSelectOption[] = selectedCategoryObjects.flatMap(category => category.subcategories.map(subcategory => ({value: subcategory.id, label: subcategory.name})));
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-     // TODO: сохранить введённые данные при отправке формы
-
-    navigate(ROUTES.REGISTRATION_STEP_3);
+    e.preventDefault()
+    saveRegistrationData({
+      name,
+      birthDate,
+      gender,
+      cityId,
+      categoriesLearn: selectedCategoriesLearn,
+      subcategoriesLearn: selectedSubcategoriesLearn,
+    })
+    navigate(ROUTES.REGISTRATION_STEP_3)
   }
 
   return (
@@ -64,7 +90,7 @@ export default function RegistrationStep1Page() {
       <div className={styles.header}>
         <Logo />
         <Button variant="tertiary">
-          <span className={styles.buttonContent}  onClick={()=>navigate('/')}>
+          <span className={styles.buttonContent} onClick={() => navigate('/')}>
             Закрыть
             <CrossIcon />
           </span>
@@ -76,14 +102,14 @@ export default function RegistrationStep1Page() {
       <div className={styles.content}>
         <div className={styles.formCard}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <AvatarUpload onChange={(file) => setAvatar(file)}/>
-            <Input value={name} onChange={(e)=>{setName(e.target.value)}} placeholder='Введите ваше имя' label='Имя' />
+            <AvatarUpload onChange={(file) => setAvatar(file)} />
+            <Input value={name} onChange={(e) => setName(e.target.value)} placeholder='Введите ваше имя' label='Имя' />
             <div className={styles.birthdateGenderWrapper}>
               <div className={styles.birthdate}>
-                <DatePicker value={birthDate} onChange={setBirthDate}/>
+                <DatePicker value={birthDate} onChange={setBirthDate} />
               </div>
               <div className={styles.selectGendertWrapper}>
-                <SingleSelect options={genderOptions} value={gender} onChange={setGender} label='Пол' placeholder='Не указан'/>
+                <SingleSelect options={genderOptions} value={gender} onChange={setGender} label='Пол' placeholder='Не указан' />
               </div>
             </div>
             <div className={styles.selectCitytWrapper}>
@@ -94,7 +120,7 @@ export default function RegistrationStep1Page() {
             <div className={styles.buttonsWrapper}>
               <Button variant='secondary' className={styles.button} onClick={() => navigate(ROUTES.REGISTRATION_STEP_1)}>Назад</Button>
               <Button variant='primary' type="submit" className={styles.button}>Продолжить</Button>
-              </div>
+            </div>
           </form>
         </div>
         <div className={styles.formCard}>

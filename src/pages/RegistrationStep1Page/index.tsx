@@ -10,29 +10,57 @@ import lampimg from '../../assets/images/lamp.svg'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/shared/lib/constants'
 
+const REGISTRATION_KEY = 'skillswap_registration'
+
+function getRegistrationData() {
+  try {
+    const raw = localStorage.getItem(REGISTRATION_KEY)
+    return raw ? JSON.parse(raw) : {}
+  } catch {
+    return {}
+  }
+}
+
+function saveRegistrationData(data: Record<string, unknown>) {
+  localStorage.setItem(REGISTRATION_KEY, JSON.stringify({ ...getRegistrationData(), ...data }))
+}
+
 export default function RegistrationStep1Page() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [emailError] = useState(false); //убран setEmailError, чтобы не было ошибок линтера и сборки
-  const navigate = useNavigate();
+  const stored = getRegistrationData()
+  const [email, setEmail] = useState(stored.email ?? '')
+  const [password, setPassword] = useState(stored.password ?? '')
+  const [showPassword, setShowPassword] = useState(false)
+  const [emailError, setEmailError] = useState(false)
+  const [emailHelper, setEmailHelper] = useState<string | undefined>(undefined)
+  const navigate = useNavigate()
 
-  const passwordHelper = (password.length > 0) && (password.length < 8) ? 'Пароль должен содержать не менее 8 знаков' : '';
+  const passwordHelper = password.length > 0 && password.length < 8
+    ? 'Пароль должен содержать не менее 8 знаков'
+    : ''
 
-  const emailHelper = emailError ? 'Email уже используется' : undefined;
-
-  //TODO: когда будет готов механизм авторизации - сравнить email с сохранённой почтой зарегистрированного пользователя и вызвать setEmailError(true), чтобы появилось сообщение об ошибке
+  const validateEmail = (value: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(value)
+  }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // TODO: сохранить введённые email и password при отправке формы
+    e.preventDefault()
 
-    navigate(ROUTES.REGISTRATION_STEP_2);
+    if (!validateEmail(email)) {
+      setEmailError(true)
+      setEmailHelper('Введите корректный email (например, user@example.com)')
+      return
+    }
+
+    setEmailError(false)
+    setEmailHelper(undefined)
+    saveRegistrationData({ email, password })
+    navigate(ROUTES.REGISTRATION_STEP_2)
   }
 
   return (
     <main className={styles.page}>
-            <div className={styles.header}>
+      <div className={styles.header}>
         <Logo />
         <Button className={styles.closeButton} onClick={() => navigate(ROUTES.HOME)}>
           Закрыть <CrossIcon />
@@ -44,8 +72,23 @@ export default function RegistrationStep1Page() {
       <div className={styles.content}>
         <div className={styles.formCard}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <Input value={email} onChange={(e) => setEmail(e.target.value)} helperText={emailHelper} placeholder='Введите email' label='Email' />
-            <Input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} helperText={passwordHelper} error={emailError} rightIcon={<EyeIcon onClick={() => setShowPassword(prev => !prev)} className={styles.eyeIcon} />} placeholder='Придумайте надёжный пароль' label='Пароль' />
+            <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              helperText={emailHelper}
+              error={emailError}
+              placeholder='Введите email'
+              label='Email'
+            />
+            <Input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              type={showPassword ? 'text' : 'password'}
+              helperText={passwordHelper}
+              rightIcon={<EyeIcon onClick={() => setShowPassword(prev => !prev)} className={styles.eyeIcon} />}
+              placeholder='Придумайте надёжный пароль'
+              label='Пароль'
+            />
             <Button variant='primary' type="submit">Далее</Button>
           </form>
         </div>

@@ -13,40 +13,89 @@ import boardimg from '@/assets/images/schoolBoard.svg'
 import type { SkillCategory } from '@/shared/types'
 import { ROUTES } from '@/shared/lib/constants'
 
+const REGISTRATION_KEY = 'skillswap_registration'
+
+function getRegistrationData() {
+  try {
+    const raw = localStorage.getItem(REGISTRATION_KEY)
+    return raw ? JSON.parse(raw) : {}
+  } catch {
+    return {}
+  }
+}
+
+function saveRegistrationData(data: Record<string, unknown>) {
+  localStorage.setItem(REGISTRATION_KEY, JSON.stringify({ ...getRegistrationData(), ...data }))
+}
 
 export default function RegistrationStep3Page() {
-  const [skill, setSkill] = useState('');
-  const [categories, setCategories] = useState<SkillCategory[]>([]);
-  const [selectedCategoriesTeach, setSelectedCategoriesTeach] = useState<string[]>([]);
-  const [selectedSubcategoriesTeach, setSelectedSubcategoriesTeach] = useState<string[]>([]);
-  const [description, setDescription] = useState('');
-  const [, setSkillImage] = useState<File|null>(null); //переменная skillImage удалена, чтобы линтер не ругался
+  const stored = getRegistrationData()
+  const [skill, setSkill] = useState(stored.skill ?? '')
+  const [categories, setCategories] = useState<SkillCategory[]>([])
+  const [selectedCategoriesTeach, setSelectedCategoriesTeach] = useState<string[]>(stored.categoriesTeach ?? [])
+  const [selectedSubcategoriesTeach, setSelectedSubcategoriesTeach] = useState<string[]>(stored.subcategoriesTeach ?? [])
+  const [description, setDescription] = useState(stored.description ?? '')
+  const [, setSkillImage] = useState<File | null>(null)
 
   useEffect(() => {
-  fetch('/db/skills.json')
-    .then((response) => response.json())
-    .then((data: SkillCategory[]) => setCategories(data));
-  }, []);
+    fetch('/db/skills.json')
+      .then((response) => response.json())
+      .then((data: SkillCategory[]) => setCategories(data))
+  }, [])
 
-  const categoryOptions: MultiSelectOption[] = categories.map(category =>
-    ({value: category.id, label: category.name})
-  );
-  const selectedCategoryObjects = categories.filter(category => (selectedCategoriesTeach.includes(category.id)));
-  const subcategoryOptions: MultiSelectOption[] = selectedCategoryObjects.flatMap(category => category.subcategories.map(subcategory => ({value: subcategory.id, label: subcategory.name})));
+  const categoryOptions: MultiSelectOption[] = categories.map(category => ({
+    value: category.id,
+    label: category.name,
+  }))
 
-  const navigate = useNavigate();
+  const selectedCategoryObjects = categories.filter(category => selectedCategoriesTeach.includes(category.id))
+  const subcategoryOptions: MultiSelectOption[] = selectedCategoryObjects.flatMap(category =>
+    category.subcategories.map(subcategory => ({ value: subcategory.id, label: subcategory.name })),
+  )
+
+  const navigate = useNavigate()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-       // TODO: сохранить введённые данные при отправке формы
+    e.preventDefault()
+    saveRegistrationData({
+      skill,
+      categoriesTeach: selectedCategoriesTeach,
+      subcategoriesTeach: selectedSubcategoriesTeach,
+      description,
+    })
+
+    // Сборка итогового пользователя
+    const data = getRegistrationData()
+    const user = {
+      id: 'user_' + Date.now(),
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      birthDate: data.birthDate,
+      gender: data.gender,
+      city: data.cityId,
+      about: '',
+      avatarUrl: null,
     }
+
+    // Сохраняем как авторизованного пользователя
+    localStorage.setItem('skillswap_auth_user', JSON.stringify({
+      ...user,
+      token: 'mock_token_' + user.id,
+    }))
+
+    // Очищаем временные данные регистрации
+    localStorage.removeItem(REGISTRATION_KEY)
+
+    navigate(ROUTES.HOME)
+  }
 
   return (
     <main className={styles.page}>
       <div className={styles.header}>
         <Logo />
         <Button variant="tertiary">
-          <span className={styles.buttonContent} onClick={()=>navigate('/')}>
+          <span className={styles.buttonContent} onClick={() => navigate('/')}>
             Закрыть
             <CrossIcon />
           </span>
@@ -58,11 +107,11 @@ export default function RegistrationStep3Page() {
       <div className={styles.content}>
         <div className={styles.formCard}>
           <form className={styles.form} onSubmit={handleSubmit}>
-            <Input value={skill} onChange={(e)=>setSkill(e.target.value)} label='Название навыка' placeholder='Введите название вашего навыка'/>
+            <Input value={skill} onChange={(e) => setSkill(e.target.value)} label='Название навыка' placeholder='Введите название вашего навыка' />
             <MultiSelect options={categoryOptions} selectedValues={selectedCategoriesTeach} onChange={setSelectedCategoriesTeach} placeholder='Выберите категорию навыка' label='Категория навыка' />
             <MultiSelect options={subcategoryOptions} selectedValues={selectedSubcategoriesTeach} onChange={setSelectedSubcategoriesTeach} placeholder='Выберите подкатегорию навыка' label='Подкатегория навыка' />
-            <Textarea value={description} onChange={(e)=>setDescription(e.target.value)} label='Описание' placeholder='Коротко опишите, чему можете научить'/>
-            <SkillImageUpload onFileSelect={setSkillImage} label='Перетащите или выберите изображения навыка'/>
+            <Textarea value={description} onChange={(e) => setDescription(e.target.value)} label='Описание' placeholder='Коротко опишите, чему можете научить' />
+            <SkillImageUpload onFileSelect={setSkillImage} label='Перетащите или выберите изображения навыка' />
             <div className={styles.buttonsWrapper}>
               <Button variant='secondary' className={styles.button} onClick={() => navigate(ROUTES.REGISTRATION_STEP_2)}>Назад</Button>
               <Button variant='primary' type="submit" className={styles.button}>Продолжить</Button>
