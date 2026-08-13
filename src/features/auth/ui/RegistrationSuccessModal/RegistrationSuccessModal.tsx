@@ -21,7 +21,6 @@ export function RegistrationSuccessModal({
   onClose,
   onEdit,
   onContinue,
-  userName = 'Анна',
   skillTitle = 'Игра на барабанах',
   skillCategory = 'Творчество и искусство',
   skillSubcategory = 'Музыка и звук',

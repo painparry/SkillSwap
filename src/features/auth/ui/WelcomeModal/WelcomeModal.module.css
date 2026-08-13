@@ -2,7 +2,7 @@
   width: 556px;
   max-width: 90vw;
   height: 420px;
-  background: #ffffff;
+  background: #fff;
   border-radius: 12px;
   padding: 80px 60px;
   display: flex;
@@ -44,7 +44,7 @@
   line-height: 28px;
   letter-spacing: -0.011em;
   text-align: center;
-  color: #000000;
+  color: #000;
   margin: 0;
 }
 
@@ -89,7 +89,7 @@
   background: #8ab05a;
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
   .container {
     width: 90vw;
     height: auto;
@@ -129,7 +129,7 @@
   }
 }
 
-@media (max-width: 400px) {
+@media (width <= 400px) {
   .container {
     padding: 24px 16px;
     gap: 24px;

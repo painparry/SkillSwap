@@ -2,9 +2,9 @@
   width: 1024px;
   max-width: 90vw;
   height: 532px;
-  background: #ffffff;
+  background: #fff;
   border-radius: 12px;
-  padding: 44px 60px 72px 60px;
+  padding: 44px 60px 72px;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -27,7 +27,7 @@
   line-height: 28px;
   letter-spacing: -0.011em;
   text-align: center;
-  color: #000000;
+  color: #000;
   margin: 0;
 }
 
@@ -72,7 +72,7 @@
   font-size: 32px;
   line-height: 40px;
   letter-spacing: -0.011em;
-  color: #000000;
+  color: #000;
   margin: 0;
   text-align: left;
 }
@@ -141,9 +141,9 @@
 }
 
 .editButton {
-  background: #ffffff;
+  background: #fff;
   color: #253017;
-  border: 1px solid #abd27a !important;
+  border: 1px solid #abd27a;
 }
 
 .editButton:hover {
@@ -177,23 +177,23 @@
   overflow: hidden;
 }
 
-.carouselSection :global(.carousel) {
+.carouselSection .carousel {
   width: 100%;
   height: 100%;
 }
 
-.carouselSection :global(.mainImage) {
+.carouselSection .mainImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   .container {
     width: 90vw;
     height: auto;
     min-height: 500px;
-    padding: 32px 30px 40px 30px;
+    padding: 32px 30px 40px;
     gap: 24px;
   }
 
@@ -226,9 +226,9 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .container {
-    padding: 24px 16px 32px 16px;
+    padding: 24px 16px 32px;
     min-height: 400px;
   }
 
