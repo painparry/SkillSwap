@@ -4,11 +4,11 @@ import { fetchUserSkillById, fetchUserSkills } from '@/api/userSkills'
 import { fetchUsers } from '@/api/users'
 import { ExtendedUserCard } from '@/entities/user/ui/ExtendedUserCard'
 import { UserCard, UserCardProps } from '@/entities/user/ui/UserCard'
-import { ExchangeButton } from '@/features/exchange/ui'
 import { Carousel } from '@/shared/ui/Carousel'
 import type { SkillItem } from '@/shared/ui/SkillList'
 import { skillCategories } from '@/shared/lib/skillCategories'
 import { ROUTES } from '@/shared/lib/constants'
+import { SkillCard } from '@/shared/ui/SkillCard'
 import type { Skill, User } from '@/shared/types'
 import styles from './index.module.css'
 
@@ -152,22 +152,15 @@ export default function SkillPage() {
             className={styles.userCard}
           />
 
-          {/* заглушка */}
-          <div className={styles.skillDetails}>
-            <p>SkillDetails — TODO</p>
-            <h1>{skill.title}</h1>
-            <p>
-              {category?.name} / {subcategory?.name}
-            </p>
-            <p>{skill.description}</p>
-
-            <ExchangeButton
-              skillId={skill.id}
-              authorId={author.id}
-              authorName={author.name}
-              skillTitle={skill.title}
-            />
-          </div>
+          <SkillCard
+            title={skill.title}
+            category={category?.name ?? ''}
+            subcategory={subcategory?.name ?? ''}
+            description={skill.description}
+            images={skill.imageUrl ? [skill.imageUrl] : []}
+            liked={false}
+            onToggleLike={() => {}}
+          />
         </div>
 
         {similarUsers.length > 0 && (
@@ -175,7 +168,10 @@ export default function SkillPage() {
             <h2 className={styles.similarTitle}>Похожие предложения</h2>
             <Carousel>
               {similarUsers.map((user) => (
-                <div key={user.id} className={styles.cardWrapper}>
+                <div
+                  key={user.id}
+                  style={{ flex: '0 0 320px', scrollSnapAlign: 'start' }}
+                >
                   <UserCard {...user} />
                 </div>
               ))}
