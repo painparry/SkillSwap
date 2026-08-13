@@ -1,0 +1,22 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.images {
+  max-width: 252px;
+}
+
+.title {
+  font-size: 32px;
+}
+
+.text {
+  padding-bottom: 50px;
+}
+
+.button {
+  max-width: 270px;
+}
