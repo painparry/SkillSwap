@@ -1,12 +1,11 @@
 import { RootState } from '@/store'
-import { useAppDispatch } from '@/store/hooks'
-import { useSelector } from 'react-redux'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { toggleFavorite } from './favoriteSlice'
 
 export function useFavorites() {
   const dispatch = useAppDispatch()
 
-  const favoriteIds = useSelector((state: RootState) => state.favorites.userIds)
+  const favoriteIds = useAppSelector((state: RootState) => state.favorites.userIds)
 
   const toggle = (userId: string) => {
     dispatch(toggleFavorite(userId))

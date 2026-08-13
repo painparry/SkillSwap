@@ -2,19 +2,19 @@ import { selectFavoritesUsers } from '@/entities/favorite/model/selectors'
 import { useFavorites } from '@/entities/favorite/model/useFavorites'
 import { UserCardProps } from '@/entities/user/ui/UserCard'
 import { UserSection } from '@/shared/ui/Section'
-import { useSelector } from 'react-redux'
 import styles from './FavoritePage.module.css'
 import { Button } from '@/shared/ui/Button'
 import noFavoritesImage from '../../assets/images/no-favorites.png'
 import { useNavigate } from 'react-router-dom'
-import { RootState } from '@/store'
-import { SkillItem } from '@/shared/ui/SkillList'
-import { Skill } from '@/shared/types'
+import type { RootState } from '@/store'
+import type { SkillItem } from '@/shared/ui/SkillList'
+import type { Skill } from '@/shared/types'
+import { useAppSelector } from '@/store/hooks'
 
 export default function FavoritesPage() {
-  const users = useSelector(selectFavoritesUsers)
+  const users = useAppSelector(selectFavoritesUsers)
   const navigate = useNavigate()
-  const skills = useSelector((state: RootState) => state.skills.skills)
+  const skills = useAppSelector((state: RootState) => state.skills.skills)
 
   const { toggleFavorite } = useFavorites()
 
@@ -28,7 +28,7 @@ export default function FavoritesPage() {
       avatarUrl: user.avatarUrl,
 
       canTeach: userSkills.filter((skill) => skill.type === 'teach').map(toSkillItem),
-      wantsToLearn: userSkills.filter((skill) => skill.type === 'teach').map(toSkillItem),
+      wantsToLearn: userSkills.filter((skill) => skill.type === 'learn').map(toSkillItem),
 
       liked: true,
       likesCount: user.likes,
