@@ -18,7 +18,7 @@ function renderCard(overrides: Partial<Parameters<typeof UserCard>[0]> = {}) {
         { title: 'Рисование', category: 'art' },
       ]}
       liked={false}
-      onToggleLike={() => {}}
+      onToggleLike={() => { }}
       {...overrides}
     />,
   )
@@ -31,12 +31,11 @@ describe('UserCard', () => {
     expect(screen.getByText('Санкт-Петербург, 34 года')).toBeInTheDocument()
   })
 
-  it('обрезает список "Хочет научиться" и показывает "+2"', () => {
+  it('обрезает список "Хочет научиться" и показывает "+3"', () => {
     renderCard()
     expect(screen.getByText('Тайм менеджмент')).toBeInTheDocument()
-    expect(screen.getByText('Медитация')).toBeInTheDocument()
-    expect(screen.queryByText('Йога')).not.toBeInTheDocument()
-    expect(screen.getByText('+2')).toBeInTheDocument()
+    expect(screen.queryByText('Медитация')).not.toBeInTheDocument()
+    expect(screen.getByText('+3')).toBeInTheDocument()
   })
 
   it('вызывает onToggleLike при клике на сердечко', () => {

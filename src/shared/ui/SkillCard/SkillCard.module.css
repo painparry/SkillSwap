@@ -1,0 +1,65 @@
+.skillCard {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr;
+  gap: 32px;
+  padding: 80px 52px 40px;
+  min-height: 440px;
+  background-color: #fff;
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+}
+
+.content {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.title {
+  font-size: 32px;
+  font-family: Jost, sans-serif;
+  font-weight: 500;
+}
+
+.category {
+  margin-block-end: 20px;
+  color: #8e8e93;
+  font-size: 12px;
+}
+
+.description {
+  color: #253017;
+  line-height: 24px;
+}
+
+.contentbtn {
+  margin-top: auto;
+}
+
+.actionBtn {
+  width: 100%;
+}
+
+.controls,
+.carouselWrapper {
+  grid-column: 2;
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+  justify-content: end;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.controls svg {
+  width: 24px;
+  height: 24px;
+}

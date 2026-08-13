@@ -41,6 +41,13 @@
   max-width: 460px;
 }
 
+.notFound {
+  margin: auto;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+}
+
 .passwordLink {
   align-self: flex-start;
   margin-top: calc(-1 * var(--space-md));

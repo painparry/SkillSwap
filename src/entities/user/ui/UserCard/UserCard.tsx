@@ -57,11 +57,9 @@ export function UserCard({
 
       <Button
         variant={exchangeProposed ? 'secondary' : 'primary'}
-        className={styles.button}
+        className={[styles.button, exchangeProposed && styles.buttonProposed].filter(Boolean).join(' ')}
         disabled={exchangeProposed}
         onClick={onDetailsClick}
-        // TODO: костыль для изменения цвета кнопки при предложенном обмене, пока нет отдельного варианта стиля
-        style={exchangeProposed ? { borderColor: '#abd27a', color: '#253017' } : undefined}
       >
         {exchangeProposed ? (
           <>

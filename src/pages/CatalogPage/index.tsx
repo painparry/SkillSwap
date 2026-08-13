@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FiltersSidebar, type FiltersSidebarValue } from '@/features/filters'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { fetchUsersThunk, toggleLike, removeLike } from '@/entities/user/model/usersSlice'
@@ -16,7 +17,7 @@ import { useInfiniteScroll } from '@/shared/ui/InfiniteScroll/useInfiniteScroll'
 import { Tag } from '@/shared/ui/Tag'
 import { skillCategories } from '@/shared/lib/skillCategories'
 import { useLocalStorage } from '@/shared/hooks/useLocalStorage'
-import { LOCAL_STORAGE_KEYS } from '@/shared/lib/constants'
+import { LOCAL_STORAGE_KEYS, ROUTES } from '@/shared/lib/constants'
 import type { UserCardProps } from '@/entities/user/ui/UserCard'
 import type { SkillItem } from '@/shared/ui/SkillList'
 import type { Skill } from '@/shared/types'
@@ -27,6 +28,7 @@ const LOAD_MORE_COUNT = 6
 
 export default function CatalogPage() {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const users = useAppSelector(selectUsers)
 
   const [skills, setSkills] = useState<Skill[]>([])
@@ -113,6 +115,12 @@ export default function CatalogPage() {
           }
         },
         likesCount: user.likes,
+        onDetailsClick: () => {
+          const firstSkill = skills.find((s) => s.authorId === user.id)
+          if (firstSkill) {
+            navigate(ROUTES.SKILL.replace(':id', firstSkill.id))
+          }
+        },
       })
     })
 
@@ -128,7 +136,7 @@ export default function CatalogPage() {
     }
 
     return result
-  }, [filteredSkills, users, skills, searchValue, favorites, setFavorites, isAuth, dispatch])
+  }, [filteredSkills, users, skills, searchValue, favorites, setFavorites, isAuth, dispatch, navigate])
 
   const popularCards = useMemo(
     () => [...allCards].sort((a, b) => (b.likesCount || 0) - (a.likesCount || 0)),

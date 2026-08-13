@@ -7,7 +7,6 @@ import { DatePicker } from '@/shared/ui/DatePicker'
 import { Autocomplete } from '@/shared/ui/Autocomplete'
 import { AvatarUpload } from '@/shared/ui/AvatarUpload'
 import { Button } from '@/shared/ui/Button'
-import { fetchUsers } from '@/api/users'
 import { fetchCities } from '@/api/cities'
 import { saveAuthUser } from '@/features/auth/model/authUtils'
 import { setUser } from '@/features/auth/model/authSlice'
@@ -48,32 +47,6 @@ export default function ProfilePage() {
   const [baseline, setBaseline] = useState<ProfileFormState>(() => toFormState(authUser))
   const seededUserIdRef = useRef<string | null>(authUser?.id ?? null)
 
-  // TODO: Пока не готов реальный вход (LoginPage в разработке), используется первый тестовый пользователь, чтобы страницу профиля можно было проверить.
-  useEffect(() => {
-    if (authUser) return
-    let cancelled = false
-
-    fetchUsers().then((users) => {
-      if (cancelled || users.length === 0) return
-
-      const demoUser = users[0]
-      const nextUser = saveAuthUser({
-        id: demoUser.id,
-        name: demoUser.name,
-        email: demoUser.email,
-        avatarUrl: demoUser.avatarUrl,
-        city: demoUser.city,
-        gender: demoUser.gender,
-        about: demoUser.about,
-      })
-      dispatch(setUser(nextUser))
-    })
-
-    return () => {
-      cancelled = true
-    }
-  }, [authUser, dispatch])
-
   useEffect(() => {
     fetchCities()
       .then(setCities)
@@ -96,7 +69,10 @@ export default function ProfilePage() {
 
   const isDirty = useMemo(() => JSON.stringify(form) !== JSON.stringify(baseline), [form, baseline])
 
-  const updateField = <Key extends keyof ProfileFormState>(key: Key, value: ProfileFormState[Key]) => {
+  const updateField = <Key extends keyof ProfileFormState>(
+    key: Key,
+    value: ProfileFormState[Key],
+  ) => {
     setForm((current) => ({ ...current, [key]: value }))
   }
 
@@ -129,83 +105,95 @@ export default function ProfilePage() {
         <ProfileSidebar className={styles.sidebar} />
 
         <section className={styles.card}>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <Input
-              label="Почта"
-              type="email"
-              value={form.email}
-              onChange={(event: ChangeEvent<HTMLInputElement>) => updateField('email', event.target.value)}
-              rightIcon={<PencilIcon />}
-            />
+          {!authUser ? (
+            <p className={styles.notFound}>Пользователь не найден</p>
+          ) : (
+            <>
+              <form className={styles.form} onSubmit={handleSubmit}>
+                <Input
+                  label="Почта"
+                  type="email"
+                  value={form.email}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    updateField('email', event.target.value)
+                  }
+                  rightIcon={<PencilIcon />}
+                />
 
-            <button type="button" className={styles.passwordLink}>
-              Изменить пароль
-            </button>
+                <button type="button" className={styles.passwordLink}>
+                  Изменить пароль
+                </button>
 
-            <Input
-              label="Имя"
-              value={form.name}
-              onChange={(event: ChangeEvent<HTMLInputElement>) => updateField('name', event.target.value)}
-              rightIcon={<PencilIcon />}
-            />
+                <Input
+                  label="Имя"
+                  value={form.name}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    updateField('name', event.target.value)
+                  }
+                  rightIcon={<PencilIcon />}
+                />
 
-            <div className={styles.row}>
-              <DatePicker
-                className={styles.dateField}
-                value={form.birthDate}
-                onChange={(value) => updateField('birthDate', value)}
-              />
+                <div className={styles.row}>
+                  <DatePicker
+                    className={styles.dateField}
+                    value={form.birthDate}
+                    onChange={(value) => updateField('birthDate', value)}
+                  />
 
-              <div className={styles.genderField}>
-                <label className={styles.label} htmlFor={genderId}>
-                  Пол
-                </label>
-                <div className={styles.selectWrapper}>
-                  <select
-                    id={genderId}
-                    className={styles.select}
-                    value={form.gender}
-                    onChange={(event) => updateField('gender', event.target.value as GenderType)}
-                  >
-                    <option value="female">Женский</option>
-                    <option value="male">Мужской</option>
-                  </select>
-                  <span className={styles.selectChevron} aria-hidden="true" />
+                  <div className={styles.genderField}>
+                    <label className={styles.label} htmlFor={genderId}>
+                      Пол
+                    </label>
+                    <div className={styles.selectWrapper}>
+                      <select
+                        id={genderId}
+                        className={styles.select}
+                        value={form.gender}
+                        onChange={(event) =>
+                          updateField('gender', event.target.value as GenderType)
+                        }
+                      >
+                        <option value="female">Женский</option>
+                        <option value="male">Мужской</option>
+                      </select>
+                      <span className={styles.selectChevron} aria-hidden="true" />
+                    </div>
+                  </div>
                 </div>
+
+                <Autocomplete
+                  label="Город"
+                  placeholder="Введите город"
+                  showChevron
+                  options={cityOptions}
+                  value={form.city}
+                  onChange={(value) => updateField('city', value)}
+                  onSelect={(option) => updateField('city', option.label)}
+                />
+
+                <Textarea
+                  label="О себе"
+                  rows={4}
+                  value={form.about}
+                  onChange={(event) => updateField('about', event.target.value)}
+                  rightIcon={<PencilIcon />}
+                />
+
+                <Button className={styles.saveButton} type="submit" disabled={!isDirty}>
+                  Сохранить
+                </Button>
+              </form>
+
+              <div className={styles.avatarColumn}>
+                <AvatarUpload
+                  className={styles.avatar}
+                  size={244}
+                  value={form.avatarUrl}
+                  onChange={handleAvatarChange}
+                />
               </div>
-            </div>
-
-            <Autocomplete
-              label="Город"
-              placeholder="Введите город"
-              showChevron
-              options={cityOptions}
-              value={form.city}
-              onChange={(value) => updateField('city', value)}
-              onSelect={(option) => updateField('city', option.label)}
-            />
-
-            <Textarea
-              label="О себе"
-              rows={4}
-              value={form.about}
-              onChange={(event) => updateField('about', event.target.value)}
-              rightIcon={<PencilIcon />}
-            />
-
-            <Button className={styles.saveButton} type="submit" disabled={!isDirty}>
-              Сохранить
-            </Button>
-          </form>
-
-          <div className={styles.avatarColumn}>
-            <AvatarUpload
-              className={styles.avatar}
-              size={244}
-              value={form.avatarUrl}
-              onChange={handleAvatarChange}
-            />
-          </div>
+            </>
+          )}
         </section>
       </main>
     </div>

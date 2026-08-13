@@ -14,7 +14,7 @@ export const Carousel = ({ children }: CarouselProps) => {
   useEffect(() => {
     if (!carouselRef.current) return
 
-    const firstCard = carouselRef.current.querySelector(`.${styles.cardWrapper}`)
+    const firstCard = carouselRef.current.firstElementChild as HTMLElement
 
     if (firstCard) {
       setCardWidth((firstCard as HTMLElement).offsetWidth)

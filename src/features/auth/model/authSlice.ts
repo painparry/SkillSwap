@@ -1,14 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { AuthUser } from '@/shared/types';
+import { getAuthUser, clearAuthUser } from './authUtils';
 
 interface AuthState {
   user: AuthUser | null;
   isAuth: boolean;
 }
 
+const storedUser = getAuthUser();
+
 const initialState: AuthState = {
-  user: null,
-  isAuth: false,
+  user: storedUser,
+  isAuth: storedUser !== null,
 };
 
 const authSlice = createSlice({
@@ -22,6 +25,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.isAuth = false;
+      clearAuthUser();
     },
   },
 });
