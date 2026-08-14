@@ -10,6 +10,7 @@ export interface Skill {
   subcategory: string
   tags: string
   imageUrl: string | null
+  photos?: string[]
   authorId: string
   createdAt: string
 }
@@ -59,6 +60,7 @@ export interface AuthUser {
   birthDate?: string
   gender?: GenderType
   about?: string
+  password?: string
 }
 
 // ─── Skill Categories and Subcategories ─────────────────────────────────────────────

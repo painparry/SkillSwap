@@ -113,7 +113,7 @@ export default function CatalogPage() {
           if (!isAuth) return
           toggleFavorite(user.id)
         },
-        likesCount: user.likes,
+        likesCount: user.likes + (favorites.includes(user.id) ? 1 : 0),
         onDetailsClick: () => {
           const firstSkill = skills.find((s) => s.authorId === user.id)
           if (firstSkill) {
